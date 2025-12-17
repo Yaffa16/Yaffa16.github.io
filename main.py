@@ -222,7 +222,7 @@ def build_index():
 
     <hr>
     <small>
-    HTML only · no CSS files · no JS · no tracking<br>
+    JIYO · AUR · JEENE · DO<br>
     Index generated automatically
     </small>
   </div>
