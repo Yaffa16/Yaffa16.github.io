@@ -223,7 +223,6 @@ def build_index():
     <hr>
     <small>
     JIYO · AUR · JEENE · DO<br>
-    Index generated automatically
     </small>
   </div>
 </div>
