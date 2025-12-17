@@ -1,126 +1,173 @@
-import os
+import re
+from pathlib import Path
 
-# Root folder
-root = "weirdwithcode_site"
+ROOT = Path(__file__).parent
+WORK_DIR = ROOT / "work"
+OUTPUT = ROOT / "index.html"
 
-# Create main folders
-os.makedirs(root, exist_ok=True)
-os.makedirs(os.path.join(root, "work"), exist_ok=True)
-os.makedirs(os.path.join(root, "images"), exist_ok=True)
+META_RE = re.compile(r"<!--(.*?)-->", re.S)
 
-# List of project names and corresponding image names
-projects = [
-    "taming_ai",
-    "ai_tell_you",
-    "meme_me",
-    "berthold_leibinger",
-    "doodly_do",
-    "if_you_think_you_are_sleeping",
-    "botcast",
-    "agents",
-    "berlin_stallwachter_party",
-    "memory_holes",
-    "start_festival",
-    "prayer_room",
-    "bindu",
-    "isle_of_coding",
-    "reflections",
-    "voice_box"
-]
+def parse_metadata(html_path):
+    text = html_path.read_text(encoding="utf-8", errors="ignore")
+    meta = {}
 
-# 1️⃣ Generate index.html
-index_html = f"""<!DOCTYPE html>
+    match = META_RE.search(text)
+    if match:
+        for line in match.group(1).splitlines():
+            if ":" in line:
+                k, v = line.split(":", 1)
+                meta[k.strip().upper()] = v.strip()
+
+    year = html_path.parent.name
+    title = meta.get(
+        "TITLE",
+        html_path.stem.replace("_", " ").title()
+    )
+
+    return {
+        "title": title,
+        "year": int(meta.get("YEAR", year)),
+        "image": meta.get("IMAGE", f"{html_path.stem}.jpg"),
+        "link": f"work/{year}/{html_path.name}",
+        "image_path": f"work/{year}/{meta.get('IMAGE', f'{html_path.stem}.jpg')}"
+    }
+
+def collect_all_works():
+    works = []
+
+    for year_dir in WORK_DIR.iterdir():
+        if not year_dir.is_dir():
+            continue
+        if not year_dir.name.isdigit():
+            continue
+
+        for html in year_dir.glob("*.html"):
+            works.append(parse_metadata(html))
+
+    works.sort(key=lambda w: w["year"], reverse=True)
+    return works
+
+def build_grid(works):
+    html = "<div style='display:flex; flex-wrap:wrap; justify-content:center; gap:15px;'>\n"
+
+    for work in works:
+        html += f"""
+<div style='text-align:left; width:18%;'>
+  <a href="{work['link']}" class="artwork-link" style="text-decoration:none; color:#000000;">
+    <img src="{work['image_path']}" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
+    <span class="artwork-hover" style="font-size:0.9em;">{work['title']} | {work['year']}</span>
+  </a>
+</div>
+"""
+    html += "</div>\n"
+    return html
+
+
+def build_index():
+    works = collect_all_works()
+    grid_html = build_grid(works)
+
+    OUTPUT.write_text(f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Weirdwithcode — Home</title>
+  <style>
+    body {{
+      background-color: #cccccc; /* grey background */
+      font-family: monospace, sans-serif;
+      margin: 0;
+      padding: 0;
+    }}
+    .content {{
+      background-color: #ffffff; /* “paper” block */
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }}
+    .header-bar {{
+      background-color: #000000;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+    }}
+    .header-bar a {{
+      color: #ffffff;
+      text-decoration: none;
+      margin-left: 15px;
+    }}
+    .header-bar a:hover {{
+      text-decoration: underline;
+    }}
+    .content-inner {{
+      padding: 40px;
+    }}
+    a.artwork-link:hover .artwork-hover {{
+      background: #000000;
+      color: #ffffff;
+    }}
+    h1, h2 {{
+      text-align: center;
+    }}
+    hr {{
+      margin-top: 30px;
+      margin-bottom: 30px;
+      border: 0;
+      border-top: 1px solid #999999;
+    }}
+    h2.works-heading {{
+      margin-top: 0;
+      margin-bottom: 20px; /* space between heading and images */
+    }}
+  </style>
 </head>
-<body bgcolor="#ffffff" text="#000000">
 
-<h1>Weird with code</h1>
-<p>
-  <a href="index.html">Work</a> |
-  <a href="press.html">Press</a> |
-  <a href="contact.html">Contact</a> |
-  <a href="https://www.instagram.com/" target="_blank">Instagram</a>
-</p>
-
-<hr>
-
-<h2>Yasha Jain (weirdwithcode) is a new media artist who makes art out of code and curiosity.</h2>
-<p>
-Blending coding, storytelling, and experimental media to make interactive, generative, and visual art.
-</p>
-
-<hr>
-
-<h3>Works</h3>
-<ul>
-"""
-for p in projects:
-    index_html += f'  <li><a href="work/{p}.html">{p.replace("_"," ").title()}</a></li>\n'
-
-index_html += """</ul>
-</body>
-</html>
-"""
-
-with open(os.path.join(root, "index.html"), "w") as f:
-    f.write(index_html)
-
-# 2️⃣ Generate press.html
-press_html = """<!DOCTYPE html>
-<html>
-<head><title>Press — Weirdwithcode</title></head>
 <body>
-<h1>Press</h1>
-<p><a href="index.html">← back</a></p>
-<p>Press links and articles go here.</p>
+
+<div class="content">
+  <div class="header-bar">
+    <div><b>weird with code</b></div>
+    <div>
+      <a href="bio.html">Bio</a>
+      <a href="cv.html">CV</a>
+      <a href="press.html">Press</a>
+      <a href="contact.html">Contact</a>
+      <a href="https://www.instagram.com/" target="_blank">Instagram</a>
+    </div>
+  </div>
+
+  <div class="content-inner">
+    <h2>
+    Yasha Jain (weirdwithcode) is a new media artist who makes art out of code and curiosity.
+    </h2>
+
+    <p>
+    Blending coding, storytelling, and experimental media to make interactive,
+    generative, and visual art. Looking at the narrative potential of code —
+    how simple rules can evoke meaning, emotion, or memory.
+    </p>
+
+    <hr>
+    <h2 class="works-heading">Works</h2>
+
+    {grid_html}
+
+    <hr>
+    <small>
+    HTML only · no CSS files · no JS · no tracking<br>
+    Index generated automatically
+    </small>
+  </div>
+</div>
+
 </body>
 </html>
-"""
-with open(os.path.join(root, "press.html"), "w") as f:
-    f.write(press_html)
+""", encoding="utf-8")
 
-# 3️⃣ Generate contact.html
-contact_html = """<!DOCTYPE html>
-<html>
-<head><title>Contact — Weirdwithcode</title></head>
-<body>
-<h1>Contact</h1>
-<p><a href="index.html">← back</a></p>
-<p>Email: your@email.com</p>
-<p>Instagram: <a href="https://www.instagram.com/" target="_blank">@weirdwithcode</a></p>
-</body>
-</html>
-"""
-with open(os.path.join(root, "contact.html"), "w") as f:
-    f.write(contact_html)
 
-# 4️⃣ Generate work HTML files
-for p in projects:
-    html_content = f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>{p.replace('_',' ').title()} — Weirdwithcode</title>
-</head>
-<body bgcolor="#ffffff" text="#000000">
-<h1>{p.replace('_',' ').title()}</h1>
-<center>
-  <img src="../images/{p}.jpg" width="400" height="400" alt="{p.replace('_',' ').title()}">
-</center>
-<p>Description of the project goes here.</p>
-<p><a href="../index.html">&larr; Back to Home</a></p>
-</body>
-</html>
-"""
-    with open(os.path.join(root, "work", f"{p}.html"), "w") as f:
-        f.write(html_content)
-
-# 5️⃣ Create placeholder JPG files
-for p in projects:
-    img_path = os.path.join(root, "images", f"{p}.jpg")
-    if not os.path.exists(img_path):
-        with open(img_path, "wb") as f:
-            f.write(b"")  # empty placeholder
+if __name__ == "__main__":
+    build_index()
+    print("✓ index.html rebuilt")

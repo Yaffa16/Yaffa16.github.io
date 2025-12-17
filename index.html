@@ -3,68 +3,210 @@
 <head>
   <meta charset="UTF-8">
   <title>Weirdwithcode — Home</title>
+  <style>
+    body {
+      background-color: #cccccc; /* grey background */
+      font-family: monospace, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .content {
+      background-color: #ffffff; /* “paper” block */
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .header-bar {
+      background-color: #000000;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+    }
+    .header-bar a {
+      color: #ffffff;
+      text-decoration: none;
+      margin-left: 15px;
+    }
+    .header-bar a:hover {
+      text-decoration: underline;
+    }
+    .content-inner {
+      padding: 40px;
+    }
+    a.artwork-link:hover .artwork-hover {
+      background: #000000;
+      color: #ffffff;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    hr {
+      margin-top: 30px;
+      margin-bottom: 30px;
+      border: 0;
+      border-top: 1px solid #999999;
+    }
+    h2.works-heading {
+      margin-top: 0;
+      margin-bottom: 20px; /* space between heading and images */
+    }
+  </style>
 </head>
-<body bgcolor="#ffffff" text="#000000">
 
-<!-- Navigation -->
-<h1>weird with code</h1>
-<p>
-  <a href="index.html">Work</a> |
-  <a href="press.html">Press</a> |
-  <a href="contact.html">Contact</a> |
-  <a href="https://www.instagram.com/" target="_blank">Instagram</a>
-</p>
+<body>
 
-<hr>
+<div class="content">
+  <div class="header-bar">
+    <div><b>weird with code</b></div>
+    <div>
+      <a href="bio.html">Bio</a>
+      <a href="cv.html">CV</a>
+      <a href="press.html">Press</a>
+      <a href="contact.html">Contact</a>
+      <a href="https://www.instagram.com/" target="_blank">Instagram</a>
+    </div>
+  </div>
 
-<!-- Artist Statement -->
-<h2>
-  Yasha Jain (weirdwithcode) is a new media artist who makes art out of code and curiosity.
-</h2>
-<p>
-  Blending coding, storytelling, and experimental media to make interactive, generative, and visual art.
-  Looking at the narrative potential of code—how simple rules can evoke meaning, emotion, or memory. :contentReference[oaicite:1]{index=1}
-</p>
+  <div class="content-inner">
+    <h2>
+    Yasha Jain (weirdwithcode) is a new media artist who makes art out of code and curiosity.
+    </h2>
 
-<hr>
+    <p>
+    Blending coding, storytelling, and experimental media to make interactive,
+    generative, and visual art. Looking at the narrative potential of code —
+    how simple rules can evoke meaning, emotion, or memory.
+    </p>
 
-<!-- Projects by Year -->
-<h3>2024</h3>
-<ul>
-  <li><a href="work/voice_box.html">Voice Box</a></li>
-</ul>
+    <hr>
+    <h2 class="works-heading">Works</h2>
 
-<h3>Work</h3>
-<ul>
-  <li><a href="work/ai_tell_you.html">(A) I Tell you, you tell Me</a></li>
-  <li><a href="work/meme_me.html">Meme Me</a></li>
-</ul>
+    <div style='display:flex; flex-wrap:wrap; justify-content:center; gap:15px;'>
 
-<h3>2023</h3>
-<ul>
-  <li><a href="work/berthold_leibinger.html">Berthold Leibinger</a></li>
-  <li><a href="work/doodly_do.html">Doodly Do</a></li>
-  <li><a href="work/if_you_think_you_are_sleeping.html">If You Think You Are Sleeping You Are Awake Box</a></li>
-</ul>
+<div style='text-align:left; width:18%;'>
+  <a href="work/2024/voice_box.html" class="artwork-link" style="text-decoration:none; color:#000000;">
+    <img src="work/2024/voice_box.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
+    <span class="artwork-hover" style="font-size:0.9em;">Voice Box | 2024</span>
+  </a>
+</div>
 
-<h3>2022</h3>
-<ul>
-  <li><a href="work/botcast.html">Botcast</a></li>
-  <li><a href="work/agents.html">Agents</a></li>
-  <li><a href="work/berlin_stallwachter_party.html">Berlin Stallwachter Party</a></li>
-</ul>
+<div style='text-align:left; width:18%;'>
+  <a href="work/2024/ai_tell_you.html" class="artwork-link" style="text-decoration:none; color:#000000;">
+    <img src="work/2024/ai_tell_you.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
+    <span class="artwork-hover" style="font-size:0.9em;">Ai Tell You | 2024</span>
+  </a>
+</div>
 
-<h3>Other Works</h3>
-<ul>
-  <li><a href="work/memory_holes.html">Memory Holes</a></li>
-  <li><a href="work/start_festival.html">ST+ART Festival</a></li>
-  <li><a href="work/prayer_room.html">Prayer Room</a></li>
-  <li><a href="work/bindu.html">Bindu</a></li>
-  <li><a href="work/sangath.html">Sangath</a></li>
-  <li><a href="work/isle_of_coding.html">Isle Of Coding</a></li>
-  <li><a href="work/reflections.html">Reflections</a></li>
-  <li><a href="work/voice_box.html">Voice Box</a></li>
-</ul>
+<div style='text-align:left; width:18%;'>
+  <a href="work/2024/meme_me.html" class="artwork-link" style="text-decoration:none; color:#000000;">
+    <img src="work/2024/meme_me.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
+    <span class="artwork-hover" style="font-size:0.9em;">Meme Me | 2024</span>
+  </a>
+</div>
+
+<div style='text-align:left; width:18%;'>
+  <a href="work/2023/isle_of_coding.html" class="artwork-link" style="text-decoration:none; color:#000000;">
+    <img src="work/2023/isle_of_coding.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
+    <span class="artwork-hover" style="font-size:0.9em;">Isle Of Coding | 2023</span>
+  </a>
+</div>
+
+<div style='text-align:left; width:18%;'>
+  <a href="work/2023/if_you_think_you_are_sleeping.html" class="artwork-link" style="text-decoration:none; color:#000000;">
+    <img src="work/2023/if_you_think_you_are_sleeping.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
+    <span class="artwork-hover" style="font-size:0.9em;">If You Think You Are Sleeping | 2023</span>
+  </a>
+</div>
+
+<div style='text-align:left; width:18%;'>
+  <a href="work/2023/berthold_leibinger.html" class="artwork-link" style="text-decoration:none; color:#000000;">
+    <img src="work/2023/berthold_leibinger.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
+    <span class="artwork-hover" style="font-size:0.9em;">Berthold Leibinger | 2023</span>
+  </a>
+</div>
+
+<div style='text-align:left; width:18%;'>
+  <a href="work/2023/doodly_do.html" class="artwork-link" style="text-decoration:none; color:#000000;">
+    <img src="work/2023/doodly_do.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
+    <span class="artwork-hover" style="font-size:0.9em;">Doodly Do | 2023</span>
+  </a>
+</div>
+
+<div style='text-align:left; width:18%;'>
+  <a href="work/2022/taming_ai.html" class="artwork-link" style="text-decoration:none; color:#000000;">
+    <img src="work/2022/taming_ai.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
+    <span class="artwork-hover" style="font-size:0.9em;">Taming Ai | 2022</span>
+  </a>
+</div>
+
+<div style='text-align:left; width:18%;'>
+  <a href="work/2022/agents.html" class="artwork-link" style="text-decoration:none; color:#000000;">
+    <img src="work/2022/agents.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
+    <span class="artwork-hover" style="font-size:0.9em;">Agents | 2022</span>
+  </a>
+</div>
+
+<div style='text-align:left; width:18%;'>
+  <a href="work/2022/botcast.html" class="artwork-link" style="text-decoration:none; color:#000000;">
+    <img src="work/2022/botcast.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
+    <span class="artwork-hover" style="font-size:0.9em;">Botcast | 2022</span>
+  </a>
+</div>
+
+<div style='text-align:left; width:18%;'>
+  <a href="work/2022/berlin_stallwachter_party.html" class="artwork-link" style="text-decoration:none; color:#000000;">
+    <img src="work/2022/berlin_stallwachter_party.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
+    <span class="artwork-hover" style="font-size:0.9em;">Berlin Stallwachter Party | 2022</span>
+  </a>
+</div>
+
+<div style='text-align:left; width:18%;'>
+  <a href="work/2019/memory_holes.html" class="artwork-link" style="text-decoration:none; color:#000000;">
+    <img src="work/2019/memory_holes.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
+    <span class="artwork-hover" style="font-size:0.9em;">Memory Holes | 2019</span>
+  </a>
+</div>
+
+<div style='text-align:left; width:18%;'>
+  <a href="work/2017/bindu.html" class="artwork-link" style="text-decoration:none; color:#000000;">
+    <img src="work/2017/bindu.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
+    <span class="artwork-hover" style="font-size:0.9em;">Bindu | 2017</span>
+  </a>
+</div>
+
+<div style='text-align:left; width:18%;'>
+  <a href="work/2017/start_festival.html" class="artwork-link" style="text-decoration:none; color:#000000;">
+    <img src="work/2017/start_festival.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
+    <span class="artwork-hover" style="font-size:0.9em;">Start Festival | 2017</span>
+  </a>
+</div>
+
+<div style='text-align:left; width:18%;'>
+  <a href="work/2017/prayer_room.html" class="artwork-link" style="text-decoration:none; color:#000000;">
+    <img src="work/2017/prayer_room.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
+    <span class="artwork-hover" style="font-size:0.9em;">Prayer Room | 2017</span>
+  </a>
+</div>
+
+<div style='text-align:left; width:18%;'>
+  <a href="work/2016/reflections.html" class="artwork-link" style="text-decoration:none; color:#000000;">
+    <img src="work/2016/reflections.jpg" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
+    <span class="artwork-hover" style="font-size:0.9em;">Reflections | 2016</span>
+  </a>
+</div>
+</div>
+
+
+    <hr>
+    <small>
+    HTML only · no CSS files · no JS · no tracking<br>
+    Index generated automatically
+    </small>
+  </div>
+</div>
 
 </body>
 </html>
