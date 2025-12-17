@@ -34,20 +34,23 @@ def parse_metadata(html_path):
 
 def collect_all_works():
     works = []
+
     for year_dir in WORK_DIR.iterdir():
         if not year_dir.is_dir() or not year_dir.name.isdigit():
             continue
         for html in year_dir.glob("*.html"):
             works.append(parse_metadata(html))
+
     works.sort(key=lambda w: w["year"], reverse=True)
     return works
 
 def build_grid(works):
     html = "<div style='display:flex; flex-wrap:wrap; justify-content:center; gap:15px;'>\n"
+
     for work in works:
         html += f"""
 <div style='text-align:left; width:18%;'>
-  <a href="{work['link']}" class="artwork-link">
+  <a href="{work['link']}" class="artwork-link" style="text-decoration:none;">
     <img src="{work['image_path']}" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
     <span class="artwork-hover" style="font-size:0.9em;">{work['title']} | {work['year']}</span>
   </a>
@@ -70,13 +73,12 @@ def build_index():
       margin: 0;
       padding: 0;
       font-family: monospace, sans-serif;
-      background-color: #1e1e1e; /* dark grey behind content */
     }}
-    body.dark-mode .content {{
+    body.dark-mode {{
       background-color: #1e1e1e;
       color: #ffffff;
     }}
-    body.light-mode .content {{
+    body.light-mode {{
       background-color: #ffffff;
       color: #000000;
     }}
@@ -98,7 +100,7 @@ def build_index():
       z-index: 999;
     }}
     .header-bar a {{
-      color: #ffffff;
+      color: #ffffff; /* always white */
       text-decoration: none;
       margin-left: 15px;
     }}
@@ -221,6 +223,7 @@ def build_index():
     <hr>
     <small>
     JIYO · AUR · JEENE · DO<br>
+    Index generated automatically
     </small>
   </div>
 </div>
