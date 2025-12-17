@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blog – Weirdwithcode</title>
+</head>
+
+<body bgcolor="#ffffff" text="#000000">
+
+<h1>Blog</h1>
+<p><a href="index.html">← back</a></p>
+
+<hr>
+
+<p>
+<b>2025-06-01</b><br>
+Uploaded something today.<br>
+It felt wrong.<br>
+I kept it.
+</p>
+
+<hr>
+
+<p>
+<b>2025-05-22</b><br>
+Thinking about old websites.<br>
+They didn’t explain themselves.
+</p>
+
+<hr>
+
+<p>
+<b>2025-05-02</b><br>
+Frames are misunderstood.<br>
+Division is a form of care.
+</p>
+
+<hr>
+
+<blink>last updated whenever</blink>
+
+</body>
+</html>
