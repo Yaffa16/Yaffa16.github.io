@@ -36,11 +36,8 @@ def collect_all_works():
     works = []
 
     for year_dir in WORK_DIR.iterdir():
-        if not year_dir.is_dir():
+        if not year_dir.is_dir() or not year_dir.name.isdigit():
             continue
-        if not year_dir.name.isdigit():
-            continue
-
         for html in year_dir.glob("*.html"):
             works.append(parse_metadata(html))
 
@@ -53,7 +50,7 @@ def build_grid(works):
     for work in works:
         html += f"""
 <div style='text-align:left; width:18%;'>
-  <a href="{work['link']}" class="artwork-link" style="text-decoration:none; color:#000000;">
+  <a href="{work['link']}" class="artwork-link" style="text-decoration:none;">
     <img src="{work['image_path']}" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
     <span class="artwork-hover" style="font-size:0.9em;">{work['title']} | {work['year']}</span>
   </a>
@@ -61,7 +58,6 @@ def build_grid(works):
 """
     html += "</div>\n"
     return html
-
 
 def build_index():
     works = collect_all_works()
@@ -74,13 +70,19 @@ def build_index():
   <title>Weirdwithcode — Home</title>
   <style>
     body {{
-      background-color: #cccccc; /* grey background */
-      font-family: monospace, sans-serif;
       margin: 0;
       padding: 0;
+      font-family: monospace, sans-serif;
+    }}
+    body.dark-mode {{
+      background-color: #1e1e1e;
+      color: #ffffff;
+    }}
+    body.light-mode {{
+      background-color: #ffffff;
+      color: #000000;
     }}
     .content {{
-      background-color: #ffffff; /* “paper” block */
       max-width: 1200px;
       margin: 40px auto;
       padding: 0;
@@ -93,19 +95,44 @@ def build_index():
       justify-content: space-between;
       align-items: center;
       padding: 15px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 999;
     }}
     .header-bar a {{
-      color: #ffffff;
+      color: #ffffff; /* always white */
       text-decoration: none;
       margin-left: 15px;
     }}
     .header-bar a:hover {{
       text-decoration: underline;
     }}
+    .toggle-container {{
+      display:inline-block;
+      margin-left: 15px;
+    }}
     .content-inner {{
       padding: 40px;
     }}
-    a.artwork-link:hover .artwork-hover {{
+    a.artwork-link {{
+      text-decoration:none;
+    }}
+    body.dark-mode a.artwork-link {{
+      color: #ffffff;
+    }}
+    body.light-mode a.artwork-link {{
+      color: #000000;
+    }}
+    a.artwork-link .artwork-hover {{
+      display:block;
+      margin-top:5px;
+      padding:2px 4px;
+    }}
+    body.dark-mode a.artwork-link:hover .artwork-hover {{
+      background: #ffffff;
+      color: #000000;
+    }}
+    body.light-mode a.artwork-link:hover .artwork-hover {{
       background: #000000;
       color: #ffffff;
     }}
@@ -120,12 +147,44 @@ def build_index():
     }}
     h2.works-heading {{
       margin-top: 0;
-      margin-bottom: 20px; /* space between heading and images */
+      margin-bottom: 20px;
+    }}
+    /* Toggle Switch */
+    .switch {{
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }}
+    .switch input {{display:none;}}
+    .slider {{
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }}
+    .slider:before {{
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }}
+    input:checked + .slider {{
+      background-color: #2196F3;
+    }}
+    input:checked + .slider:before {{
+      transform: translateX(26px);
     }}
   </style>
 </head>
-
-<body>
+<body class="light-mode">
 
 <div class="content">
   <div class="header-bar">
@@ -136,6 +195,12 @@ def build_index():
       <a href="press.html">Press</a>
       <a href="contact.html">Contact</a>
       <a href="https://www.instagram.com/" target="_blank">Instagram</a>
+      <span class="toggle-container">
+        <label class="switch">
+          <input type="checkbox" id="modeToggle" onclick="toggleMode()">
+          <span class="slider"></span>
+        </label>
+      </span>
     </div>
   </div>
 
@@ -157,11 +222,18 @@ def build_index():
 
     <hr>
     <small>
-    JIYO  · AUR · Jeene · Do <br>
+    HTML only · no CSS files · no JS · no tracking<br>
     Index generated automatically
     </small>
   </div>
 </div>
+
+<script>
+function toggleMode() {{
+    document.body.classList.toggle('dark-mode');
+    document.body.classList.toggle('light-mode');
+}}
+</script>
 
 </body>
 </html>
