@@ -235,6 +235,10 @@ input:checked + .slider:before { transform: translateX(26px); }
 <!-- HERO -->
 <section class="hero-section">
   <div class="hero-bg"></div>
+
+  <!-- ASCII Animation -->
+  <pre id="asciiAnimation" style="color:#FF9933; font-family:'Courier New', monospace; font-size:14px; line-height:14px; text-align:center;"></pre>
+
   <div class="hero-text">
     <h1>Yasha Jain</h1>
     <p class="subheading">new media artist • weirdwithcode</p>
@@ -245,6 +249,73 @@ input:checked + .slider:before { transform: translateX(26px); }
     <div class="scroll-cue">Scroll to explore ↓</div>
   </div>
 </section>
+
+<script>
+// ---------- ASCII ANIMATIONS ----------
+const asciiAnimations = [
+  [
+    "(-_-) \n /|\\ \n / \\",
+    "(o_o) \n /|\\ \n / \\",
+    "(^_^) \n /|\\ \n / \\"
+  ],
+  [
+    "  *\n ***\n*****",
+    " *** \n*****\n *** ",
+    "  *  \n *** \n*****"
+  ],
+  [
+    "[=    ]\n[ ==  ]\n[  ===]",
+    "[ ==  ]\n[  ===]\n[ === ]",
+    "[  ===]\n[ === ]\n[==   ]"
+  ],
+  [
+    "<(^_^)>",
+    "<(^o^)>",
+    "<(^_~)>"
+  ],
+  [
+    "o_o\n/|\\\n/ \\",
+    "O_O\n/|\\\n/ \\",
+    "0_0\n/|\\\n/ \\"
+  ]
+];
+
+let currentAnimation = 0;
+let currentFrame = 0;
+const asciiEl = document.getElementById('asciiAnimation');
+let animInterval;
+let scrolling = false;
+
+// function to start animation
+function startAsciiAnimation() {
+  animInterval = setInterval(()=>{
+    asciiEl.textContent = asciiAnimations[currentAnimation][currentFrame];
+    currentFrame++;
+    if(currentFrame >= asciiAnimations[currentAnimation].length){
+      currentFrame = 0;
+      currentAnimation = (currentAnimation + 1) % asciiAnimations.length;
+    }
+  }, 300); // frame every 300ms
+}
+
+// stop animation
+function stopAsciiAnimation() {
+  clearInterval(animInterval);
+}
+
+// start initially
+startAsciiAnimation();
+
+// stop animation on scroll
+window.addEventListener('scroll', () => {
+  if(!scrolling && window.scrollY > 20) {
+    scrolling = true;
+    stopAsciiAnimation();
+    asciiEl.style.display = 'none'; // hide when scrolling
+  }
+});
+</script>
+
 
 <!-- PAGE -->
 <div class="page">
