@@ -133,11 +133,7 @@ body.dark-mode .page { background: #1F1F1F; }
     color: #FF9933;
 }
 .project-list ul { list-style: none; padding: 0; margin: 0; }
-.project-list li { margin-bottom: 8px; }
-.project-list li.year-header {
-    font-weight: 700;
-    margin-top: 16px;
-}
+.project-list li { margin-bottom: 12px; }
 .project-list a { text-decoration: none; color: inherit; transition: color 0.25s; }
 .project-list a:hover { color: #FF9933; }
 
@@ -372,22 +368,26 @@ input:checked + .slider:before { transform: translateX(26px); }
 </div>
 
 <script>
-// LEFT COLUMN LINKS TO PROJECT PAGES
+// DYNAMIC LEFT LIST: every artwork by year
 const projectList = document.getElementById('projectList');
 document.querySelectorAll('.year-section').forEach(section=>{
   const year = section.id.replace('year-','');
   const yearHeader = document.createElement('li');
   yearHeader.textContent = year;
-  yearHeader.classList.add('year-header');
+  yearHeader.style.fontWeight = '700';
+  yearHeader.style.marginTop = '12px';
   projectList.appendChild(yearHeader);
 
   section.querySelectorAll('.artwork-link').forEach(link=>{
     const title = link.querySelector('.artwork-title').innerText;
     const li = document.createElement('li');
     const a = document.createElement('a');
-    a.href = link.getAttribute('href'); // goes to individual project page
-    a.target = "_self";
+    a.href = `#${link.getAttribute('href')}`;
     a.textContent = title;
+    a.addEventListener('click', e=>{
+      e.preventDefault();
+      link.scrollIntoView({behavior:'smooth', block:'start'});
+    });
     li.appendChild(a);
     projectList.appendChild(li);
   });
