@@ -207,17 +207,20 @@ body.dark-mode .page {
     opacity: 1;
     transform: translateY(0);
 }
+
+/* ---------- UPDATED IMAGE STYLE TO PREVENT CROPPING ---------- */
 .artwork-link img {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
+    width: 100%;           /* scale to column width */
+    height: auto;          /* maintain aspect ratio */
+    object-fit: contain;   /* show full artwork, no cropping */
     border-radius: 6px;
     transition: transform 0.25s, box-shadow 0.25s;
 }
 .artwork-link:hover img {
-    transform: scale(1.04);
+    transform: scale(1.02);
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
+
 .artwork-caption {
     margin-top: 10px;
     font-size: 0.82em;
@@ -270,8 +273,7 @@ input:checked + .slider:before {
 }
 
 @media (max-width: 768px) {
-
-  /* Hero section scaling */
+  /* Hero scaling */
   .hero-text h1 { font-size: 2rem; }
   .hero-text .subheading { font-size: 1rem; }
   .hero-text .hero-description { font-size: 0.9rem; padding: 0 20px; }
@@ -281,24 +283,16 @@ input:checked + .slider:before {
   .page { padding: 24px 16px 32px; margin: calc(110vh - 150px) auto 20px; }
 
   /* Works layout */
-  .works-layout {
-      gap: 16px;
-      overflow-x: auto;
-  }
+  .works-layout { gap: 16px; overflow-x: auto; }
   .project-list { width: 220px; min-width: 180px; font-size: 0.8em; }
-  .projects-grid { min-width: 280px; }
+  .projects-grid { min-width: 180px; }
 
-  /* Header & Footer responsive */
-  .header-bar {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
-  }
+  .year-section { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+
+  /* Header & Footer */
+  .header-bar { flex-direction: column; align-items: flex-start; gap: 8px; }
   .header-bar div { display: flex; flex-wrap: wrap; gap: 8px; }
   .footer { flex-direction: column; align-items: flex-start; gap: 6px; }
-
-  /* Images scale better */
-  .artwork-link img { border-radius: 4px; }
 
   /* Body font adjustments */
   body { font-size: 14px; line-height: 1.5; }
@@ -343,7 +337,7 @@ input:checked + .slider:before {
     </div>
     <div class="project-divider"></div>
     <div class="projects-grid" id="projectsGrid">
-      <!-- Example years/artworks -->
+      <!-- Example artworks -->
       <div id="year-2024" class="year-section">
         <a href="work/2024/voice_box.html" class="artwork-link">
           <img src="work/2024/voice_box.jpg" alt="Voice Box 2024">
@@ -367,7 +361,7 @@ input:checked + .slider:before {
 </div>
 
 <script>
-/* ---------- BUILD LIST OF WORKS FROM GRID ---------- */
+/* ---------- BUILD LIST OF WORKS ---------- */
 const projectList = document.getElementById('projectList');
 document.querySelectorAll('.year-section').forEach(section => {
   const year = section.id.replace('year-', '');
@@ -406,7 +400,7 @@ if (modeToggle) modeToggle.addEventListener('change', () => {
   document.body.classList.toggle('dark-mode');
 });
 
-/* ---------- HEADER CLICK → SNAP TO PAGE TOP ---------- */
+/* ---------- HEADER CLICK → SNAP ---------- */
 const pageContainer = document.getElementById('pageContainer');
 const headerOverlay = document.getElementById('headerOverlay');
 if (headerOverlay && pageContainer) {
@@ -415,7 +409,7 @@ if (headerOverlay && pageContainer) {
   });
 }
 
-/* ---------- AUTO SNAP ON SMALL SCROLL (IGNORE first scroll) ---------- */
+/* ---------- AUTO SNAP ON SMALL SCROLL ---------- */
 let hasSnapped = false;
 let initialScrollIgnored = false;
 window.addEventListener('scroll', () => {
