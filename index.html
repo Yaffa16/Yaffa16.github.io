@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Weirdwithcode — Home</title>
 
 <!-- Google Fonts -->
@@ -98,8 +99,8 @@ body.dark-mode {
 /* ---------- PAGE ---------- */
 .page {
     max-width: 1200px;
-    min-height: 1123px;
-    background: #FFFFFF;
+    min-height: 1100px;
+    background: #f2f2f2;
     margin: calc(110vh - 180px) auto 40px;
     padding: 32px 56px 56px;
     border-top-left-radius: 14px;
@@ -124,7 +125,7 @@ body.dark-mode .page {
     margin-bottom: 32px;
     padding-bottom: 8px;
     border-bottom: 1px solid #D6CFC0;
-    position: relative; /* parent for overlay */
+    position: relative;
 }
 .header-bar b {
     font-family: 'Merriweather', serif;
@@ -141,22 +142,26 @@ body.dark-mode .page {
 /* ---------- HEADER OVERLAY ---------- */
 .header-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;       /* full width of header-bar */
-    height: 10%;      /* full height of header-bar */
+    inset: 0;
     cursor: pointer;
     background: transparent;
-    z-index: 5;        /* above header content for click detection */
+    z-index: 5;
 }
 
 /* ---------- WORKS LAYOUT ---------- */
 .works-layout {
     display: flex;
     gap: 44px;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    overflow-x: auto;
+    padding-bottom: 16px;
 }
+
+/* Left column: project list */
 .project-list {
     width: 260px;
+    min-width: 200px;
     font-size: 0.85em;
 }
 .project-list h3 {
@@ -183,8 +188,8 @@ body.dark-mode .page {
     background: linear-gradient(to bottom, transparent, #D6CFC0 15%, #D6CFC0 85%, transparent);
 }
 
-/* ---------- GRID ---------- */
-.projects-grid { flex: 1; }
+/* Right column: projects grid */
+.projects-grid { flex: 1 1 auto; }
 .year-section {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -259,10 +264,45 @@ input:checked + .slider:before {
     transform: translateX(26px);
 }
 
-/* ---------- RESPONSIVE ---------- */
-@media (max-width:1024px){
-  .works-layout { flex-direction: column; }
-  .project-list { width: 100%; }
+/* ---------- RESPONSIVE / MOBILE ---------- */
+@media (max-width: 1024px) {
+  .page { padding: 24px 32px 32px; }
+}
+
+@media (max-width: 768px) {
+
+  /* Hero section scaling */
+  .hero-text h1 { font-size: 2rem; }
+  .hero-text .subheading { font-size: 1rem; }
+  .hero-text .hero-description { font-size: 0.9rem; padding: 0 20px; }
+  .hero-section { height: auto; padding: 60px 20px; text-align: center; }
+
+  /* Page layout */
+  .page { padding: 24px 16px 32px; margin: calc(110vh - 150px) auto 20px; }
+
+  /* Works layout */
+  .works-layout {
+      gap: 16px;
+      overflow-x: auto;
+  }
+  .project-list { width: 220px; min-width: 180px; font-size: 0.8em; }
+  .projects-grid { min-width: 280px; }
+
+  /* Header & Footer responsive */
+  .header-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+  }
+  .header-bar div { display: flex; flex-wrap: wrap; gap: 8px; }
+  .footer { flex-direction: column; align-items: flex-start; gap: 6px; }
+
+  /* Images scale better */
+  .artwork-link img { border-radius: 4px; }
+
+  /* Body font adjustments */
+  body { font-size: 14px; line-height: 1.5; }
+  .header-bar a { margin-left: 12px; font-size: 0.9em; }
 }
 </style>
 </head>
@@ -284,7 +324,7 @@ input:checked + .slider:before {
 
 <!-- PAGE -->
 <div class="page" id="pageContainer">
-  <div class="header-bar" id="headerBar">
+  <div class="header-bar">
     <b>weird with code</b>
     <div>
       <a href="bio.html">Bio</a>
@@ -293,8 +333,6 @@ input:checked + .slider:before {
       <a href="contact.html">Contact</a>
       <a href="https://www.instagram.com/" target="_blank">Instagram</a>
     </div>
-
-    <!-- HEADER OVERLAY -->
     <div class="header-overlay" id="headerOverlay"></div>
   </div>
 
@@ -303,12 +341,9 @@ input:checked + .slider:before {
       <h3>List of Works</h3>
       <ul id="projectList"></ul>
     </div>
-
     <div class="project-divider"></div>
-
     <div class="projects-grid" id="projectsGrid">
-
-      <!-- 2024 -->
+      <!-- Example years/artworks -->
       <div id="year-2024" class="year-section">
         <a href="work/2024/voice_box.html" class="artwork-link">
           <img src="work/2024/voice_box.jpg" alt="Voice Box 2024">
@@ -318,84 +353,7 @@ input:checked + .slider:before {
           <img src="work/2024/ai_tell_you.jpg" alt="Ai Tell You 2024">
           <span class="artwork-caption"><span class="artwork-title">Ai Tell You</span><span class="artwork-year">2024</span></span>
         </a>
-        <a href="work/2024/meme_me.html" class="artwork-link">
-          <img src="work/2024/meme_me.jpg" alt="Meme Me 2024">
-          <span class="artwork-caption"><span class="artwork-title">Meme Me</span><span class="artwork-year">2024</span></span>
-        </a>
       </div>
-
-      <!-- 2023 -->
-      <div id="year-2023" class="year-section">
-        <a href="work/2023/isle_of_coding.html" class="artwork-link">
-          <img src="work/2023/isle_of_coding.jpg" alt="Isle Of Coding 2023">
-          <span class="artwork-caption"><span class="artwork-title">Isle Of Coding</span><span class="artwork-year">2023</span></span>
-        </a>
-        <a href="work/2023/if_you_think_you_are_sleeping.html" class="artwork-link">
-          <img src="work/2023/if_you_think_you_are_sleeping.jpg" alt="If You Think You Are Sleeping 2023">
-          <span class="artwork-caption"><span class="artwork-title">If You Think You Are Sleeping</span><span class="artwork-year">2023</span></span>
-        </a>
-        <a href="work/2023/berthold_leibinger.html" class="artwork-link">
-          <img src="work/2023/berthold_leibinger.jpg" alt="Berthold Leibinger 2023">
-          <span class="artwork-caption"><span class="artwork-title">Berthold Leibinger</span><span class="artwork-year">2023</span></span>
-        </a>
-        <a href="work/2023/doodly_do.html" class="artwork-link">
-          <img src="work/2023/doodly_do.jpg" alt="Doodly Do 2023">
-          <span class="artwork-caption"><span class="artwork-title">Doodly Do</span><span class="artwork-year">2023</span></span>
-        </a>
-      </div>
-
-      <!-- 2022 -->
-      <div id="year-2022" class="year-section">
-        <a href="work/2022/taming_ai.html" class="artwork-link">
-          <img src="work/2022/taming_ai.jpg" alt="Taming Ai 2022">
-          <span class="artwork-caption"><span class="artwork-title">Taming Ai</span><span class="artwork-year">2022</span></span>
-        </a>
-        <a href="work/2022/agents.html" class="artwork-link">
-          <img src="work/2022/agents.jpg" alt="Agents 2022">
-          <span class="artwork-caption"><span class="artwork-title">Agents</span><span class="artwork-year">2022</span></span>
-        </a>
-        <a href="work/2022/botcast.html" class="artwork-link">
-          <img src="work/2022/botcast.jpg" alt="Botcast 2022">
-          <span class="artwork-caption"><span class="artwork-title">Botcast</span><span class="artwork-year">2022</span></span>
-        </a>
-        <a href="work/2022/berlin_stallwachter_party.html" class="artwork-link">
-          <img src="work/2022/berlin_stallwachter_party.jpg" alt="Berlin Stallwachter Party 2022">
-          <span class="artwork-caption"><span class="artwork-title">Berlin Stallwachter Party</span><span class="artwork-year">2022</span></span>
-        </a>
-      </div>
-
-      <!-- 2019 -->
-      <div id="year-2019" class="year-section">
-        <a href="work/2019/memory_holes.html" class="artwork-link">
-          <img src="work/2019/memory_holes.jpg" alt="Memory Holes 2019">
-          <span class="artwork-caption"><span class="artwork-title">Memory Holes</span><span class="artwork-year">2019</span></span>
-        </a>
-      </div>
-
-      <!-- 2017 -->
-      <div id="year-2017" class="year-section">
-        <a href="work/2017/bindu.html" class="artwork-link">
-          <img src="work/2017/bindu.jpg" alt="Bindu 2017">
-          <span class="artwork-caption"><span class="artwork-title">Bindu</span><span class="artwork-year">2017</span></span>
-        </a>
-        <a href="work/2017/start_festival.html" class="artwork-link">
-          <img src="work/2017/start_festival.jpg" alt="Start Festival 2017">
-          <span class="artwork-caption"><span class="artwork-title">Start Festival</span><span class="artwork-year">2017</span></span>
-        </a>
-        <a href="work/2017/prayer_room.html" class="artwork-link">
-          <img src="work/2017/prayer_room.jpg" alt="Prayer Room 2017">
-          <span class="artwork-caption"><span class="artwork-title">Prayer Room</span><span class="artwork-year">2017</span></span>
-        </a>
-      </div>
-
-      <!-- 2016 -->
-      <div id="year-2016" class="year-section">
-        <a href="work/2016/reflections.html" class="artwork-link">
-          <img src="work/2016/reflections.jpg" alt="Reflections 2016">
-          <span class="artwork-caption"><span class="artwork-title">Reflections</span><span class="artwork-year">2016</span></span>
-        </a>
-      </div>
-
     </div>
   </div>
 
@@ -409,64 +367,68 @@ input:checked + .slider:before {
 </div>
 
 <script>
-// Build List of Works with real links
+/* ---------- BUILD LIST OF WORKS FROM GRID ---------- */
 const projectList = document.getElementById('projectList');
 document.querySelectorAll('.year-section').forEach(section => {
   const year = section.id.replace('year-', '');
-  const yearHeader = document.createElement('li');
-  yearHeader.textContent = year;
-  yearHeader.style.fontWeight = '700';
-  yearHeader.style.marginTop = '12px';
-  projectList.appendChild(yearHeader);
+  const yearLi = document.createElement('li');
+  yearLi.textContent = year;
+  yearLi.style.fontWeight = '700';
+  yearLi.style.marginTop = '14px';
+  projectList.appendChild(yearLi);
 
   section.querySelectorAll('.artwork-link').forEach(link => {
     const title = link.querySelector('.artwork-title').innerText;
+    const href = link.getAttribute('href');
     const li = document.createElement('li');
     const a = document.createElement('a');
-    a.href = link.getAttribute('href');
+    a.href = href;
     a.textContent = title;
     li.appendChild(a);
     projectList.appendChild(li);
   });
 });
 
-// HERO PARALLAX + REVEAL
+/* ---------- HERO PARALLAX + ARTWORK REVEAL ---------- */
+const artworks = document.querySelectorAll('.artwork-link');
 window.addEventListener('scroll', () => {
-  const offset = window.scrollY;
+  const scrollY = window.scrollY;
   const bg = document.querySelector('.hero-bg');
-  if (bg) bg.style.transform = `translateY(${offset * 0.3}px) scale(1.2)`;
-
-  document.querySelectorAll('.artwork-link').forEach(el => {
-    if (el.getBoundingClientRect().top < window.innerHeight - 100) {
-      el.classList.add('visible');
-    }
+  if (bg) bg.style.transform = `translateY(${scrollY * 0.3}px) scale(1.2)`;
+  artworks.forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('visible');
   });
 });
 
-// DARK MODE
-document.getElementById('modeToggle').addEventListener('change', () => {
+/* ---------- DARK MODE ---------- */
+const modeToggle = document.getElementById('modeToggle');
+if (modeToggle) modeToggle.addEventListener('change', () => {
   document.body.classList.toggle('dark-mode');
 });
 
-// HEADER OVERLAY CLICK SCROLLS WHITE PAGE TO TOP
+/* ---------- HEADER CLICK → SNAP TO PAGE TOP ---------- */
 const pageContainer = document.getElementById('pageContainer');
-document.getElementById('headerOverlay').addEventListener('click', () => {
-  const pageTop = pageContainer.offsetTop;
-  window.scrollTo({ top: pageTop, behavior: 'smooth' });
-});
+const headerOverlay = document.getElementById('headerOverlay');
+if (headerOverlay && pageContainer) {
+  headerOverlay.addEventListener('click', () => {
+    window.scrollTo({ top: pageContainer.offsetTop, behavior: 'smooth' });
+  });
+}
 
-// AUTO-SCROLL TO WHITE PAGE ON LOAD (GitHub Pages fix)
-window.addEventListener('DOMContentLoaded', () => {
-  const page = document.getElementById('pageContainer');
-  if (page) {
-    window.scrollTo({
-      top: page.offsetTop,
-      behavior: 'auto'
-    });
+/* ---------- AUTO SNAP ON SMALL SCROLL (IGNORE first scroll) ---------- */
+let hasSnapped = false;
+let initialScrollIgnored = false;
+window.addEventListener('scroll', () => {
+  if (!pageContainer) return;
+  const pageTop = pageContainer.offsetTop;
+  const scrollY = window.scrollY;
+  if (!initialScrollIgnored) { initialScrollIgnored = true; return; }
+  if (!hasSnapped && scrollY > 40 && scrollY < pageTop - 120) {
+    hasSnapped = true;
+    window.scrollTo({ top: pageTop, behavior: 'smooth' });
   }
+  if (scrollY < 20) hasSnapped = false;
 });
 </script>
-
-
 </body>
 </html>
