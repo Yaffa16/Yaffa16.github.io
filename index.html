@@ -450,11 +450,23 @@ document.getElementById('modeToggle').addEventListener('change', () => {
 
 // HEADER OVERLAY CLICK SCROLLS WHITE PAGE TO TOP
 const pageContainer = document.getElementById('pageContainer');
-document.getElementById('headerOverlay').addEventListener('click', (e) => {
-  const pageTop = pageContainer.offsetTop; // top of white page
+document.getElementById('headerOverlay').addEventListener('click', () => {
+  const pageTop = pageContainer.offsetTop;
   window.scrollTo({ top: pageTop, behavior: 'smooth' });
 });
+
+// AUTO-SCROLL TO WHITE PAGE ON LOAD (GitHub Pages fix)
+window.addEventListener('DOMContentLoaded', () => {
+  const page = document.getElementById('pageContainer');
+  if (page) {
+    window.scrollTo({
+      top: page.offsetTop,
+      behavior: 'auto'
+    });
+  }
+});
 </script>
+
 
 </body>
 </html>
