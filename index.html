@@ -26,18 +26,30 @@ body.dark-mode {
 /* ---------- HERO ---------- */
 .hero-section {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    inset: 0;
     height: 100vh;
     background: #000080;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     color: #fff;
     z-index: -1;
     overflow: hidden;
+}
+.hero-section::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 140px;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,128,0) 0%,
+        rgba(0,0,128,0.65) 60%,
+        rgba(0,0,128,1) 100%
+    );
+    pointer-events: none;
 }
 .hero-bg {
     position: absolute;
@@ -49,8 +61,9 @@ body.dark-mode {
 }
 .hero-text {
     text-align: center;
-    max-width: 100%;
     padding: 0 40px;
+    position: relative;
+    z-index: 2;
 }
 .hero-text h1 {
     font-family: 'Merriweather', serif;
@@ -60,7 +73,6 @@ body.dark-mode {
     animation: fadeInUp 1.2s ease-out forwards;
 }
 .hero-text .subheading {
-    font-family: 'IBM Plex Mono', monospace;
     font-size: 1.3rem;
     letter-spacing: 1px;
     opacity: 0;
@@ -68,13 +80,13 @@ body.dark-mode {
 }
 .hero-text .hero-description {
     max-width: 720px;
-    margin: 20px auto 0 auto;
+    margin: 20px auto 0;
     opacity: 0;
     animation: fadeInUp 1.6s ease-out forwards;
 }
 .hero-text .scroll-cue {
     margin-top: 40px;
-    font-size: 1rem;
+    font-size: 1.2rem;
     opacity: 0;
     animation: fadeInUp 1.8s ease-out infinite alternate;
 }
@@ -88,15 +100,20 @@ body.dark-mode {
     max-width: 1200px;
     min-height: 1123px;
     background: #FFFFFF;
-    box-shadow: 0 12px 48px rgba(0,0,0,0.18);
-    padding: 56px;
-    border-radius: 6px;
-    margin: 100vh auto 40px;
+    margin: calc(110vh - 180px) auto 40px;
+    padding: 32px 56px 56px;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    box-shadow:
+        0 -10px 30px rgba(0,0,0,0.12),
+        0 12px 48px rgba(0,0,0,0.18);
     display: flex;
     flex-direction: column;
     transition: background 0.3s, color 0.3s;
 }
-body.dark-mode .page { background: #1F1F1F; }
+body.dark-mode .page {
+    background: #1F1F1F;
+}
 
 /* ---------- HEADER ---------- */
 .header-bar {
@@ -104,86 +121,103 @@ body.dark-mode .page { background: #1F1F1F; }
     justify-content: space-between;
     align-items: center;
     font-size: 0.95em;
-    margin-bottom: 48px;
+    margin-bottom: 32px;
+    padding-bottom: 8px;
     border-bottom: 1px solid #D6CFC0;
-    padding-bottom: 12px;
+    position: relative; /* parent for overlay */
 }
-.header-bar b { font-family: 'Merriweather', serif; font-size: 1.2em; }
-.header-bar a { color: inherit; text-decoration: none; margin-left: 20px; transition: color 0.25s ease; }
+.header-bar b {
+    font-family: 'Merriweather', serif;
+    font-size: 1.2em;
+}
+.header-bar a {
+    color: inherit;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color 0.25s ease;
+}
 .header-bar a:hover { color: #FF9933; }
+
+/* ---------- HEADER OVERLAY ---------- */
+.header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;       /* full width of header-bar */
+    height: 10%;      /* full height of header-bar */
+    cursor: pointer;
+    background: transparent;
+    z-index: 5;        /* above header content for click detection */
+}
 
 /* ---------- WORKS LAYOUT ---------- */
 .works-layout {
     display: flex;
     gap: 44px;
-    align-items: flex-start;
 }
 .project-list {
     width: 260px;
     font-size: 0.85em;
-    flex-shrink: 0;
 }
 .project-list h3 {
-    margin-top: 0;
-    margin-bottom: 22px;
-    font-weight: 900;
+    margin: 0 0 22px;
     font-size: 1.7em;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: #FF9933;
 }
-.project-list ul { list-style: none; padding: 0; margin: 0; }
-.project-list li { margin-bottom: 8px; }
-.project-list li.year-header {
-    font-weight: 700;
-    margin-top: 16px;
+.project-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
-.project-list a { text-decoration: none; color: inherit; transition: color 0.25s; }
+.project-list li { margin-bottom: 12px; }
+.project-list a {
+    text-decoration: none;
+    color: inherit;
+}
 .project-list a:hover { color: #FF9933; }
 
 .project-divider {
     width: 1px;
     background: linear-gradient(to bottom, transparent, #D6CFC0 15%, #D6CFC0 85%, transparent);
-    align-self: stretch;
 }
 
+/* ---------- GRID ---------- */
 .projects-grid { flex: 1; }
-
-/* ---------- YEAR SECTIONS GRID ---------- */
 .year-section {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 16px;
     margin-bottom: 40px;
 }
-
 .artwork-link {
     text-decoration: none;
     color: inherit;
     opacity: 0;
     transform: translateY(24px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transition: opacity 0.6s ease, transform 0.6s ease;
 }
-.artwork-link.visible { opacity: 1; transform: translateY(0); }
+.artwork-link.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
 .artwork-link img {
     width: 100%;
-    aspect-ratio: 1/1;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: 6px;
-    filter: grayscale(10%);
-    transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s;
+    transition: transform 0.25s, box-shadow 0.25s;
 }
 .artwork-link:hover img {
     transform: scale(1.04);
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    filter: grayscale(0%);
 }
 .artwork-caption {
     margin-top: 10px;
     font-size: 0.82em;
     text-align: center;
 }
-.artwork-title, .artwork-year { display: block; }
 
 /* ---------- FOOTER ---------- */
 .footer {
@@ -194,7 +228,11 @@ body.dark-mode .page { background: #1F1F1F; }
     gap: 12px;
     font-size: 0.85em;
 }
-.switch { position: relative; display: inline-block; width: 50px; height: 24px; }
+.switch {
+    position: relative;
+    width: 50px;
+    height: 24px;
+}
 .switch input { display: none; }
 .slider {
     position: absolute;
@@ -202,7 +240,6 @@ body.dark-mode .page { background: #1F1F1F; }
     background: #ccc;
     border-radius: 24px;
     cursor: pointer;
-    transition: background 0.3s;
 }
 .slider:before {
     content: "";
@@ -215,111 +252,39 @@ body.dark-mode .page { background: #1F1F1F; }
     border-radius: 50%;
     transition: transform 0.3s;
 }
-input:checked + .slider { background: #FF9933; }
-input:checked + .slider:before { transform: translateX(26px); }
+input:checked + .slider {
+    background: #FF9933;
+}
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
 
-/* RESPONSIVE */
+/* ---------- RESPONSIVE ---------- */
 @media (max-width:1024px){
   .works-layout { flex-direction: column; }
-  .project-list { width: 100%; margin-bottom:32px; }
-}
-@media (max-width:600px){
-  .hero-text h1 { font-size:2.2rem; }
-  .hero-text .subheading { font-size:1rem; }
-  .hero-text .hero-description { font-size:0.95rem; }
+  .project-list { width: 100%; }
 }
 </style>
 </head>
+
 <body>
 
 <!-- HERO -->
 <section class="hero-section">
   <div class="hero-bg"></div>
-
-  <!-- ASCII Animation -->
-  <pre id="asciiAnimation" style="color:#FF9933; font-family:'Courier New', monospace; font-size:14px; line-height:14px; text-align:center;"></pre>
-
   <div class="hero-text">
     <h1>Yasha Jain</h1>
     <p class="subheading">new media artist • weirdwithcode</p>
     <p class="hero-description">
       I blend code, curiosity, and computation to create interactive and generative art.
-      Explore how simple rules evoke meaning, emotion, and memory through algorithmic expression.
     </p>
-    <div class="scroll-cue">Scroll to explore ↓</div>
+    <div class="scroll-cue">↓</div>
   </div>
 </section>
 
-<script>
-// ---------- ASCII ANIMATIONS ----------
-const asciiAnimations = [
-  [
-    "(-_-) \n /|\\ \n / \\",
-    "(o_o) \n /|\\ \n / \\",
-    "(^_^) \n /|\\ \n / \\"
-  ],
-  [
-    "  *\n ***\n*****",
-    " *** \n*****\n *** ",
-    "  *  \n *** \n*****"
-  ],
-  [
-    "[=    ]\n[ ==  ]\n[  ===]",
-    "[ ==  ]\n[  ===]\n[ === ]",
-    "[  ===]\n[ === ]\n[==   ]"
-  ],
-  [
-    "<(^_^)>",
-    "<(^o^)>",
-    "<(^_~)>"
-  ],
-  [
-    "o_o\n/|\\\n/ \\",
-    "O_O\n/|\\\n/ \\",
-    "0_0\n/|\\\n/ \\"
-  ]
-];
-
-let currentAnimation = 0;
-let currentFrame = 0;
-const asciiEl = document.getElementById('asciiAnimation');
-let animInterval;
-let scrolling = false;
-
-// function to start animation
-function startAsciiAnimation() {
-  animInterval = setInterval(()=>{
-    asciiEl.textContent = asciiAnimations[currentAnimation][currentFrame];
-    currentFrame++;
-    if(currentFrame >= asciiAnimations[currentAnimation].length){
-      currentFrame = 0;
-      currentAnimation = (currentAnimation + 1) % asciiAnimations.length;
-    }
-  }, 300); // frame every 300ms
-}
-
-// stop animation
-function stopAsciiAnimation() {
-  clearInterval(animInterval);
-}
-
-// start initially
-startAsciiAnimation();
-
-// stop animation on scroll
-window.addEventListener('scroll', () => {
-  if(!scrolling && window.scrollY > 20) {
-    scrolling = true;
-    stopAsciiAnimation();
-    asciiEl.style.display = 'none'; // hide when scrolling
-  }
-});
-</script>
-
-
 <!-- PAGE -->
-<div class="page">
-  <div class="header-bar">
+<div class="page" id="pageContainer">
+  <div class="header-bar" id="headerBar">
     <b>weird with code</b>
     <div>
       <a href="bio.html">Bio</a>
@@ -328,10 +293,12 @@ window.addEventListener('scroll', () => {
       <a href="contact.html">Contact</a>
       <a href="https://www.instagram.com/" target="_blank">Instagram</a>
     </div>
+
+    <!-- HEADER OVERLAY -->
+    <div class="header-overlay" id="headerOverlay"></div>
   </div>
 
   <div class="works-layout">
-    <!-- LEFT: ALL PROJECTS LIST BY YEAR -->
     <div class="project-list">
       <h3>List of Works</h3>
       <ul id="projectList"></ul>
@@ -339,7 +306,6 @@ window.addEventListener('scroll', () => {
 
     <div class="project-divider"></div>
 
-    <!-- RIGHT: ARTWORK GRID -->
     <div class="projects-grid" id="projectsGrid">
 
       <!-- 2024 -->
@@ -443,42 +409,50 @@ window.addEventListener('scroll', () => {
 </div>
 
 <script>
-// LEFT COLUMN LINKS TO PROJECT PAGES
+// Build List of Works with real links
 const projectList = document.getElementById('projectList');
-document.querySelectorAll('.year-section').forEach(section=>{
-  const year = section.id.replace('year-','');
+document.querySelectorAll('.year-section').forEach(section => {
+  const year = section.id.replace('year-', '');
   const yearHeader = document.createElement('li');
   yearHeader.textContent = year;
-  yearHeader.classList.add('year-header');
+  yearHeader.style.fontWeight = '700';
+  yearHeader.style.marginTop = '12px';
   projectList.appendChild(yearHeader);
 
-  section.querySelectorAll('.artwork-link').forEach(link=>{
+  section.querySelectorAll('.artwork-link').forEach(link => {
     const title = link.querySelector('.artwork-title').innerText;
     const li = document.createElement('li');
     const a = document.createElement('a');
-    a.href = link.getAttribute('href'); // goes to individual project page
-    a.target = "_self";
+    a.href = link.getAttribute('href');
     a.textContent = title;
     li.appendChild(a);
     projectList.appendChild(li);
   });
 });
 
+// HERO PARALLAX + REVEAL
+window.addEventListener('scroll', () => {
+  const offset = window.scrollY;
+  const bg = document.querySelector('.hero-bg');
+  if (bg) bg.style.transform = `translateY(${offset * 0.3}px) scale(1.2)`;
+
+  document.querySelectorAll('.artwork-link').forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+      el.classList.add('visible');
+    }
+  });
+});
+
 // DARK MODE
-document.getElementById('modeToggle').addEventListener('change',()=>{
+document.getElementById('modeToggle').addEventListener('change', () => {
   document.body.classList.toggle('dark-mode');
 });
 
-// HERO PARALLAX & FADE-IN ARTWORK
-window.addEventListener('scroll',()=>{
-  const offset = window.scrollY;
-  const bg = document.querySelector('.hero-bg');
-  if(bg) bg.style.transform = `translateY(${offset*0.3}px) scale(1.2)`;
-
-  document.querySelectorAll('.artwork-link').forEach(el=>{
-    const rect = el.getBoundingClientRect();
-    if(rect.top < window.innerHeight - 100) el.classList.add('visible');
-  });
+// HEADER OVERLAY CLICK SCROLLS WHITE PAGE TO TOP
+const pageContainer = document.getElementById('pageContainer');
+document.getElementById('headerOverlay').addEventListener('click', (e) => {
+  const pageTop = pageContainer.offsetTop; // top of white page
+  window.scrollTo({ top: pageTop, behavior: 'smooth' });
 });
 </script>
 
