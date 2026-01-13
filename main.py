@@ -1,244 +1,128 @@
-import re
-from pathlib import Path
+import os
+from bs4 import BeautifulSoup
 
-ROOT = Path(__file__).parent
-WORK_DIR = ROOT / "work"
-OUTPUT = ROOT / "index.html"
+work_folder = "work"
 
-META_RE = re.compile(r"<!--(.*?)-->", re.S)
+def create_artwork_tag(soup, year, html_file, image_file):
+    title = os.path.splitext(html_file)[0].replace("_", " ").title()
 
-def parse_metadata(html_path):
-    text = html_path.read_text(encoding="utf-8", errors="ignore")
-    meta = {}
-
-    match = META_RE.search(text)
-    if match:
-        for line in match.group(1).splitlines():
-            if ":" in line:
-                k, v = line.split(":", 1)
-                meta[k.strip().upper()] = v.strip()
-
-    year = html_path.parent.name
-    title = meta.get(
-        "TITLE",
-        html_path.stem.replace("_", " ").title()
+    a = soup.new_tag(
+        "a",
+        href=f"work/{year}/{html_file}",
+        **{"class": "artwork-link"}
     )
 
-    return {
-        "title": title,
-        "year": int(meta.get("YEAR", year)),
-        "image": meta.get("IMAGE", f"{html_path.stem}.jpg"),
-        "link": f"work/{year}/{html_path.name}",
-        "image_path": f"work/{year}/{meta.get('IMAGE', f'{html_path.stem}.jpg')}"
-    }
+    img = soup.new_tag(
+        "img",
+        src=f"work/{year}/{image_file}",
+        alt=f"{title} {year}"
+    )
 
-def collect_all_works():
-    works = []
+    caption = soup.new_tag("span", **{"class": "artwork-caption"})
+    title_span = soup.new_tag("span", **{"class": "artwork-title"})
+    title_span.string = title
+    year_span = soup.new_tag("span", **{"class": "artwork-year"})
+    year_span.string = year
 
-    for year_dir in WORK_DIR.iterdir():
-        if not year_dir.is_dir() or not year_dir.name.isdigit():
+    caption.append(title_span)
+    caption.append(year_span)
+
+    a.append(img)
+    a.append(caption)
+
+    return a
+
+
+def update_index_html(index_file):
+    with open(index_file, "r", encoding="utf-8") as f:
+        soup = BeautifulSoup(f, "html.parser")
+
+    projects_grid = soup.find("div", id="projectsGrid")
+    if not projects_grid:
+        print("❌ projectsGrid not found")
+        return
+
+    # ---------------------------------------
+    # 1. Scan filesystem → authoritative list
+    # ---------------------------------------
+    fs_artworks = {}  # year -> set of html files
+    fs_hrefs = set()
+
+    for year in os.listdir(work_folder):
+        year_path = os.path.join(work_folder, year)
+        if not os.path.isdir(year_path):
             continue
-        for html in year_dir.glob("*.html"):
-            works.append(parse_metadata(html))
 
-    works.sort(key=lambda w: w["year"], reverse=True)
-    return works
+        html_files = {
+            f for f in os.listdir(year_path)
+            if f.endswith(".html")
+        }
 
-def build_grid(works):
-    html = "<div style='display:flex; flex-wrap:wrap; justify-content:center; gap:15px;'>\n"
+        if html_files:
+            fs_artworks[year] = html_files
+            for f in html_files:
+                fs_hrefs.add(f"work/{year}/{f}")
 
-    for work in works:
-        html += f"""
-<div style='text-align:left; width:18%;'>
-  <a href="{work['link']}" class="artwork-link" style="text-decoration:none;">
-    <img src="{work['image_path']}" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block; margin-bottom:5px;">
-    <span class="artwork-hover" style="font-size:0.9em;">{work['title']} | {work['year']}</span>
-  </a>
-</div>
-"""
-    html += "</div>\n"
-    return html
+    # ---------------------------------------
+    # 2. Remove stale entries from index.html
+    # ---------------------------------------
+    for a in projects_grid.find_all("a", class_="artwork-link"):
+        href = a.get("href")
+        if href not in fs_hrefs:
+            print(f"🗑 Removed stale entry: {href}")
+            a.decompose()
 
-def build_index():
-    works = collect_all_works()
-    grid_html = build_grid(works)
+    # ---------------------------------------
+    # 3. Remove empty year sections
+    # ---------------------------------------
+    for year_section in projects_grid.find_all("div", class_="year-section"):
+        if not year_section.find("a", class_="artwork-link"):
+            year_section.decompose()
 
-    OUTPUT.write_text(f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Weirdwithcode — Home</title>
-  <style>
-    body {{
-      margin: 0;
-      padding: 0;
-      font-family: monospace, sans-serif;
-    }}
-    body.dark-mode {{
-      background-color: #1e1e1e;
-      color: #ffffff;
-    }}
-    body.light-mode {{
-      background-color: #ffffff;
-      color: #000000;
-    }}
-    .content {{
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 0;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    }}
-    .header-bar {{
-      background-color: #000000;
-      color: #ffffff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 40px;
-      position: sticky;
-      top: 0;
-      z-index: 999;
-    }}
-    .header-bar a {{
-      color: #ffffff; /* always white */
-      text-decoration: none;
-      margin-left: 15px;
-    }}
-    .header-bar a:hover {{
-      text-decoration: underline;
-    }}
-    .toggle-container {{
-      display:inline-block;
-      margin-left: 15px;
-    }}
-    .content-inner {{
-      padding: 40px;
-    }}
-    a.artwork-link {{
-      text-decoration:none;
-    }}
-    body.dark-mode a.artwork-link {{
-      color: #ffffff;
-    }}
-    body.light-mode a.artwork-link {{
-      color: #000000;
-    }}
-    a.artwork-link .artwork-hover {{
-      display:block;
-      margin-top:5px;
-      padding:2px 4px;
-    }}
-    body.dark-mode a.artwork-link:hover .artwork-hover {{
-      background: #ffffff;
-      color: #000000;
-    }}
-    body.light-mode a.artwork-link:hover .artwork-hover {{
-      background: #000000;
-      color: #ffffff;
-    }}
-    h1, h2 {{
-      text-align: center;
-    }}
-    hr {{
-      margin-top: 30px;
-      margin-bottom: 30px;
-      border: 0;
-      border-top: 1px solid #999999;
-    }}
-    h2.works-heading {{
-      margin-top: 0;
-      margin-bottom: 20px;
-    }}
-    /* Toggle Switch */
-    .switch {{
-      position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 24px;
-    }}
-    .switch input {{display:none;}}
-    .slider {{
-      position: absolute;
-      cursor: pointer;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: #ccc;
-      transition: .4s;
-      border-radius: 24px;
-    }}
-    .slider:before {{
-      position: absolute;
-      content: "";
-      height: 18px;
-      width: 18px;
-      left: 3px;
-      bottom: 3px;
-      background-color: white;
-      transition: .4s;
-      border-radius: 50%;
-    }}
-    input:checked + .slider {{
-      background-color: #2196F3;
-    }}
-    input:checked + .slider:before {{
-      transform: translateX(26px);
-    }}
-  </style>
-</head>
-<body class="light-mode">
+    # ---------------------------------------
+    # 4. Add missing artworks (latest year first)
+    # ---------------------------------------
+    for year in sorted(fs_artworks.keys(), reverse=True):
+        year_section = projects_grid.find("div", id=f"year-{year}")
 
-<div class="content">
-  <div class="header-bar">
-    <div><b>weird with code</b></div>
-    <div>
-      <a href="bio.html">Bio</a>
-      <a href="cv.html">CV</a>
-      <a href="press.html">Press</a>
-      <a href="contact.html">Contact</a>
-      <a href="https://www.instagram.com/" target="_blank">Instagram</a>
-      <span class="toggle-container">
-        <label class="switch">
-          <input type="checkbox" id="modeToggle" onclick="toggleMode()">
-          <span class="slider"></span>
-        </label>
-      </span>
-    </div>
-  </div>
+        if not year_section:
+            year_section = soup.new_tag(
+                "div",
+                id=f"year-{year}",
+                **{"class": "year-section"}
+            )
+            projects_grid.insert(0, "\n\n    ")
+            projects_grid.insert(1, year_section)
 
-  <div class="content-inner">
-    <h2>
-    Yasha Jain (weirdwithcode) is a new media artist who makes art out of code and curiosity.
-    </h2>
+        for html_file in sorted(fs_artworks[year]):
+            href = f"work/{year}/{html_file}"
 
-    <p>
-    Blending coding, storytelling, and experimental media to make interactive,
-    generative, and visual art. Looking at the narrative potential of code —
-    how simple rules can evoke meaning, emotion, or memory.
-    </p>
+            if projects_grid.find("a", href=href):
+                continue
 
-    <hr>
-    <h2 class="works-heading">Works</h2>
+            base = os.path.splitext(html_file)[0]
+            image_file = None
 
-    {grid_html}
+            for ext in (".jpg", ".png", ".jpeg"):
+                candidate = base + ext
+                if os.path.exists(os.path.join(work_folder, year, candidate)):
+                    image_file = candidate
+                    break
 
-    <hr>
-    <small>
-    JIYO · AUR · JEENE · DO<br>
-    </small>
-  </div>
-</div>
+            if not image_file:
+                print(f"⚠️ No image for {year}/{html_file}")
+                continue
 
-<script>
-function toggleMode() {{
-    document.body.classList.toggle('dark-mode');
-    document.body.classList.toggle('light-mode');
-}}
-</script>
+            artwork = create_artwork_tag(soup, year, html_file, image_file)
+            year_section.append("\n        ")
+            year_section.append(artwork)
 
-</body>
-</html>
-""", encoding="utf-8")
+            print(f"➕ Added {year}/{html_file}")
+
+    with open(index_file, "w", encoding="utf-8") as f:
+        f.write(str(soup))
+
+    print("✅ index.html fully synchronized with /work")
 
 
-if __name__ == "__main__":
-    build_index()
-    print("✓ index.html rebuilt")
+update_index_html("index.html")

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Weirdwithcode — Page Title</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ---------- RESET & BODY ---------- */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    line-height: 1.65;
+    overflow-x: hidden;
+    background: #F9F7F1;
+    color: #1B1B1B;
+    position: relative;
+}
+body.dark-mode {
+    background: #1B1B1B;
+    color: #F0F0F0;
+}
+
+/* ---------- HERO ---------- */
+.hero-section {
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    background: #000080;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    z-index: -1;
+    overflow: hidden;
+}
+.hero-section::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 140px;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,128,0) 0%,
+        rgba(0,0,128,0.65) 60%,
+        rgba(0,0,128,1) 100%
+    );
+    pointer-events: none;
+}
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('https://via.placeholder.com/1920x1080/000080/FFFFFF?text=Hero+Background') center/cover no-repeat;
+    transform: scale(1.2);
+    z-index: -1;
+    will-change: transform;
+}
+
+/* ---------- PAGE ---------- */
+.page {
+    max-width: 1200px;
+    min-height: 100vh;
+    background: #FFFFFF;
+    margin: 0 auto 40px;
+    padding: 32px 56px 56px;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    box-shadow:
+        0 -10px 30px rgba(0,0,0,0.12),
+        0 12px 48px rgba(0,0,0,0.18);
+    display: flex;
+    flex-direction: column;
+    transition: background 0.3s, color 0.3s;
+    position: relative;
+}
+body.dark-mode .page {
+    background: #1F1F1F;
+}
+
+/* ---------- HEADER ---------- */
+.header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95em;
+    margin-bottom: 32px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #D6CFC0;
+    position: relative;
+}
+.header-bar b {
+    font-family: 'Merriweather', serif;
+    font-size: 1.2em;
+}
+.header-bar a {
+    color: inherit;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color 0.25s ease;
+}
+.header-bar a:hover { color: #FF9933; }
+
+/* ---------- HEADER OVERLAY ---------- */
+.header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    cursor: pointer;
+    background: transparent;
+    z-index: 5;
+}
+
+/* ---------- MEDIA GRID ---------- */
+.media-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin: 32px 0;
+}
+
+.media-container img,
+.media-container video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+
+/* ---------- BOTTOM VIDEO ---------- */
+.bottom-video {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0 24px 0;
+}
+.bottom-video video {
+    width: 50%;
+    max-width: 800px;
+    min-width: 300px;
+    border-radius: 6px;
+    display: block;
+}
+
+/* ---------- BACK BUTTON ---------- */
+.back-button {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.95em;
+}
+.back-button a {
+    text-decoration: none;
+    color: #000080;
+    font-weight: bold;
+    transition: color 0.25s ease;
+}
+.back-button a:hover {
+    color: #FF9933;
+}
+
+/* ---------- FOOTER ---------- */
+.footer {
+    margin-top: 48px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85em;
+}
+.switch {
+    position: relative;
+    width: 50px;
+    height: 24px;
+}
+.switch input { display: none; }
+.slider {
+    position: absolute;
+    inset: 0;
+    background: #ccc;
+    border-radius: 24px;
+    cursor: pointer;
+}
+.slider:before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+input:checked + .slider {
+    background: #FF9933;
+}
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .media-container img,
+    .media-container video {
+        width: 80%;
+    }
+}
+@media (max-width: 480px) {
+    .media-container img,
+    .media-container video {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero-section">
+  <div class="hero-bg"></div>
+</section>
+
+<!-- PAGE -->
+<div class="page" id="pageContainer">
+
+  <!-- HEADER -->
+  <div class="header-bar" id="headerBar">
+    <b>weird with code</b>
+    <div>
+      <a href="#">Bio</a>
+      <a href="#">CV</a>
+      <a href="#">Press</a>
+      <a href="#">Contact</a>
+      <a href="#" target="_blank">Instagram</a>
+    </div>
+    <div class="header-overlay" id="headerOverlay"></div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+<h1>Electronic Petting Zoo</h1>
+
+<p>
+  <strong>An Interactive Installation for Early Childhood Engagement with Technology</strong><br>
+  A project by <a href="https://zkm.de" target="_blank">ZKM | Hertzlab</a> in collaboration with
+  <a href="https://www.kit.edu" target="_blank">Karlsruhe Institute of Technology (KIT)</a>
+</p>
+
+<div class="media-container">
+      <video src="video_2.mp4" controls autoplay muted loop playsinline>
+    Your browser does not support the video tag.
+  </video>
+  <img src="epz_2.jpg" alt="Electronic Petting Zoo Installation">
+<img src="epz_1.jpg" alt="Robotic Guinea Pigs">
+  <video src="video_1.mp4" controls autoplay muted loop playsinline>
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+<p>
+  At the ZKM, the <em>Electronic Petting Zoo</em> is being created as a place where preschool children
+  can gain early experience with technology. Ten robotic guinea pigs, which respond to touch and
+  voice commands, are entrusted to children for a limited time.
+</p>
+
+<p>
+  Through playful interaction, the installation enables a child-friendly exploration of a question
+  that will become increasingly important in the future:
+  <strong>Is it alive – or is it just pretending?</strong>
+</p>
+
+<h2>Concept</h2>
+
+<p>
+  The Electronic Petting Zoo creates a safe and engaging environment in which children can interact
+  with artificially animated objects that exhibit lifelike behavior. The robotic guinea pigs react
+  to physical contact and spoken cues, encouraging emotional engagement while prompting reflection
+  on the nature of living versus non-living entities. We created individual personalities for each of the robot pet to anthropomorphize them to foster a connection with the kids.
+</p>
+
+<ul>
+  <li>Ten robotic guinea pigs designed for tactile and vocal interaction</li>
+  <li>Designed specifically for preschool-aged children</li>
+  <li>Focus on curiosity, empathy, and perception</li>
+</ul>
+
+<h2>Research Context</h2>
+
+<p>
+  Alongside its public presentation, the Electronic Petting Zoo is accompanied by a planned research
+  project at the Karlsruhe Institute of Technology (KIT). Together with
+  <a href="https://hci.iar.kit.edu/21_59.php" target="_blank">
+  <strong>Prof. Dr. Kathrin Gerling</strong>
+</a>, Professor of Human-Machine Interaction and Accessibility
+  at the Institute for Anthropomatics and Robotics (IAR), the project investigates whether and how
+  kindergarten-aged children can recognize and learn the difference between living animals and
+  artificially animated objects.
+</p>
+
+<p>
+  Morning visits for kindergarten groups are available by appointment. These supervised visits offer
+  a systematic way to gain insights into early childhood human–machine interactions.
+</p>
+
+<h2>Objective</h2>
+
+<p>
+  The Electronic Petting Zoo positions itself as a contribution to a cultural infrastructure that
+  enables children—regardless of background or language skills—to participate in increasingly
+  complex technological progress.
+</p>
+
+<p>
+  Through the interplay of artistic practice and scientific research, experiential spaces are
+  created that foster social skills while simultaneously providing early access to technological,
+  ethical, and social questions surrounding artificial intelligence and robotics.
+</p>
+
+<p>
+  <strong>Learn more about the individual robotic pets:</strong><br>
+  <a href="https://zkm.de/de/2025/11/elektronischer-streichelzoo" target="_blank">
+    https://zkm.de/de/2025/11/elektronischer-streichelzoo
+  </a>
+</p>
+
+  <h2>Media & Press</h2>
+
+<ul class="press-links">
+  <li><a href="https://www.baden-tv.com/mediathek/video/elektronischer-streichelzoo-im-zkm-kuenstliche-tiere-sollen-alten-menschen-helfen/" target="_blank">Video — Elektronischer Streichelzoo im ZKM (baden-tv)</a></li>
+  <li><a href="https://www.zdfheute.de/video/heute-in-deutschland/elektronischer-streichelzoo-100.html" target="_blank">ZDF Heute in Deutschland — Elektronischer Streichelzoo</a></li>
+  <li><a href="https://www.sueddeutsche.de/wissen/forschungsprojekt-hier-koennen-kinder-roboter-meerschweinchen-streicheln-dpa.urn-newsml-dpa-com-20090101-251211-930-407970" target="_blank">Süddeutsche Zeitung — Forschungsprojekt über Roboter-Meerschweinchen</a></li>
+  <li><a href="https://www.heise.de/news/Elekronischer-Streichelzoo-Kinder-streicheln-Booboo-Roboter-Meerschweinchen-11111183.html" target="_blank">heise online — Elektronischer Streichelzoo & Booboo Roboter</a></li>
+  <li><a href="https://www.zdf.de/play/magazine/logo-154/logo-vom-mittwoch-10-dezember-2025-102" target="_blank">ZDF Logo – Feature on Elektronischer Streichelzoo</a></li>
+</ul>
+
+
+  <!-- BACK BUTTON -->
+  <div class="back-button">
+    <a href="#">← Back</a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <small>JIYO · AUR · JEENE · DO</small>
+    <label class="switch">
+      <input type="checkbox" id="modeToggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+</div>
+
+<script>
+// DARK MODE TOGGLE
+const toggle = document.getElementById('modeToggle');
+if(localStorage.getItem('darkMode') === 'true') {
+  document.body.classList.add('dark-mode');
+  toggle.checked = true;
+}
+toggle.addEventListener('change', () => {
+  document.body.classList.toggle('dark-mode');
+  localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+});
+
+// HEADER OVERLAY CLICK SCROLLS TO TOP
+const pageContainer = document.getElementById('pageContainer');
+document.getElementById('headerOverlay').addEventListener('click', () => {
+  const pageTop = pageContainer.offsetTop;
+  window.scrollTo({ top: pageTop, behavior: 'smooth' });
+});
+
+// RESTORE SCROLL POSITION ON LOAD
+window.addEventListener('load', () => {
+  const pageTop = pageContainer.offsetTop;
+  const offset = parseFloat(localStorage.getItem('pageScrollOffset')) || 0;
+  window.scrollTo({ top: pageTop + offset, behavior: 'auto' });
+});
+
+// SAVE SCROLL POSITION
+window.addEventListener('scroll', () => {
+  const offset = window.scrollY - pageContainer.offsetTop;
+  localStorage.setItem('pageScrollOffset', offset);
+});
+</script>
+
+</body>
+</html>
