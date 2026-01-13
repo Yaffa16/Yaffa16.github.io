@@ -1,21 +1,257 @@
-<!--
-TITLE: Bindu
-YEAR: 2017
-IMAGE: bindu.jpg
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Bindu — Weirdwithcode</title>
+<meta charset="UTF-8">
+<title>Weirdwithcode — Bindu</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    line-height: 1.65;
+    background: #F9F7F1;
+    color: #1B1B1B;
+}
+body.dark-mode {
+    background: #1B1B1B;
+    color: #F0F0F0;
+}
+
+/* HERO */
+.hero-section {
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    background: #000080;
+    z-index: -1;
+}
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('https://via.placeholder.com/1920x1080/000080/FFFFFF?text=Bindu+VR') center/cover no-repeat;
+    transform: scale(1.2);
+}
+
+/* PAGE */
+.page {
+    max-width: 1200px;
+    background: #FFFFFF;
+    margin: 0 auto 40px;
+    padding: 32px 56px 56px;
+    border-radius: 14px 14px 0 0;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.12), 0 12px 48px rgba(0,0,0,0.18);
+}
+body.dark-mode .page {
+    background: #1F1F1F;
+}
+
+/* HEADER */
+.header-bar {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #D6CFC0;
+    padding-bottom: 8px;
+    margin-bottom: 32px;
+}
+.header-bar b {
+    font-family: 'Merriweather', serif;
+    font-size: 1.2em;
+}
+.header-bar a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: inherit;
+}
+.header-bar a:hover {
+    color: #FF9933;
+}
+
+/* MEDIA */
+.media-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin: 32px 0;
+}
+.media-container img,
+.media-container video {
+    width: 50%;
+    max-width: 800px;
+    min-width: 300px;
+    border-radius: 6px;
+}
+
+/* FOOTER */
+.footer {
+    margin-top: 48px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85em;
+}
+.switch {
+    width: 50px;
+    height: 24px;
+    position: relative;
+}
+.switch input { display: none; }
+.slider {
+    position: absolute;
+    inset: 0;
+    background: #ccc;
+    border-radius: 24px;
+}
+.slider:before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    left: 3px;
+    bottom: 3px;
+    transition: transform 0.3s;
+}
+input:checked + .slider {
+    background: #FF9933;
+}
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+</style>
 </head>
-<body bgcolor="#ffffff" text="#000000">
-<h1>Bindu</h1>
-<center>
-  <img src="../images/bindu.jpg" width="400" height="400" alt="Bindu">
-</center>
-<p>Description of the project goes here.</p>
-<p><a href="../index.html">&larr; Back to Home</a></p>
+
+<body>
+
+<section class="hero-section">
+  <div class="hero-bg"></div>
+</section>
+
+<div class="page" id="pageContainer">
+
+  <div class="header-bar">
+    <b>weird with code</b>
+    <div>
+      <a href="#">Bio</a>
+      <a href="#">CV</a>
+      <a href="#">Press</a>
+      <a href="#">Contact</a>
+      <a href="#">Instagram</a>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <h1>Bindu</h1>
+  <p><strong>A VR Art Experience Inspired by S.H. Raza</strong></p>
+
+  <p>
+    Bindu is a meditative, interactive VR experience that immerses users in the life and art of one of India’s
+    most iconic modern painters—Sayed Haider Raza (1922–2016).
+    Drawing from Indian spiritual philosophy where Bindu represents the point of origin, unity,
+    and infinite potential, the experience traces the personal and artistic evolution of Raza
+    across four experiential levels.
+  </p>
+
+  <p>
+    As the first chapter in a series of VR art journeys dedicated to celebrating contemporary Indian artists,
+    Bindu serves a broader purpose: to foster inclusive, immersive art education in India,
+    making modern Indian art accessible and engaging for new generations.
+  </p>
+
+  <div class="media-container">
+
+    <video src="Bindu.mp4" controls muted loop></video>
+  </div>
+
+  <h2>Concept</h2>
+
+  <p>
+    Bindu is not a passive VR showcase—it is an experiential game that mirrors Raza’s journey
+    from inner conflict to creative clarity. Each level represents a distinct period in his life:
+  </p>
+
+  <p><strong>Childhood in India:</strong><br>
+    The user reenacts a pivotal moment from Raza’s early life—his schoolteacher instructing him
+    to concentrate on a single dot (bindu). This simple act of focus becomes the gateway to
+    deeper self-awareness, echoed later in his artistic journey.
+  </p>
+
+  <p><strong>Mid-life in France:</strong><br>
+    Immersed in the environment where Raza was influenced by Western modernism and Impressionism,
+    players are tasked with solving a jigsaw puzzle, symbolizing the process of artistic
+    construction and conceptual assembly that defined this phase.
+  </p>
+
+  <p><strong>Return to India – The Emergence of the Bindu:</strong><br>
+    In this stage, players help complete one of Raza’s abstract paintings by painting the Bindu—
+    a moment that encapsulates his return to India, both physically and philosophically.
+  </p>
+
+  <p><strong>Immersion into the Artistic Cosmos:</strong><br>
+    The final stage drops the viewer into a fully navigable 3D universe extrapolated from
+    Raza’s own visual language. Abstract shapes, colors, and forms surround the player in
+    a meditative realm inspired directly by his paintings.
+  </p>
+
+  <p>
+    Throughout the journey, a voiceover drawn from Raza’s own words accompanies the experience,
+    guiding the viewer through personal reflections and artistic milestones.
+  </p>
+
+  <h2>Technical Write-Up</h2>
+
+  <p><strong>VR Platform:</strong> Developed in Unity</p>
+  <p><strong>Visual Assets:</strong> Designed in Cinema4D, drawing directly from Raza’s visual motifs and compositional structures</p>
+  <p><strong>Sound & Music:</strong> All music was composed in-house, blending Indian classical and ambient textures that shift with each level to reflect Raza’s changing geography and emotional states</p>
+  <p><strong>Narrative Voiceover:</strong> Based on Raza’s writings and interviews, adapted into a guiding voice for users</p>
+
+  <p>
+    Interaction across levels is intuitive yet symbolic—meditation, construction, completion,
+    and immersion—echoing the thematic arc of Raza’s life and work.
+  </p>
+
+  <h2>Context &amp; Future Development</h2>
+
+  <p>
+    Bindu was conceived as the inaugural project in a larger VR Art Series that seeks to bring
+    the stories and philosophies of modern Indian artists to life in new digital formats.
+  </p>
+
+  <p>The upcoming chapters will spotlight influential figures such as:</p>
+
+  <ul>
+    <li>Amrita Sher-Gil</li>
+    <li>Mario Miranda</li>
+    <li>Jamini Roy</li>
+    <li>F.N. Souza</li>
+  </ul>
+
+  <p>
+    These experiences will aim to blend art history, interactivity, and narrative design to engage
+    audiences with India’s rich visual legacy in a radically contemporary way.
+  </p>
+
+  <div class="footer">
+    <small>JIYO · AUR · JEENE · DO</small>
+    <label class="switch">
+      <input type="checkbox" id="modeToggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+</div>
+
+<script>
+const toggle = document.getElementById('modeToggle');
+toggle.addEventListener('change', () => {
+  document.body.classList.toggle('dark-mode');
+});
+</script>
+
 </body>
 </html>
