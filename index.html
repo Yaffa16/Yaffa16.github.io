@@ -229,6 +229,12 @@ body.dark-mode .page {
     text-align: center;
 }
 
+/* Add separator between title and year */
+.artwork-caption .artwork-year::before {
+    content: " | ";
+    margin: 0 4px; /* optional spacing around the | */
+}
+
 /* ---------- FOOTER ---------- */
 .footer {
     margin-top: 48px;
