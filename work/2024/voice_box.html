@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Weirdwithcode — Artwork</title>
+<title>Weirdwithcode — Voice Box</title>
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,6 +17,7 @@ body {
     overflow-x: hidden;
     background: #F9F7F1;
     color: #1B1B1B;
+    position: relative;
 }
 body.dark-mode {
     background: #1B1B1B;
@@ -75,6 +76,7 @@ body.dark-mode {
     display: flex;
     flex-direction: column;
     transition: background 0.3s, color 0.3s;
+    position: relative;
 }
 body.dark-mode .page {
     background: #1F1F1F;
@@ -154,8 +156,67 @@ input:checked + .slider {
 input:checked + .slider:before {
     transform: translateX(26px);
 }
+
+/* ---------- MEDIA CENTERING ---------- */
+.media-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin: 24px 0;
+}
+.media-container img {
+    width: 50%;
+    border-radius: 6px;
+}
+
+/* ---------- BOTTOM VIDEO ---------- */
+.bottom-video {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0 0 0;
+}
+.bottom-video video {
+    width: 50%;        /* responsive width */
+    max-width: 800px;  /* maximum width */
+    min-width: 300px;  /* minimum width */
+    border-radius: 6px;
+}
+
+/* ---------- BACK BUTTON ---------- */
+.back-button {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.95em;
+}
+.back-button a {
+    text-decoration: none;
+    color: #000080;
+    font-weight: bold;
+    transition: color 0.25s ease;
+}
+.back-button a:hover {
+    color: #FF9933;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .media-container img,
+    .bottom-video video {
+        width: 80%;
+    }
+}
+@media (max-width: 480px) {
+    .media-container img,
+    .bottom-video video {
+        width: 100%;
+    }
+}
 </style>
 </head>
+
 <body>
 
 <!-- HERO -->
@@ -165,6 +226,7 @@ input:checked + .slider:before {
 
 <!-- PAGE -->
 <div class="page" id="pageContainer">
+
   <div class="header-bar" id="headerBar">
     <b>weird with code</b>
     <div>
@@ -174,14 +236,59 @@ input:checked + .slider:before {
       <a href="contact.html">Contact</a>
       <a href="https://www.instagram.com/" target="_blank">Instagram</a>
     </div>
-
     <div class="header-overlay" id="headerOverlay"></div>
   </div>
 
-  <h1>Artwork Title</h1>
-  <p>Year • Description of the artwork goes here.</p>
-  <img src="work/2024/voice_box.jpg" alt="Artwork Image" style="width:100%; border-radius:6px; margin-top:20px;">
+  <!-- CONTENT -->
+  <h1>Voice Box</h1>
+  <p><strong>ZKM | Karlsruhe</strong> · <a href="https://zkm.de/de/2024/11/ard-hoerspieltage-2024" target="_blank">ARD Hörspieltage 2024</a></p>
 
+
+  <!-- CENTERED IMAGE -->
+  <div class="media-container">
+    <img src="voice_box.jpg" alt="Voice Box installation">
+  </div>
+
+  <p>
+    <strong>Voice Box</strong> is an interactive installation that merges artificial intelligence, voice-cloning technology, and generative storytelling to create personalized Radio Plays. At the intersection of human expression and machine authorship, the work invites visitors to experience the uncanny sensation of hearing themselves perform in AI-generated radio plays.
+  </p>
+
+  <p>
+    Participants step into a recording booth equipped with microphones and a screen interface. Visitors record a short vocal sample, typically 30–60 seconds of text or spontaneous speech, which becomes the raw material for the generative process. People then choose a genre for the radio play they would like to listen to.
+  </p>
+
+  <p>
+    Within minutes, participants listen to an AI-generated radio drama featuring their own voice acting out characters, emotions, and dialogue. Through the process of researching and working on this installation I found that although people have a right to their own faces and images, individuals currently do not legally own their voice. Keeping with data protection laws we deleted the recordings and generated audio file immediately.
+  </p>
+
+  <p>
+    The system combines voice cloning, real-time narrative generation using transformer-based language models.
+  </p>
+
+  <p>
+    <em>
+      Voice Box explores authorship, identity, and the emotional weight of synthetic voices.
+    </em>
+  </p>
+
+  <!-- VIDEO AT BOTTOM ABOVE FOOTER -->
+  <div class="bottom-video">
+    <video
+        src="voice_box.mp4"
+        controls
+        autoplay
+        muted
+        loop>
+        Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- BACK BUTTON -->
+  <div class="back-button">
+    <a href="../../index.html">← Back</a>
+  </div>
+
+  <!-- FOOTER -->
   <div class="footer">
     <small>JIYO · AUR · JEENE · DO</small>
     <label class="switch">
@@ -189,6 +296,7 @@ input:checked + .slider:before {
       <span class="slider"></span>
     </label>
   </div>
+
 </div>
 
 <script>
@@ -204,13 +312,11 @@ document.getElementById('headerOverlay').addEventListener('click', () => {
   window.scrollTo({ top: pageTop, behavior: 'smooth' });
 });
 
-// -----------------------------
 // SCROLL PAGE TO SAME Y POSITION AS HOMEPAGE
-// -----------------------------
 window.addEventListener('load', () => {
   const pageTop = pageContainer.offsetTop;
   const offset = parseFloat(localStorage.getItem('pageScrollOffset')) || 0;
-  window.scrollTo({ top: pageTop + offset, behavior: 'instant' });
+  window.scrollTo({ top: pageTop + offset, behavior: 'auto' });
 });
 </script>
 

@@ -1,63 +1,316 @@
-<!--
-TITLE: Berthold Leibinger
-YEAR: 2023
-IMAGE: berthold_leibinger.jpg
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Berthold Leibinger Innovationspreis and Zukunftspreis — Weirdwithcode</title>
-  <!-- Page-wide referrer policy for YouTube embeds -->
-  <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta name="referrer-policy" content="strict-origin-when-cross-origin">
+<meta charset="UTF-8">
+<title>Weirdwithcode — Leibinger Innovationspreis</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ---------- RESET & BODY ---------- */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    line-height: 1.65;
+    overflow-x: hidden;
+    background: #F9F7F1;
+    color: #1B1B1B;
+    position: relative;
+}
+body.dark-mode {
+    background: #1B1B1B;
+    color: #F0F0F0;
+}
+
+/* ---------- HERO ---------- */
+.hero-section {
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    background: #000080;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    z-index: -1;
+    overflow: hidden;
+}
+.hero-section::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 140px;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,128,0) 0%,
+        rgba(0,0,128,0.65) 60%,
+        rgba(0,0,128,1) 100%
+    );
+    pointer-events: none;
+}
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('https://via.placeholder.com/1920x1080/000080/FFFFFF?text=Hero+Background') center/cover no-repeat;
+    transform: scale(1.2);
+    z-index: -1;
+    will-change: transform;
+}
+
+/* ---------- PAGE ---------- */
+.page {
+    max-width: 1200px;
+    min-height: 100vh;
+    background: #FFFFFF;
+    margin: 0 auto 40px;
+    padding: 32px 56px 56px;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    box-shadow:
+        0 -10px 30px rgba(0,0,0,0.12),
+        0 12px 48px rgba(0,0,0,0.18);
+    display: flex;
+    flex-direction: column;
+    transition: background 0.3s, color 0.3s;
+    position: relative;
+}
+body.dark-mode .page {
+    background: #1F1F1F;
+}
+
+/* ---------- HEADER ---------- */
+.header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95em;
+    margin-bottom: 32px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #D6CFC0;
+    position: relative;
+}
+.header-bar b {
+    font-family: 'Merriweather', serif;
+    font-size: 1.2em;
+}
+.header-bar a {
+    color: inherit;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color 0.25s ease;
+}
+.header-bar a:hover { color: #FF9933; }
+
+/* ---------- HEADER OVERLAY ---------- */
+.header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    cursor: pointer;
+    background: transparent;
+    z-index: 5;
+}
+
+/* ---------- MEDIA CENTERING ---------- */
+.media-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin: 24px 0;
+}
+.media-container img,
+.media-container video {
+    width: 50%;
+    max-width: 800px;
+    min-width: 300px;
+    border-radius: 6px;
+}
+
+/* ---------- BACK BUTTON ---------- */
+.back-button {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.95em;
+}
+.back-button a {
+    text-decoration: none;
+    color: #000080;
+    font-weight: bold;
+    transition: color 0.25s ease;
+}
+.back-button a:hover {
+    color: #FF9933;
+}
+
+/* ---------- FOOTER ---------- */
+.footer {
+    margin-top: 48px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85em;
+}
+.switch {
+    position: relative;
+    width: 50px;
+    height: 24px;
+}
+.switch input { display: none; }
+.slider {
+    position: absolute;
+    inset: 0;
+    background: #ccc;
+    border-radius: 24px;
+    cursor: pointer;
+}
+.slider:before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+input:checked + .slider {
+    background: #FF9933;
+}
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .media-container img,
+    .media-container video {
+        width: 80%;
+    }
+}
+@media (max-width: 480px) {
+    .media-container img,
+    .media-container video {
+        width: 100%;
+    }
+}
+</style>
 </head>
-<body bgcolor="#ffffff" text="#000000">
 
-<h1>Berthold Leibinger Innovationspreis and Zukunftspreis</h1>
-<p><i>TRUMPF Group, ZKM | Hertz Lab, Interactive Installation — August 2023</i></p>
+<body>
 
-<center>
-  <img src="../images/berthold_leibinger.jpg" width="400" height="400" alt="Berthold Leibinger Innovationspreis">
-</center>
+<!-- HERO -->
+<section class="hero-section">
+  <div class="hero-bg"></div>
+</section>
 
-<p>
-“Berthold Leibinger Innovationspreis and Zukunftspreis” is a collaborative interactive installation
-realized by Yasha Jain, Bernd Lintermann & Paul Bethge. Created for the Leibinger Innovation Prize
-Ceremony, this project transforms the event invitation into a living generative artwork. Each invitation
-card becomes part of a collective visual experience projected in real time during the award ceremony.
-([weirdwithcode.com](https://www.weirdwithcode.com/work/doodlydo-k8afp-h2wg3-pys8p))
-</p>
+<!-- PAGE -->
+<div class="page" id="pageContainer">
 
-<h2>Artistic Concept</h2>
-<p>
-The motifs on the invitation cards were generated using AI (Stable Diffusion). Latent space interpolation
-crafted a visual dialogue between cards, establishing continuity across images. This reflects a poetic
-interpretation of quantum duality — blending wave and particle states, mirrored in the flow between artworks.
-([weirdwithcode.com](https://www.weirdwithcode.com/work/doodlydo-k8afp-h2wg3-pys8p))
-</p>
+  <!-- HEADER -->
+  <div class="header-bar" id="headerBar">
+    <b>weird with code</b>
+    <div>
+      <a href="#">Bio</a>
+      <a href="#">CV</a>
+      <a href="#">Press</a>
+      <a href="#">Contact</a>
+      <a href="#" target="_blank">Instagram</a>
+    </div>
+    <div class="header-overlay" id="headerOverlay"></div>
+  </div>
 
-<h2>Technical Write‑Up</h2>
-<p>
-The interactive visualization and real‑time system were developed using TouchDesigner.
-The barcode scanning subsystem (Python) allows each card’s unique identifier to trigger a new visual stage.
-([weirdwithcode.com](https://www.weirdwithcode.com/work/doodlydo-k8afp-h2wg3-pys8p))
-</p>
+  <!-- MAIN CONTENT -->
+  <h1>Berthold Leibinger Innovationspreis & Zukunftspreis</h1>
+  <p><strong>Interactive Installation — TRUMPF Group, ZKM | Hertz Lab, August 2023</strong><br>
+  Developed by Yasha Jain, Bernd Lintermann & Paul Bethge for the <a href="https://en.leibinger-stiftung.de/preise-und-ausschreibungen/laser-preisverleihung" target="_blank">Berthold Leibinger Innovationspreis and Zukunftspreis</a>.</p>
 
-<h2>Video Documentation</h2>
-<p>Watch the project in action on YouTube:</p>
+  <div class="media-container">
+    <img src="https://via.placeholder.com/800x450?text=Invitation+Card+Motifs" alt="Invitation Card Motifs">
+    <img src="https://via.placeholder.com/800x450?text=Collective+Motif+Projection" alt="Collective Motif Projection">
+    <video src="Leibinger.mp4" controls autoplay muted loop playsinline>
+      Your browser does not support the video tag.
+    </video>
+  </div>
 
-<center>
-  <iframe width="560" height="315"
-          src="https://www.youtube.com/embed/zk5guPhQPl4"
-          title="YouTube video player" frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-  </iframe>
-</center>
+  <h2>Artistic Concept</h2>
+  <p>The installation transforms event invitation cards into a <strong>living generative artwork</strong>. Each card is generated via AI (Stable Diffusion) with latent space interpolation, creating a visual dialogue between cards. The work poetically interprets <em>quantum duality</em>, blending wave and particle states.</p>
 
-<p><a href="../index.html">← Back to Home</a></p>
+  <h2>Interaction</h2>
+  <ul>
+    <li>Guests scan a QR code on their invitation card.</li>
+    <li>Data is relayed to the main screen; the guest’s card is highlighted and a path is traced to the next person.</li>
+    <li>The process continues, and at the end, the <strong>complete collective motif</strong> is revealed.</li>
+    <li>Each participant can see their individual contribution within the evolving generative artwork.</li>
+  </ul>
+
+  <h2>Technical Write-Up</h2>
+  <ul>
+    <li>I developed the Visualization & Interaction: TouchDesigner</li>
+    <li>QR/Barcode Scanning & Data Handling: Python</li>
+    <li>Each card’s unique identifier triggers a new visual stage on the projection. The images were made by Paul Bethge</li>
+  </ul>
+
+  <p>This project turns a simple event invitation into a participatory artwork, merging individual contributions into a collective generative experience.</p>
+
+  <!-- BACK BUTTON -->
+  <div class="back-button">
+    <a href="#">← Back</a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <small>JIYO · AUR · JEENE · DO</small>
+    <label class="switch">
+      <input type="checkbox" id="modeToggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+</div>
+
+<script>
+// DARK MODE TOGGLE
+const toggle = document.getElementById('modeToggle');
+if(localStorage.getItem('darkMode') === 'true') {
+  document.body.classList.add('dark-mode');
+  toggle.checked = true;
+}
+toggle.addEventListener('change', () => {
+  document.body.classList.toggle('dark-mode');
+  localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+});
+
+// HEADER OVERLAY CLICK SCROLLS TO TOP
+const pageContainer = document.getElementById('pageContainer');
+document.getElementById('headerOverlay').addEventListener('click', () => {
+  const pageTop = pageContainer.offsetTop;
+  window.scrollTo({ top: pageTop, behavior: 'smooth' });
+});
+
+// RESTORE SCROLL POSITION ON LOAD
+window.addEventListener('load', () => {
+  const pageTop = pageContainer.offsetTop;
+  const offset = parseFloat(localStorage.getItem('pageScrollOffset')) || 0;
+  window.scrollTo({ top: pageTop + offset, behavior: 'auto' });
+});
+
+// SAVE SCROLL POSITION
+window.addEventListener('scroll', () => {
+  const offset = window.scrollY - pageContainer.offsetTop;
+  localStorage.setItem('pageScrollOffset', offset);
+});
+</script>
 
 </body>
 </html>

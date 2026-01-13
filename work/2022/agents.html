@@ -1,21 +1,343 @@
-<!--
-TITLE: Agents
-YEAR: 2022
-IMAGE: agents.jpg
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Agents — Weirdwithcode</title>
+<meta charset="UTF-8">
+<title>Weirdwithcode — Page Title</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ---------- RESET & BODY ---------- */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    line-height: 1.65;
+    overflow-x: hidden;
+    background: #F9F7F1;
+    color: #1B1B1B;
+    position: relative;
+}
+body.dark-mode {
+    background: #1B1B1B;
+    color: #F0F0F0;
+}
+
+/* ---------- HERO ---------- */
+.hero-section {
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    background: #000080;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    z-index: -1;
+    overflow: hidden;
+}
+.hero-section::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 140px;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,128,0) 0%,
+        rgba(0,0,128,0.65) 60%,
+        rgba(0,0,128,1) 100%
+    );
+    pointer-events: none;
+}
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('https://via.placeholder.com/1920x1080/000080/FFFFFF?text=Hero+Background') center/cover no-repeat;
+    transform: scale(1.2);
+    z-index: -1;
+    will-change: transform;
+}
+
+/* ---------- PAGE ---------- */
+.page {
+    max-width: 1200px;
+    min-height: 100vh;
+    background: #FFFFFF;
+    margin: 0 auto 40px;
+    padding: 32px 56px 56px;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    box-shadow:
+        0 -10px 30px rgba(0,0,0,0.12),
+        0 12px 48px rgba(0,0,0,0.18);
+    display: flex;
+    flex-direction: column;
+    transition: background 0.3s, color 0.3s;
+    position: relative;
+}
+body.dark-mode .page {
+    background: #1F1F1F;
+}
+
+/* ---------- HEADER ---------- */
+.header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95em;
+    margin-bottom: 32px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #D6CFC0;
+    position: relative;
+}
+.header-bar b {
+    font-family: 'Merriweather', serif;
+    font-size: 1.2em;
+}
+.header-bar a {
+    color: inherit;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color 0.25s ease;
+}
+.header-bar a:hover { color: #FF9933; }
+
+/* ---------- HEADER OVERLAY ---------- */
+.header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    cursor: pointer;
+    background: transparent;
+    z-index: 5;
+}
+
+/* ---------- MEDIA CENTERING ---------- */
+.media-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin: 24px 0;
+}
+.media-container img,
+.media-container video {
+    width: 50%;
+    max-width: 800px;
+    min-width: 300px;
+    border-radius: 6px;
+}
+
+/* ---------- BOTTOM VIDEO ---------- */
+.bottom-video {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0 24px 0;
+}
+.bottom-video video {
+    width: 50%;
+    max-width: 800px;
+    min-width: 300px;
+    border-radius: 6px;
+    display: block;
+}
+
+/* ---------- BACK BUTTON ---------- */
+.back-button {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.95em;
+}
+.back-button a {
+    text-decoration: none;
+    color: #000080;
+    font-weight: bold;
+    transition: color 0.25s ease;
+}
+.back-button a:hover {
+    color: #FF9933;
+}
+
+/* ---------- FOOTER ---------- */
+.footer {
+    margin-top: 48px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85em;
+}
+.switch {
+    position: relative;
+    width: 50px;
+    height: 24px;
+}
+.switch input { display: none; }
+.slider {
+    position: absolute;
+    inset: 0;
+    background: #ccc;
+    border-radius: 24px;
+    cursor: pointer;
+}
+.slider:before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+input:checked + .slider {
+    background: #FF9933;
+}
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .media-container img,
+    .media-container video {
+        width: 80%;
+    }
+}
+@media (max-width: 480px) {
+    .media-container img,
+    .media-container video {
+        width: 100%;
+    }
+}
+</style>
 </head>
-<body bgcolor="#ffffff" text="#000000">
-<h1>Agents</h1>
-<center>
-  <img src="../images/agents.jpg" width="400" height="400" alt="Agents">
-</center>
-<p>Description of the project goes here.</p>
-<p><a href="../index.html">&larr; Back to Home</a></p>
+
+<body>
+
+<!-- HERO -->
+<section class="hero-section">
+  <div class="hero-bg"></div>
+</section>
+
+<!-- PAGE -->
+<div class="page" id="pageContainer">
+
+  <!-- HEADER -->
+  <div class="header-bar" id="headerBar">
+    <b>weird with code</b>
+    <div>
+      <a href="#">Bio</a>
+      <a href="#">CV</a>
+      <a href="#">Press</a>
+      <a href="#">Contact</a>
+      <a href="#" target="_blank">Instagram</a>
+    </div>
+    <div class="header-overlay" id="headerOverlay"></div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <h1>Agents</h1>
+  <p><strong>Audiovisual Installation at ZKM’s <a href="https://zkm.de/en/exhibition/2021/12/biomedia" target="_blank"> Biomedia Exhibition</a></strong><br>
+  Developed by Bernd Lintermann, Dan Wilcox, Ludger Brümmer & Yasha Jain.
+  </p>
+
+
+    <div class="media-container">
+    <video src="Agents.mp4" controls autoplay muted loop playsinline>
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+
+  <p><em>Agents</em> is an immersive audiovisual installation that simulates lifelike behavior using algorithmically controlled digital entities. These artificial creatures inhabit a shared virtual space where they interact not only with one another but also with visitors in real time, creating an emergent, dynamic environment that blurs the boundaries between natural behavior and artificial life.</p>
+
+  <h2>Concept</h2>
+  <p>The installation creates a living ecosystem of algorithmic “agents” each with its own sensory framework, behavioral traits, and social tendencies. Visitors are tracked via a real-time camera system and can engage with the digital creatures through spatial movement. Each agent reacts differently:</p>
+  <ul>
+    <li>Some are curious, exploring the environment and approaching visitors.</li>
+    <li>Others are evasive or shy, retreating when approached.</li>
+    <li>Some exhibit social behaviors, interacting with other agents in complex patterns.</li>
+  </ul>
+  <p>The result is a vivid choreography of autonomous behaviors that appears natural yet unmistakably artificial.</p>
+  <p><em>Agents</em> questions the nature of intelligence and life by demonstrating how complex, lifelike behaviors can emerge from simple rule-based systems. Visitors become active participants in a generative system that continuously evolves based on their presence.</p>
+  <p>Spatialized audio enhances the experience: the position of both creatures and visitors is made perceptible not just visually, but acoustically, using a multichannel sound system that places sounds in real space.</p>
+
+  <h2>Technical Write-Up</h2>
+  <h3>Interaction System</h3>
+  <p>Developed in Unity by Yasha Jain, this system responds to visitor movement, enabling seamless communication between the agents and their human counterparts.</p>
+
+  <h3>Visual Design</h3>
+  <p>Digital creatures are rendered using custom shaders and predefined behavious. Some agents have individual behavious, some have flock behavious. This gives each agent a unique visual character and creates an eco system of various creatures. </p>
+
+  <h3>Algorithmic Behavior</h3>
+  <p>Each agent operates autonomously using different behaviour models. Some agents come close to you, while some run away , some agents react in an evolutionary manner when you spend some time near them. They react dynamically to the interaction stimulii.</p>
+
+  <h3>Sound Spatialization</h3>
+  <p>A multichannel spatial audio system maps the position of agents and visitors in real space, reinforcing immersion and interaction.</p>
+
+  <h2>Context</h2>
+  <p>Exhibited as part of <strong>Biomedia</strong>, ZKM’s landmark exhibition exploring the convergence of biology, media, and artificial intelligence, <em>Agents</em> reflects the aesthetic and philosophical implications of machine-generated behavior and artificial life forms.</p>
+  <p>With its layered sensory interactivity and generative system, <em>Agents</em> exemplifies a future where algorithmic systems do more than simulate life—they begin to behave in ways that evoke it.</p>
+
+
+
+  <!-- BACK BUTTON -->
+  <div class="back-button">
+    <a href="#">← Back</a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <small>JIYO · AUR · JEENE · DO</small>
+    <label class="switch">
+      <input type="checkbox" id="modeToggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+</div>
+
+<script>
+// DARK MODE TOGGLE
+const toggle = document.getElementById('modeToggle');
+if(localStorage.getItem('darkMode') === 'true') {
+  document.body.classList.add('dark-mode');
+  toggle.checked = true;
+}
+toggle.addEventListener('change', () => {
+  document.body.classList.toggle('dark-mode');
+  localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+});
+
+// HEADER OVERLAY CLICK SCROLLS TO TOP
+const pageContainer = document.getElementById('pageContainer');
+document.getElementById('headerOverlay').addEventListener('click', () => {
+  const pageTop = pageContainer.offsetTop;
+  window.scrollTo({ top: pageTop, behavior: 'smooth' });
+});
+
+// RESTORE SCROLL POSITION ON LOAD
+window.addEventListener('load', () => {
+  const pageTop = pageContainer.offsetTop;
+  const offset = parseFloat(localStorage.getItem('pageScrollOffset')) || 0;
+  window.scrollTo({ top: pageTop + offset, behavior: 'auto' });
+});
+
+// SAVE SCROLL POSITION
+window.addEventListener('scroll', () => {
+  const offset = window.scrollY - pageContainer.offsetTop;
+  localStorage.setItem('pageScrollOffset', offset);
+});
+</script>
+
 </body>
 </html>
