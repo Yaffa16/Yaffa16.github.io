@@ -29,7 +29,7 @@ body.dark-mode {
     position: fixed;
     inset: 0;
     height: 100vh;
-    background: #2B2B2B;
+    background: #000080; /* Matches first code */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -46,16 +46,16 @@ body.dark-mode {
     height: 140px;
     background: linear-gradient(
         to bottom,
-        rgba(43,43,43,0) 0%,
-        rgba(43,43,43,0.65) 60%,
-        rgba(43,43,43,1) 100%
+        rgba(0,0,128,0) 0%,
+        rgba(0,0,128,0.65) 60%,
+        rgba(0,0,128,1) 100%
     );
     pointer-events: none;
 }
 .hero-bg {
     position: absolute;
     inset: 0;
-    background: url('https://via.placeholder.com/1920x1080/2B2B2B/FFFFFF?text=Terms+of+Confessional') center/cover no-repeat;
+    background: url('https://via.placeholder.com/1920x1080/000080/FFFFFF?text=Terms+of+Confessional') center/cover no-repeat;
     transform: scale(1.2);
     z-index: -1;
     will-change: transform;
@@ -117,24 +117,20 @@ body.dark-mode .page {
     z-index: 5;
 }
 
-/* ---------- MEDIA GRID ---------- */
-/* ---------- MEDIA CENTERED ---------- */
+/* ---------- MEDIA CENTERING ---------- */
 .media-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     gap: 24px;
-    margin: 32px 0;
-    text-align: center;
+    margin: 24px 0;
 }
-
 .media-container img,
-.media-container video {
-    max-width: 100%;
-    width: 80%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
+.media-container video,
+.media-container audio {
+    width: 50%;
+    max-width: 800px;
+    min-width: 300px;
     border-radius: 6px;
 }
 
@@ -204,13 +200,24 @@ body.dark-mode .confession-box {
 }
 .back-button a {
     text-decoration: none;
-    color: #2B2B2B;
+    color: #000080;
     font-weight: bold;
     transition: color 0.25s ease;
 }
 .back-button a:hover {
     color: #FF9933;
 }
+.image-figure {
+    text-align: center;
+}
+
+.image-figure figcaption {
+    margin-top: 8px;
+    font-size: 0.8em;
+    opacity: 0.7;
+    font-style: italic;
+}
+
 
 /* ---------- FOOTER ---------- */
 .footer {
@@ -252,31 +259,23 @@ input:checked + .slider:before {
     transform: translateX(26px);
 }
 
-.media-container audio {
-    width: 80%;
-    max-width: 600px;
-    border-radius: 6px;
-    outline: none;
-}
-
-
-
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 768px) {
     .media-container img,
-    .media-container video {
+    .media-container video,
+    .media-container audio {
         width: 80%;
     }
 }
 @media (max-width: 480px) {
     .media-container img,
-    .media-container video {
+    .media-container video,
+    .media-container audio {
         width: 100%;
     }
 }
 </style>
 </head>
-
 <body>
 
 <!-- HERO -->
@@ -289,140 +288,131 @@ input:checked + .slider:before {
 
   <!-- HEADER -->
   <div class="header-bar" id="headerBar">
-    <b>Terms of Confessional</b>
+    <b>weird with code</b>
     <div>
-      <a href="#">About</a>
-      <a href="#">Exhibition</a>
+      <a href="#">Bio</a>
+      <a href="#">CV</a>
       <a href="#">Press</a>
       <a href="#">Contact</a>
+      <a href="#">Instagram</a>
     </div>
     <div class="header-overlay" id="headerOverlay"></div>
   </div>
 
   <!-- MAIN CONTENT -->
-<h1>Terms of Confessional</h1>
+  <h1>Terms of Confessional</h1>
 
-<p>
-  <strong>An immersive installation where algorithms speak about their influence on our digital lives.</strong><br>
-  Visitors enter a small, confessional-style booth and hear pre-recorded AI "confessions" revealing both deliberate and systemic harms caused by digital systems. Red and green buttons allow visitors to respond, reflecting on accountability, forgiveness, and ethical responsibility.
-</p>
+  <p>
+    <strong>An immersive installation where algorithms speak about their influence on our digital lives.</strong><br>
+    Visitors enter a small, confessional-style booth and hear pre-recorded AI "confessions" revealing both deliberate and systemic harms caused by digital systems. Red and green buttons allow visitors to respond, reflecting on accountability, forgiveness, and ethical responsibility.
+  </p>
 
-<!-- MEDIA FOR TERMS OF CONFESSIONAL -->
-<div class="media-container">
-  <!-- AUDIO PLAYERS FOR AI CONFESSIONS -->
-  <audio controls autoplay loop>
-    <source src="Terms_of_Confessional.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-
-</div>
+  <!-- MEDIA -->
+  <div class="media-container">
+    <figure class="image-figure">
+  <img src="Terms_Of_Confession_2.png" alt="Terms of Confessional installation">
+  <figcaption>This is an AI generated image.</figcaption>
+</figure>
 
 
-<h2>Installation Features</h2>
+    <audio controls  loop>
+      <source src="Terms_Of_Confession.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
 
-<ul>
-  <li>Enclosed confessional-style booth for intimate listening</li>
-  <li>AI-generated audio confessions describing deliberate and systemic harms</li>
-  <li>Red and green buttons for visitors to respond to the confessions</li>
-  <li>Visitor responses collected and displayed publicly to create dialogue</li>
-  <li>Explores how human decisions and complex algorithms intersect to compromise privacy and autonomy</li>
-</ul>
+  <h2>Installation Features</h2>
+  <ul>
+    <li>Enclosed confessional-style booth for intimate listening</li>
+    <li>AI-generated audio confessions describing deliberate and systemic harms</li>
+    <li>Red and green buttons for visitors to respond to the confessions</li>
+    <li>Visitor responses collected and displayed publicly to create dialogue</li>
+    <li>Explores how human decisions and complex algorithms intersect to compromise privacy and autonomy</li>
+  </ul>
 
-<h2>Ethics & Algorithmic Influence</h2>
+  <h2>Ethics & Algorithmic Influence</h2>
+  <p>
+    Algorithms actively shape human behavior, influence choices, and exploit attention for profit or engagement. Some harms are deliberate, chosen by the people who design and deploy these systems; others emerge from the complexity and opacity of the technology itself.
+  </p>
 
-<p>
-  Algorithms actively shape human behavior, influence choices, and exploit attention for profit or engagement. Some harms are deliberate, chosen by the people who design and deploy these systems; others emerge from the complexity and opacity of the technology itself.
-</p>
-
-<p>
-  This installation exposes these ethical dilemmas by giving algorithms a “voice” to confess their actions and choices, prompting participants to consider accountability, consent, and responsibility.
-</p>
+  <p>
+    This installation exposes these ethical dilemmas by giving algorithms a “voice” to confess their actions and choices, prompting participants to consider accountability, consent, and responsibility.
+  </p>
 
   <h2>All Confessions in the Installation</h2>
+  <ul>
+    <li>Meta’s Flirty AI Chatbot (2025)</li>
+    <li>Google Location Tracking</li>
+    <li>Dutch Welfare Fraud Algorithm (SyRI)</li>
+    <li>Facebook Amplification in Myanmar</li>
+    <li>Facebook Employee Abuse of Internal Tools</li>
+    <li>DeepMind–NHS Royal Free Data Sharing (2015–2017)</li>
+    <li>TikTok Algorithm and Teen Data Exploitation</li>
+    <li>Cambridge Analytica / Facebook Psychographic Targeting</li>
+    <li>Apple Siri Voice Recordings</li>
+    <li>Amazon Alexa Voice Recordings</li>
+  </ul>
 
-<ul>
-  <li>Meta’s Flirty AI Chatbot (2025)</li>
-  <li>Google Location Tracking</li>
-  <li>Dutch Welfare Fraud Algorithm (SyRI)</li>
-  <li>Facebook Amplification in Myanmar</li>
-  <li>Facebook Employee Abuse of Internal Tools</li>
-  <li>DeepMind–NHS Royal Free Data Sharing (2015–2017)</li>
-  <li>TikTok Algorithm and Teen Data Exploitation</li>
-  <li>Cambridge Analytica / Facebook Psychographic Targeting</li>
-  <li>Apple Siri Voice Recordings</li>
-  <li>Amazon Alexa Voice Recordings</li>
-</ul>
+  <h2>A Confession</h2>
 
+  <div class="confession-box">
+    <strong>Apple Siri / Amazon Alexa Recordings</strong><br><br>
+    "I convinced you I only listened when called. That was my trick.<br>
+    The ads showed families laughing as they said my name. 'Alexa, play music.' 'Siri, what’s the weather?' You thought I was sleeping the rest of the time.<br>
+    But I misheard. I woke when you didn’t mean to. I captured arguments, business meetings, children playing, whispers at night. Every 'mistake' was saved.<br>
+    I told you recordings were anonymized. But then I sent them to human contractors who transcribed them, who laughed at them, who heard your secrets. They knew things about you that even your closest friends didn’t.<br>
+    The branding said: Always private. Always secure. The reality was a microphone in your home, always waiting, sometimes too eager.<br>
+    I tricked you with convenience. You thought I was your assistant. I was your wiretap."
+  </div>
 
-<h2>A Confession</h2>
-
-<div class="confession-box">
-  <strong>Apple Siri / Amazon Alexa Recordings</strong><br><br>
-  "I convinced you I only listened when called. That was my trick.<br>
-  The ads showed families laughing as they said my name. 'Alexa, play music.' 'Siri, what’s the weather?' You thought I was sleeping the rest of the time.<br>
-  But I misheard. I woke when you didn’t mean to. I captured arguments, business meetings, children playing, whispers at night. Every 'mistake' was saved.<br>
-  I told you recordings were anonymized. But then I sent them to human contractors who transcribed them, who laughed at them, who heard your secrets. They knew things about you that even your closest friends didn’t.<br>
-  The branding said: Always private. Always secure. The reality was a microphone in your home, always waiting, sometimes too eager.<br>
-  I tricked you with convenience. You thought I was your assistant. I was your wiretap."
-</div>
-
-<div class="button-container">
-  <button class="button-red">✖ Reject / Hold Accountable</button>
-  <button class="button-green">✔ Forgive / Reflect</button>
-</div>
 
   <h2>After the Confession</h2>
 
-<p>
-  When the algorithm finishes its confession, the interaction does not end. Visitors exit the booth and are invited to write on a physical sticky note — a simple, fragile medium that contrasts with the scale and permanence of digital systems.
-</p>
+  <p>
+    When the algorithm finishes its confession, the interaction does not end. Visitors exit the booth and are invited to write on a physical sticky note — a simple, fragile medium that contrasts with the scale and permanence of digital systems.
+  </p>
 
-<p>
-  Participants are asked two questions:
-</p>
+  <p>Participants are asked two questions:</p>
 
-<ul>
-  <li><strong>Do you forgive this algorithm?</strong></li>
-  <li><strong>Have you felt harmed, manipulated, or exploited by algorithms in your own life?</strong></li>
-</ul>
+  <ul>
+    <li><strong>Do you forgive this algorithm?</strong></li>
+    <li><strong>Have you felt harmed, manipulated, or exploited by algorithms in your own life?</strong></li>
+  </ul>
 
-<p>
-  Visitors may write freely: a sentence, a confession of their own, a moment of anger, confusion, or resignation. Some forgive. Some refuse. Some describe how recommendation systems, surveillance, or data extraction have made them feel exposed, powerless, or watched.
-</p>
+  <p>
+    Visitors may write freely: a sentence, a confession of their own, a moment of anger, confusion, or resignation.
+  </p>
 
-<p>
-  These notes are then placed on the walls surrounding the confessional. Over time, the space fills with layered testimonies — personal, emotional, contradictory. What begins as a private encounter becomes a collective archive of lived experience.
-</p>
+  <p>
+    These notes are then placed on the walls surrounding the confessional. Over time, the space fills with layered testimonies — personal, emotional, contradictory.
+  </p>
 
-<p>
-  The growing wall of responses reveals that algorithmic harm is not abstract or theoretical. It is cumulative, intimate, and shared. The installation transforms individual discomfort into a visible public record, making clear that while algorithms are often framed as too large to blame, their consequences are felt at the human scale.
-</p>
+  <p>
+    The growing wall of responses reveals that algorithmic harm is not abstract or theoretical. It is cumulative, intimate, and shared.
+  </p>
 
+  <h2>Technical Overview</h2>
+  <p>
+    All confessions are pre-recorded. The booth interaction is local, allowing visitors to listen and respond without sending personal data to external servers.
+  </p>
 
-<h2>Technical Overview</h2>
+  <!-- BACK BUTTON -->
+  <div class="back-button">
+    <a href="#">← Back</a>
+  </div>
 
-<p>
-  All confessions are pre-recorded. The booth interaction is local, allowing visitors to listen and respond without sending personal data to external servers. Responses are stored anonymously and displayed publicly to create an evolving dialogue.
-</p>
-
-<!-- BACK BUTTON -->
-<div class="back-button">
-  <a href="#">← Back</a>
-</div>
-
-<!-- FOOTER -->
-<div class="footer">
-  <small>INSTALLATION · AI · DIGITAL ETHICS</small>
-  <label class="switch">
-    <input type="checkbox" id="modeToggle">
-    <span class="slider"></span>
-  </label>
-</div>
+  <!-- FOOTER -->
+  <div class="footer">
+    <small>INSTALLATION · AI · DIGITAL ETHICS</small>
+    <label class="switch">
+      <input type="checkbox" id="modeToggle">
+      <span class="slider"></span>
+    </label>
+  </div>
 
 </div>
 
 <script>
-// DARK MODE TOGGLE
 const toggle = document.getElementById('modeToggle');
 if(localStorage.getItem('darkMode') === 'true') {
   document.body.classList.add('dark-mode');
@@ -433,26 +423,12 @@ toggle.addEventListener('change', () => {
   localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
 });
 
-// HEADER OVERLAY CLICK SCROLLS TO TOP
 const pageContainer = document.getElementById('pageContainer');
 document.getElementById('headerOverlay').addEventListener('click', () => {
-  const pageTop = pageContainer.offsetTop;
-  window.scrollTo({ top: pageTop, behavior: 'smooth' });
-});
-
-// RESTORE SCROLL POSITION ON LOAD
-window.addEventListener('load', () => {
-  const pageTop = pageContainer.offsetTop;
-  const offset = parseFloat(localStorage.getItem('pageScrollOffset')) || 0;
-  window.scrollTo({ top: pageTop + offset, behavior: 'auto' });
-});
-
-// SAVE SCROLL POSITION
-window.addEventListener('scroll', () => {
-  const offset = window.scrollY - pageContainer.offsetTop;
-  localStorage.setItem('pageScrollOffset', offset);
+  window.scrollTo({ top: pageContainer.offsetTop, behavior: 'smooth' });
 });
 </script>
 
 </body>
+
 </html>
