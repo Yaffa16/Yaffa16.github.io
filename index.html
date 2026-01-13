@@ -209,15 +209,17 @@ body.dark-mode .page {
 }
 
 /* ---------- UPDATED IMAGE STYLE TO PREVENT CROPPING ---------- */
+/* Make all artwork images the same size */
 .artwork-link img {
-    width: 100%;           /* scale to column width */
-    height: auto;          /* maintain aspect ratio */
-    object-fit: contain;   /* show full artwork, no cropping */
+    width: 180px;       /* fixed width */
+    height: 180px;      /* fixed height */
+    object-fit: cover;  /* crop images to fill the box */
     border-radius: 6px;
     transition: transform 0.25s, box-shadow 0.25s;
 }
+
 .artwork-link:hover img {
-    transform: scale(1.02);
+    transform: scale(1.15);
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
@@ -362,7 +364,7 @@ input:checked + .slider:before {
       <div id="year-2023" class="year-section">
         <a href="work/2023/isle_of_coding.html" class="artwork-link">
           <img src="work/2023/isle_of_coding.jpg" alt="Isle Of Coding 2023">
-          <span class="artwork-caption"><span class="artwork-title">Isle Of Coding</span><span class="artwork-year">2023</span></span>
+          <span class="artwork-caption"><span class="artwork-title">Live Coding</span><span class="artwork-year">2023</span></span>
         </a>
         <a href="work/2023/if_you_think_you_are_sleeping.html" class="artwork-link">
           <img src="work/2023/if_you_think_you_are_sleeping.jpg" alt="If You Think You Are Sleeping 2023">
