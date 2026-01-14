@@ -138,6 +138,16 @@ body.dark-mode .page {
 }
 .header-bar a:hover { color: #FF9933; }
 
+#headerSnap {
+  cursor: pointer;
+}
+
+#headerSnap:hover {
+  color: #FF9933; /* optional but recommended */
+}
+
+
+
 /* ---------- HEADER OVERLAY ---------- */
 .header-overlay {
     position: absolute;
@@ -323,16 +333,19 @@ input:checked + .slider:before {
 <!-- PAGE -->
 <div class="page" id="pageContainer">
 <div class="header-bar">
-<b>weird with code</b>
-<div>
-<a href="bio.html">Bio</a>
-<a href="cv.html">CV</a>
+  <b id="headerSnap">weird with code</b>
+  <div>
+    <a href="bio.html">Bio</a>
+    <a href="cv.html">CV</a>
     <a href="Works.html">Works</a>
-<a href="contact.html">Contact</a>
-<a href="https://www.instagram.com/" target="_blank">Instagram</a>
+    <a href="contact.html">Contact</a>
+    <a href="https://www.instagram.com/yaffa16/" target="_blank" rel="noopener noreferrer">
+  Instagram
+</a>
+
+  </div>
 </div>
-<div class="header-overlay" id="headerOverlay"></div>
-</div>
+
 <div class="works-layout">
 <!-- LEFT: ALL PROJECTS LIST BY YEAR -->
 <div class="project-list">
@@ -483,11 +496,15 @@ if (modeToggle) modeToggle.addEventListener('change', () => {
 });
 
 /* ---------- HEADER CLICK → SNAP ---------- */
+const headerSnap = document.getElementById('headerSnap');
 const pageContainer = document.getElementById('pageContainer');
-const headerOverlay = document.getElementById('headerOverlay');
-if (headerOverlay && pageContainer) {
-  headerOverlay.addEventListener('click', () => {
-    window.scrollTo({ top: pageContainer.offsetTop, behavior: 'smooth' });
+
+if (headerSnap && pageContainer) {
+  headerSnap.addEventListener('click', () => {
+    window.scrollTo({
+      top: pageContainer.offsetTop,
+      behavior: 'smooth'
+    });
   });
 }
 

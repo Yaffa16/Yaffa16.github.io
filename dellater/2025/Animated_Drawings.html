@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Weirdwithcode — Doodly Do</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    line-height: 1.65;
+    background: #F9F7F1;
+    color: #1B1B1B;
+}
+body.dark-mode {
+    background: #1B1B1B;
+    color: #F0F0F0;
+}
+
+/* HERO */
+.hero-section {
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    background: #000080;
+    z-index: -1;
+}
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('https://via.placeholder.com/1920x1080/1C1C1C/FFFFFF?text=Doodly+Do') center/cover no-repeat;
+    transform: scale(1.2);
+}
+
+/* PAGE */
+.page {
+    max-width: 1200px;
+    background: #FFFFFF;
+    margin: 0 auto 40px;
+    padding: 32px 56px 56px;
+    border-radius: 14px 14px 0 0;
+    box-shadow:
+        0 -10px 30px rgba(0,0,0,0.12),
+        0 12px 48px rgba(0,0,0,0.18);
+}
+body.dark-mode .page {
+    background: #1F1F1F;
+}
+
+/* HEADER */
+.header-bar {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #D6CFC0;
+    padding-bottom: 8px;
+    margin-bottom: 32px;
+}
+.header-bar b {
+    font-family: 'Merriweather', serif;
+    font-size: 1.2em;
+}
+.header-bar a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: inherit;
+}
+.header-bar a:hover {
+    color: #FF9933;
+}
+
+/* MEDIA GRID */
+.media-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin: 32px 0;
+    align-items: start;
+}
+
+.media-container img,
+.media-container video {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    display: block;
+}
+
+/* FOOTER */
+.footer {
+    margin-top: 48px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85em;
+}
+.switch {
+    width: 50px;
+    height: 24px;
+    position: relative;
+}
+.switch input { display: none; }
+.slider {
+    position: absolute;
+    inset: 0;
+    background: #ccc;
+    border-radius: 24px;
+}
+.slider:before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    left: 3px;
+    bottom: 3px;
+    transition: transform 0.3s;
+}
+input:checked + .slider {
+    background: #FF9933;
+}
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero-section">
+  <div class="hero-bg"></div>
+</section>
+
+<div class="page">
+
+  <div class="header-bar">
+    <b>weird with code</b>
+    <div>
+
+
+
+      <a href="../../index.html">Works</a>
+
+
+
+      <a href="../../bio.html">Bio</a>
+
+
+
+      <a href="../../contact.html">Contact</a>
+
+
+
+      <a href="https://www.instagram.com/yaffa16/" target="_blank" rel="noopener noreferrer">
+  Instagram</a>
+</div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <h1>Doodly Do</h1>
+  <p><em>Technical Write-Up</em></p>
+
+  <p>
+    <strong>Doodly Do</strong> is an interactive installation that brings visitor-submitted
+    hand-drawn characters to life through real-time animation. Participants create simple
+    drawings, which are then captured, processed, and animated using machine learning techniques.
+    The project playfully bridges the physical and digital worlds, allowing static doodles
+    to transform into expressive, moving characters.
+  </p>
+
+  <p>
+    This installation was presented at the opening of <em>The Petting Zoo</em>.
+  </p>
+
+
+  <div class="media-container">
+  <video src="ad_1.mp4" controls autoplay muted loop playsinline></video>
+  <video src="ad_2.mp4" controls autoplay muted loop playsinline></video>
+</div>
+
+
+  <p>
+    At the core of the system is Meta’s open-source
+    <em>AnimatedDrawings</em> repository, which provides automated tools for pose estimation,
+    skeleton extraction, and animation of 2D drawings. The pipeline has been extended with
+    custom classification logic, animal-specific rig conversion, OSC-based system communication,
+    and Unity-based rendering to support a live, public-facing interactive experience.
+  </p>
+
+  <h2>System Overview</h2>
+
+  <p>
+    The installation operates as a modular, locally deployed pipeline coordinated through
+    OSC messaging. User drawings are captured via camera, analyzed by machine learning models,
+    animated using the AnimatedDrawings framework, and rendered in a custom Unity environment.
+  </p>
+
+
+  <p>
+    All processing runs locally on an NVIDIA GTX 1080 GPU, achieving an average response time
+    of 8–10 seconds from drawing submission to on-screen animation.
+  </p>
+
+  <h2>Runtime Animation Pipeline</h2>
+
+      <div class="media-container">
+  <img src="Workflow.png" alt="Electronic Petting Zoo Installation">
+</div>
+
+  <p><strong>Camera Capture</strong><br>
+    The system activates a camera to capture a screenshot of the visitor’s drawing.
+  </p>
+
+  <p><strong>New Image Signal (OSC)</strong><br>
+    Once the image is captured, an OSC message is sent to indicate that a new image is available
+    for processing.
+  </p>
+
+  <p><strong>Image Classification</strong><br>
+    A locally trained machine learning classification model analyzes the drawing to determine
+    whether the character is humanoid or animal.
+  </p>
+
+  <p><strong>Humanoid Configuration Generation</strong><br>
+    Using Meta’s AnimatedDrawings pipeline, the system performs limb and torso detection,
+    image segmentation, and pose estimation. This process generates a standard humanoid
+    configuration file, including skeletal joint positions and segmentation masks.
+  </p>
+
+  <p><strong>Animal Conversion (Conditional)</strong><br>
+    If the drawing is classified as animal, the humanoid configuration is programmatically
+    adapted into a four-legged skeletal structure. If the drawing is humanoid, this step is skipped.
+  </p>
+
+  <p><strong>Animation Rendering</strong><br>
+    Characters are animated using predefined motion patterns. Humanoids use one of several
+    motion variations, while animals use motion adapted from the converted quadruped rig.
+    The animation output is initially rendered as a GIF.
+  </p>
+
+  <p><strong>Format Conversion</strong><br>
+    The GIF animation is converted into a Unity-compatible WebM video format to ensure
+    efficient playback and performance.
+  </p>
+
+  <p><strong>File Storage & Unity Update</strong><br>
+    The WebM file is saved to Unity’s persistent data path. A final OSC message notifies Unity
+    that a new animation file is ready, triggering a brief visual transition before display.
+  </p>
+
+  <h2>Performance</h2>
+
+  <p>
+    <strong>Hardware:</strong> NVIDIA GTX 1080<br>
+    <strong>Average latency:</strong> 8–10 seconds<br>
+    <strong>Primary bottlenecks:</strong> Pose estimation and animation rendering<br>
+    <strong>Processing mode:</strong> Fully local
+  </p>
+
+  <h2>Technical Stack</h2>
+
+  <p>
+    <strong>Machine Learning & Animation:</strong> Meta’s AnimatedDrawings<br>
+    <strong>Custom ML Models:</strong> Local image classification (humanoid vs. animal)<br>
+    <strong>Communication:</strong> OSC (Open Sound Control)<br>
+    <strong>Rendering Engine:</strong> Unity<br>
+    <strong>Media Formats:</strong> GIF (intermediate), WebM (final)
+  </p>
+
+  <h2>Conceptual Context</h2>
+
+  <p>
+    By allowing visitors to see their drawings immediately animated, <em>Doodly Do</em>
+    emphasizes authorship, play, and transformation. The installation positions machine
+    learning not as invisible automation, but as an active collaborator — translating
+    imperfect, playful human marks into motion and personality.
+  </p>
+
+    <p>
+   This is the previous version of the installation from Kamuna 2023 August 15 - 2023.
+  </p>
+
+
+
+    <div class="media-container">
+  <video src="ad_old.mp4" controls autoplay muted loop playsinline></video>
+</div>
+
+  <div class="footer">
+    <small>JIYO · AUR · JEENE · DO</small>
+    <label class="switch">
+      <input type="checkbox" id="modeToggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+</div>
+
+<script>
+const toggle = document.getElementById('modeToggle');
+toggle.addEventListener('change', () => {
+  document.body.classList.toggle('dark-mode');
+});
+</script>
+
+</body>
+</html>
