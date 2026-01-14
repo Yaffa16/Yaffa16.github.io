@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -215,40 +216,36 @@ input:checked + .slider:before { transform: translateX(26px); }
 <body>
 <!-- HERO -->
 <section class="hero-section">
-  <div class="hero-bg"></div>
-  <div class="hero-text">
-    <h1>Yasha Jain</h1>
-    <p class="subheading">new media artist • weirdwithcode</p>
-    <p class="hero-description">
+<div class="hero-bg"></div>
+<div class="hero-text">
+<h1>Yasha Jain</h1>
+<p class="subheading">new media artist • weirdwithcode</p>
+<p class="hero-description">
       I blend code, curiosity, and computation to create interactive and generative art.
     </p>
-    <div class="scroll-cue">↓</div>
-  </div>
+<div class="scroll-cue">↓</div>
+</div>
 </section>
-
 <!-- PAGE -->
 <div class="page" id="pageContainer">
-
-  <!-- Animated Cat -->
-  <pre id="animatedCat"></pre>
-
-  <div class="header-bar">
-    <b id="headerSnap">weird with code</b>
-    <div>
-      <a href="index.html">Works</a>
-      <a href="bio.html">Bio</a>
-      <a href="contact.html">Contact</a>
-      <a href="https://www.instagram.com/yaffa16/" target="_blank" rel="noopener noreferrer">Instagram</a>
-    </div>
-  </div>
-
-  <div class="works-layout">
-    <div class="project-list">
-      <h3>List of Works</h3>
-      <ul id="projectList"></ul>
-    </div>
-    <div class="project-divider"></div>
-    <div class="projects-grid" id="projectsGrid">
+<!-- Animated Cat -->
+<pre id="animatedCat"></pre>
+<div class="header-bar">
+<b id="headerSnap">weird with code</b>
+<div>
+<a href="index.html">Works</a>
+<a href="bio.html">Bio</a>
+<a href="contact.html">Contact</a>
+<a href="https://www.instagram.com/yaffa16/" rel="noopener noreferrer" target="_blank">Instagram</a>
+</div>
+</div>
+<div class="works-layout">
+<div class="project-list">
+<h3>List of Works</h3>
+<ul id="projectList"></ul>
+</div>
+<div class="project-divider"></div>
+<div class="projects-grid" id="projectsGrid">
 <div class="year-section" id="year-2025">
 <a class="artwork-link" href="work/2025/Animated_Drawings.html"><img alt="Animated Drawings 2025" src="work/2025/Animated_Drawings.jpg"/><span class="artwork-caption"><span class="artwork-title">Animated Drawings</span><span class="artwork-year">2025</span></span></a>
 <a class="artwork-link" href="work/2025/Electronic_Petting_Zoo.html"><img alt="Electronic Petting Zoo 2025" src="work/2025/Electronic_Petting_Zoo.jpg"/><span class="artwork-caption"><span class="artwork-title">Electronic Petting Zoo</span><span class="artwork-year">2025</span></span></a>
@@ -286,7 +283,6 @@ input:checked + .slider:before { transform: translateX(26px); }
 <img alt="Berthold Leibinger 2023" src="work/2023/berthold_leibinger.jpg"/>
 <span class="artwork-caption"><span class="artwork-title">Berthold Leibinger</span><span class="artwork-year">2023</span></span>
 </a>
-
 </div>
 <!-- 2022 -->
 <div class="year-section" id="year-2022">
@@ -337,17 +333,15 @@ input:checked + .slider:before { transform: translateX(26px); }
 </a>
 </div>
 </div>
-  </div>
-
-  <div class="footer">
-    <small>JIYO · AUR · JEENE · DO</small>
-    <label class="switch">
-      <input id="modeToggle" type="checkbox"/>
-      <span class="slider"></span>
-    </label>
-  </div>
 </div>
-
+<div class="footer">
+<small>JIYO · AUR · JEENE · DO</small>
+<label class="switch">
+<input id="modeToggle" type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+</div>
 <script>
 // --------- PROJECT LIST ---------
 const projectList = document.getElementById('projectList');
