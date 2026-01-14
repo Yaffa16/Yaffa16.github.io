@@ -488,7 +488,7 @@ function revealVisibleArtworks() {
   });
 }
 
-// Run on scroll
+// Hero parallax on scroll
 window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
   const bg = document.querySelector('.hero-bg');
@@ -497,13 +497,9 @@ window.addEventListener('scroll', () => {
   revealVisibleArtworks();
 });
 
-// Run once on page load
-window.addEventListener('load', revealVisibleArtworks);
-
 // --------- DARK MODE TOGGLE ---------
 const modeToggle = document.getElementById('modeToggle');
 if (modeToggle) {
-  // Restore dark mode from localStorage
   if (localStorage.getItem('darkMode') === 'true') {
     document.body.classList.add('dark-mode');
     modeToggle.checked = true;
@@ -540,23 +536,23 @@ window.addEventListener('scroll', () => {
   if (scrollY < 20) hasSnapped = false;
 });
 
-// --------- SHOW WHITE PAGE AT TOP IF LINKED INTERNALLY ---------
-window.addEventListener('load', () => {
+// --------- SHOW WHITE PAGE AT TOP IF LOADED VIA WORKS BUTTON ---------
+(function() {
   if (!pageContainer) return;
+
   const urlParams = new URLSearchParams(window.location.search);
   const topParam = urlParams.get('top');
 
+  // If loaded via Works button, show page immediately at top
   if (topParam === '1') {
-    // Remove top margin to show the white page at the top
     pageContainer.style.marginTop = '0';
-
-    // Also reveal visible artworks immediately
-    revealVisibleArtworks();
+    revealVisibleArtworks(); // Reveal artworks immediately
+  } else {
+    // Default behavior: reveal artworks after page fully loads
+    window.addEventListener('load', revealVisibleArtworks);
   }
-});
+})();
 </script>
-
-
 
 </body>
 </html>
