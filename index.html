@@ -17,6 +17,7 @@ body {
     overflow-x: hidden;
     background: #F9F7F1;
     color: #1B1B1B;
+
 }
 body.dark-mode {
     background: #1B1B1B;
@@ -335,14 +336,12 @@ input:checked + .slider:before {
 <div class="header-bar">
   <b id="headerSnap">weird with code</b>
   <div>
+    <a href="index.html">Works</a>
     <a href="bio.html">Bio</a>
-    <a href="cv.html">CV</a>
-    <a href="Works.html">Works</a>
     <a href="contact.html">Contact</a>
     <a href="https://www.instagram.com/yaffa16/" target="_blank" rel="noopener noreferrer">
   Instagram
 </a>
-
   </div>
 </div>
 
@@ -456,7 +455,7 @@ input:checked + .slider:before {
 </div>
 </div>
 <script>
-/* ---------- BUILD LIST OF WORKS ---------- */
+// --------- BUILD LIST OF WORKS (LEFT PROJECT LIST) ---------
 const projectList = document.getElementById('projectList');
 document.querySelectorAll('.year-section').forEach(section => {
   const year = section.id.replace('year-', '');
@@ -478,37 +477,55 @@ document.querySelectorAll('.year-section').forEach(section => {
   });
 });
 
-/* ---------- HERO PARALLAX + ARTWORK REVEAL ---------- */
+// --------- HERO PARALLAX & ARTWORK REVEAL ---------
 const artworks = document.querySelectorAll('.artwork-link');
+
+function revealVisibleArtworks() {
+  artworks.forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+      el.classList.add('visible');
+    }
+  });
+}
+
+// Run on scroll
 window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
   const bg = document.querySelector('.hero-bg');
   if (bg) bg.style.transform = `translateY(${scrollY * 0.3}px) scale(1.2)`;
-  artworks.forEach(el => {
-    if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('visible');
-  });
+
+  revealVisibleArtworks();
 });
 
-/* ---------- DARK MODE ---------- */
+// Run once on page load
+window.addEventListener('load', revealVisibleArtworks);
+
+// --------- DARK MODE TOGGLE ---------
 const modeToggle = document.getElementById('modeToggle');
-if (modeToggle) modeToggle.addEventListener('change', () => {
-  document.body.classList.toggle('dark-mode');
-});
+if (modeToggle) {
+  // Restore dark mode from localStorage
+  if (localStorage.getItem('darkMode') === 'true') {
+    document.body.classList.add('dark-mode');
+    modeToggle.checked = true;
+  }
 
-/* ---------- HEADER CLICK → SNAP ---------- */
+  modeToggle.addEventListener('change', () => {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+  });
+}
+
+// --------- HEADER SNAP ON CLICK ---------
 const headerSnap = document.getElementById('headerSnap');
 const pageContainer = document.getElementById('pageContainer');
 
 if (headerSnap && pageContainer) {
   headerSnap.addEventListener('click', () => {
-    window.scrollTo({
-      top: pageContainer.offsetTop,
-      behavior: 'smooth'
-    });
+    pageContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 }
 
-/* ---------- AUTO SNAP ON SMALL SCROLL ---------- */
+// --------- AUTO SNAP ON SMALL SCROLL ---------
 let hasSnapped = false;
 let initialScrollIgnored = false;
 window.addEventListener('scroll', () => {
@@ -518,10 +535,28 @@ window.addEventListener('scroll', () => {
   if (!initialScrollIgnored) { initialScrollIgnored = true; return; }
   if (!hasSnapped && scrollY > 40 && scrollY < pageTop - 120) {
     hasSnapped = true;
-    window.scrollTo({ top: pageTop, behavior: 'smooth' });
+    pageContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
   if (scrollY < 20) hasSnapped = false;
 });
+
+// --------- SHOW WHITE PAGE AT TOP IF LINKED INTERNALLY ---------
+window.addEventListener('load', () => {
+  if (!pageContainer) return;
+  const urlParams = new URLSearchParams(window.location.search);
+  const topParam = urlParams.get('top');
+
+  if (topParam === '1') {
+    // Remove top margin to show the white page at the top
+    pageContainer.style.marginTop = '0';
+
+    // Also reveal visible artworks immediately
+    revealVisibleArtworks();
+  }
+});
 </script>
+
+
+
 </body>
 </html>
