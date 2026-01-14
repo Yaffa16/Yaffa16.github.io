@@ -125,4 +125,4 @@ def update_index_html(index_file):
     print("✅ index.html fully synchronized with /work")
 
 
-update_index_html("index.html")
+update_index_html("Hyperlinks/index.html")
