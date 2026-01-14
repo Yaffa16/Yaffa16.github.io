@@ -132,11 +132,19 @@ body.dark-mode .page {
 .media-container img,
 .media-container video {
     max-width: 100%;      /* responsive */
-    width: 80%;           /* scale media size */
+    width: 60%;           /* scale media size */
     aspect-ratio: 16 / 9;
     object-fit: cover;
     border-radius: 6px;
 }
+.video-description {
+    margin-top: 12px;       /* space between video and text */
+    font-size: 0.95em;      /* slightly smaller than body text */
+    color: inherit;         /* matches current light/dark mode text color */
+    text-align: center;     /* center the description under the video */
+    max-width: 80%;         /* optional: limit width to match video */
+}
+
 
 /* ---------- BOTTOM VIDEO ---------- */
 .bottom-video {
@@ -263,7 +271,11 @@ input:checked + .slider:before {
 
 <div class="media-container">
   <video src="Bring_Your_Own_Model.mp4" controls autoplay muted loop playsinline></video>
+  <p class="video-description">
+    This video demonstrates BYOM in action — training and classifying models locally on your machine, with real-time outputs sent via OSC.
+  </p>
 </div>
+
 
 <p>
   BYOM puts power back in the hands of the user. All computation happens locally — no data is sent to cloud servers or large corporations. By keeping AI training and inference on your own machine, BYOM prioritizes <strong>privacy</strong>, <strong>control</strong>, and <strong>personal empowerment</strong>.

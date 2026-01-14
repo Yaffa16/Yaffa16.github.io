@@ -94,30 +94,30 @@ body.dark-mode {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ---------- CAT ANIMATION ---------- */
+/* ---------- CAT TAIL ANIMATION ---------- */
 #animatedCat {
     position: absolute;
-    top: 0;
-    font-size: 11px;
+    top: 0;           /* place at top of page */
     transform: translateX(-50%);
     transform: translateY(-110%);
+    font-size: 11px;
     white-space: pre;
     pointer-events: none;
     text-align: center;
     width: auto;
     z-index: 10;
-    color: #FFFFFF;
+    color: #FFFFFF;/* ensure it's above page content */
 }
 .heart { color: #FF0000; }
 
 /* ---------- PAGE ---------- */
 .page {
-    position: relative; /* required for cat positioning */
+    position: relative; /* needed for cat positioning */
     max-width: 1200px;
     min-height: 1100px;
     background: #f2f2f2;
     margin: calc(110vh - 180px) auto 40px;
-    padding: 64px 56px 56px; /* extra top padding for cat */
+    padding: 64px 56px 56px; /* added extra top padding for cat */
     border-top-left-radius: 14px;
     border-top-right-radius: 14px;
     box-shadow:
@@ -156,6 +156,15 @@ body.dark-mode .page {
 #headerSnap { cursor: pointer; }
 #headerSnap:hover { color: #FF9933; }
 
+/* ---------- HEADER OVERLAY ---------- */
+.header-overlay {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    background: transparent;
+    z-index: 5;
+}
+
 /* ---------- WORKS LAYOUT ---------- */
 .works-layout {
     display: flex;
@@ -172,6 +181,8 @@ body.dark-mode .page {
 .project-list a { text-decoration: none; color: inherit; }
 .project-list a:hover { color: #FF9933; }
 .project-divider { width: 1px; background: linear-gradient(to bottom, transparent, #D6CFC0 15%, #D6CFC0 85%, transparent); }
+
+/* Right column: projects grid */
 .projects-grid { flex: 1 1 auto; }
 .year-section { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 40px; }
 .artwork-link { text-decoration: none; color: inherit; opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
@@ -190,7 +201,7 @@ body.dark-mode .page {
 input:checked + .slider { background: #FF9933; }
 input:checked + .slider:before { transform: translateX(26px); }
 
-/* ---------- RESPONSIVE ---------- */
+/* ---------- RESPONSIVE / MOBILE ---------- */
 @media (max-width: 1024px) {
   .page { padding: 24px 32px 32px; }
 }
@@ -215,21 +226,21 @@ input:checked + .slider:before { transform: translateX(26px); }
 <body>
 <!-- HERO -->
 <section class="hero-section">
-  <div class="hero-bg"></div>
-  <div class="hero-text">
-    <h1>Yasha Jain</h1>
-    <p class="subheading">new media artist • weirdwithcode</p>
-    <p class="hero-description">
+<div class="hero-bg"></div>
+<div class="hero-text">
+<h1>Yasha Jain</h1>
+<p class="subheading">new media artist • weirdwithcode</p>
+<p class="hero-description">
       I blend code, curiosity, and computation to create interactive and generative art.
-    </p>
-    <div class="scroll-cue">↓</div>
-  </div>
+</p>
+<div class="scroll-cue">↓</div>
+</div>
 </section>
 
 <!-- PAGE -->
 <div class="page" id="pageContainer">
 
-  <!-- Animated Cat -->
+  <!-- Animated Cat at TOP -->
   <pre id="animatedCat"></pre>
 
   <div class="header-bar">
@@ -238,7 +249,7 @@ input:checked + .slider:before { transform: translateX(26px); }
       <a href="index.html">Works</a>
       <a href="bio.html">Bio</a>
       <a href="contact.html">Contact</a>
-      <a href="https://www.instagram.com/yaffa16/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.instagram.com/yaffa16/" rel="noopener noreferrer" target="_blank">Instagram</a>
     </div>
   </div>
 
@@ -249,98 +260,12 @@ input:checked + .slider:before { transform: translateX(26px); }
     </div>
     <div class="project-divider"></div>
     <div class="projects-grid" id="projectsGrid">
-<div class="year-section" id="year-2025">
-<a class="artwork-link" href="work/2025/Animated_Drawings.html"><img alt="Animated Drawings 2025" src="work/2025/Animated_Drawings.jpg"/><span class="artwork-caption"><span class="artwork-title">Animated Drawings</span><span class="artwork-year">2025</span></span></a>
-<a class="artwork-link" href="work/2025/Electronic_Petting_Zoo.html"><img alt="Electronic Petting Zoo 2025" src="work/2025/Electronic_Petting_Zoo.jpg"/><span class="artwork-caption"><span class="artwork-title">Electronic Petting Zoo</span><span class="artwork-year">2025</span></span></a>
-<a class="artwork-link" href="work/2025/Bring_Your_Own_Model.html"><img alt="Bring Your Own Model 2025" src="work/2025/Bring_Your_Own_Model.jpg"/><span class="artwork-caption"><span class="artwork-title">Bring Your Own Model</span><span class="artwork-year">2025</span></span></a>
-<a class="artwork-link" href="work/2025/Terms_Of_Confession.html"><img alt="Terms Of Confession 2025" src="work/2025/Terms_Of_Confession.jpg"/><span class="artwork-caption"><span class="artwork-title">Terms Of Confession</span><span class="artwork-year">2025</span></span></a>
-<a class="artwork-link" href="work/2025/OHL_Plants.html"><img alt="Ohl Plants 2025" src="work/2025/OHL_Plants.jpg"/><span class="artwork-caption"><span class="artwork-title">Ohl Plants</span><span class="artwork-year">2025</span></span></a>
-<a class="artwork-link" href="work/2025/Kamuna.html"><img alt="Kamuna 2025" src="work/2025/Kamuna.jpg"/><span class="artwork-caption"><span class="artwork-title">Kamuna</span><span class="artwork-year">2025</span></span></a>
-<a class="artwork-link" href="work/2025/Interplanetary_Texting.html"><img alt="Interplanetary Texting 2025" src="work/2025/Interplanetary_Texting.jpg"/><span class="artwork-caption"><span class="artwork-title">Interplanetary Texting</span><span class="artwork-year">2025</span></span></a></div>
-<!-- 2024 -->
-<div class="year-section" id="year-2024">
-<a class="artwork-link" href="work/2024/voice_box.html">
-<img alt="Voice Box 2024" src="work/2024/voice_box.jpg"/>
-<span class="artwork-caption"><span class="artwork-title">Voice Box</span><span class="artwork-year">2024</span></span>
-</a>
-<a class="artwork-link" href="work/2024/Flatware_Hardware_Software_Wetware.html">
-<img alt="Flatware_Hardware_Software_Wetware  2024" src="work/2024/Flatware_Hardware_Software_Wetware.jpg"/>
-<span class="artwork-caption"><span class="artwork-title">Flatware Hardware Software Wetware</span><span class="artwork-year">2024</span></span>
-</a>
-<a class="artwork-link" href="work/2024/meme_me.html">
-<img alt="Meme Me 2024" src="work/2024/meme_me.jpg"/>
-<span class="artwork-caption"><span class="artwork-title">Meme Me</span><span class="artwork-year">2024</span></span>
-</a>
-</div>
-<!-- 2023 -->
-<div class="year-section" id="year-2023">
-<a class="artwork-link" href="work/2023/isle_of_coding.html">
-<img alt="Isle Of Coding 2023" src="work/2023/isle_of_coding.jpg"/>
-<span class="artwork-caption"><span class="artwork-title">Live Coding</span><span class="artwork-year">2023</span></span>
-</a>
-<a class="artwork-link" href="work/2023/if_you_think_you_are_sleeping.html">
-<img alt="If You Think You Are Sleeping 2023" src="work/2023/if_you_think_you_are_sleeping.jpg"/>
-<span class="artwork-caption"><span class="artwork-title">If You Think You Are Sleeping</span><span class="artwork-year">2023</span></span>
-</a>
-<a class="artwork-link" href="work/2023/berthold_leibinger.html">
-<img alt="Berthold Leibinger 2023" src="work/2023/berthold_leibinger.jpg"/>
-<span class="artwork-caption"><span class="artwork-title">Berthold Leibinger</span><span class="artwork-year">2023</span></span>
-</a>
-
-</div>
-<!-- 2022 -->
-<div class="year-section" id="year-2022">
-<a class="artwork-link" href="work/2022/taming_ai.html">
-<img alt="Taming Ai 2022" src="work/2022/taming_ai.jpg"/>
-<span class="artwork-caption"><span class="artwork-title">Taming Ai</span><span class="artwork-year">2022</span></span>
-</a>
-<a class="artwork-link" href="work/2022/agents.html">
-<img alt="Agents 2022" src="work/2022/agents.jpg"/>
-<span class="artwork-caption"><span class="artwork-title">Agents</span><span class="artwork-year">2022</span></span>
-</a>
-<a class="artwork-link" href="work/2022/botcast.html">
-<img alt="Botcast 2022" src="work/2022/botcast.jpg"/>
-<span class="artwork-caption"><span class="artwork-title">Botcast</span><span class="artwork-year">2022</span></span>
-</a>
-<a class="artwork-link" href="work/2022/berlin_stallwachter_party.html">
-<img alt="Berlin Stallwachter Party 2022" src="work/2022/berlin_stallwachter_party.jpg"/>
-<span class="artwork-caption"><span class="artwork-title">Berlin Stallwachter Party</span><span class="artwork-year">2022</span></span>
-</a>
-</div>
-<!-- 2019 -->
-<div class="year-section" id="year-2019">
-<a class="artwork-link" href="work/2019/memory_holes.html">
-<img alt="Memory Holes 2019" src="work/2019/memory_holes.jpg"/>
-<span class="artwork-caption"><span class="artwork-title">Memory Holes</span><span class="artwork-year">2019</span></span>
-</a>
-</div>
-<!-- 2017 -->
-<div class="year-section" id="year-2017">
-<a class="artwork-link" href="work/2017/bindu.html">
-<img alt="Bindu 2017" src="work/2017/bindu.jpg"/>
-<span class="artwork-caption"><span class="artwork-title">Bindu</span><span class="artwork-year">2017</span></span>
-</a>
-<a class="artwork-link" href="work/2017/start_festival.html">
-<img alt="Start Festival 2017" src="work/2017/start_festival.jpg"/>
-<span class="artwork-caption"><span class="artwork-title">Start Festival</span><span class="artwork-year">2017</span></span>
-</a>
-<a class="artwork-link" href="work/2017/prayer_room.html">
-<img alt="Prayer Room 2017" src="work/2017/prayer_room.jpg"/>
-<span class="artwork-caption"><span class="artwork-title">Prayer Room</span><span class="artwork-year">2017</span></span>
-</a>
-</div>
-<!-- 2016 -->
-<div class="year-section" id="year-2016">
-<a class="artwork-link" href="work/2016/reflections.html">
-<img alt="Reflections 2016" src="work/2016/reflections.jpg"/>
-<span class="artwork-caption"><span class="artwork-title">Reflections</span><span class="artwork-year">2016</span></span>
-</a>
-</div>
-</div>
+      <!-- Add your artwork links here -->
+    </div>
   </div>
 
   <div class="footer">
-    <small>JIYO · AUR · JEENE · DO</small>
+    <small>© 2026 Yasha Jain</small>
     <label class="switch">
       <input id="modeToggle" type="checkbox"/>
       <span class="slider"></span>
@@ -349,7 +274,7 @@ input:checked + .slider:before { transform: translateX(26px); }
 </div>
 
 <script>
-// --------- PROJECT LIST ---------
+// --------- BUILD LIST OF WORKS ---------
 const projectList = document.getElementById('projectList');
 document.querySelectorAll('.year-section').forEach(section => {
   const year = section.id.replace('year-', '');
@@ -400,7 +325,7 @@ if (modeToggle) {
   });
 }
 
-// --------- HEADER SNAP ---------
+// --------- HEADER SNAP ON CLICK ---------
 const headerSnap = document.getElementById('headerSnap');
 const pageContainer = document.getElementById('pageContainer');
 if (headerSnap && pageContainer) {
@@ -409,7 +334,7 @@ if (headerSnap && pageContainer) {
   });
 }
 
-// --------- AUTO SNAP ---------
+// --------- AUTO SNAP ON SMALL SCROLL ---------
 let hasSnapped = false;
 let initialScrollIgnored = false;
 window.addEventListener('scroll', () => {
@@ -424,7 +349,7 @@ window.addEventListener('scroll', () => {
   if (scrollY < 20) hasSnapped = false;
 });
 
-// --------- SHOW PAGE IF LOADED VIA WORKS BUTTON ---------
+// --------- SHOW WHITE PAGE AT TOP IF LOADED VIA WORKS BUTTON ---------
 (function() {
   if (!pageContainer) return;
   const urlParams = new URLSearchParams(window.location.search);
@@ -437,33 +362,42 @@ window.addEventListener('scroll', () => {
   }
 })();
 
-// --------- CAT ANIMATION ----------
-const tailFrames = ['_/', '_\\'];
+// --------- ANIMATED CAT WITH WAGGING TAIL ----------
+const tailFrames = ['_/', '_\\']; // tail moves
 let i = 0;
 function animateTail() {
-  const cat = ` /\\_/\\<span class="heart">♥</span>
+    const cat = ` /\\_/\\<span class="heart">♥</span>
 >^,^<
 / \\
   (___)${tailFrames[i]}`;
-  const catEl = document.getElementById('animatedCat');
-  if(catEl) catEl.innerHTML = cat;
-  i = (i + 1) % tailFrames.length;
+    const catEl = document.getElementById('animatedCat');
+    if(catEl) catEl.innerHTML = cat;
+    i = (i + 1) % tailFrames.length;
 }
 setInterval(animateTail, 400);
 
 const catEl = document.getElementById('animatedCat');
+
 window.addEventListener('scroll', () => {
   if (!catEl || !pageContainer) return;
+
   const scrollY = window.scrollY;
   const pageTop = pageContainer.offsetTop;
   const pageHeight = pageContainer.offsetHeight;
   const pageWidth = pageContainer.offsetWidth;
   const catWidth = catEl.offsetWidth;
+
+  // Calculate how far the white page has scrolled into view
   const pageScrollProgress = Math.min(Math.max((scrollY + window.innerHeight - pageTop) / (pageHeight + window.innerHeight), 0), 1);
-  const leftPos = pageScrollProgress * 2 * (pageWidth - catWidth);
+
+  // Map progress to horizontal position
+  const leftPos = pageScrollProgress *2* (pageWidth - catWidth);
+
   catEl.style.left = `${leftPos}px`;
-  catEl.style.transform = `translateY(-110%)`;
+  catEl.style.transform = `translateY(-110%)`; // keep it above the page
 });
+
+
 </script>
 </body>
 </html>
