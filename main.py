@@ -1,7 +1,7 @@
 import os
 from bs4 import BeautifulSoup
 
-work_folder = "work"
+work_folder = "works"
 
 def create_artwork_tag(soup, year, html_file, image_file):
     title = os.path.splitext(html_file)[0].replace("_", " ").title()
