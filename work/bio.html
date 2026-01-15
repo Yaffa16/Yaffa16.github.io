@@ -128,10 +128,12 @@ body.dark-mode .page {
 .media-container img,
 .media-container video {
     width: 50%;
-    max-width: 800px;
-    min-width: 300px;
-    border-radius: 6px;
+    max-width: 400px;
+    min-width: 200px;
+    border-radius: 6px; /* small rounded corners instead of oval */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
+
 
 /* ---------- BOTTOM VIDEO ---------- */
 .bottom-video {
@@ -232,19 +234,23 @@ input:checked + .slider:before {
 <div class="page" id="pageContainer">
 
   <!-- HEADER -->
-<div class="header-bar">
-  <b id="headerSnap">weird with code</b>
-  <div>
-    <a href="../index.html?top=1">Works</a>
-    <a href="bio.html">Bio</a>
-    <a href="contact.html">Contact</a>
-    <a href="https://www.instagram.com/yaffa16/" target="_blank" rel="noopener noreferrer">
-  Instagram
-</a>
+  <div class="header-bar">
+    <b id="headerSnap">weird with code</b>
+    <div>
+      <a href="../index.html?top=1">Works</a>
+      <a href="bio.html">Bio</a>
+      <a href="contact.html">Contact</a>
+      <a href="https://www.instagram.com/yaffa16/" target="_blank" rel="noopener noreferrer">Instagram</a>
+    </div>
   </div>
-</div>
 
   <!-- MAIN CONTENT (BIO ONLY) -->
+
+  <!-- PROFILE PHOTO -->
+  <div class="media-container">
+    <img src="../assets/Profile_Photo.jpg" alt="Yasha Jain Profile Photo">
+  </div>
+
   <h1>Yasha Jain</h1>
 
   <p>
@@ -252,33 +258,20 @@ input:checked + .slider:before {
   </p>
 
   <p>
-    Yasha Jain is a new media artist and creative technologist whose practice
-    explores the intersection of code, computation, and human experience.
-    Working under the moniker <em>weirdwithcode</em>, she uses programming as
-    both material and method.
+    Yasha Jain is a new media artist and creative technologist working under the moniker <em>weirdwithcode</em>.
+    She creates interactive installations, generative systems, and experimental interfaces that grow and change through audience participation, emphasizing process, play, and surprise.
+    Her work draws from programming, artificial intelligence, and human–computer interaction to explore how computational systems shape perception, control, and meaning in digital culture.
   </p>
 
   <p>
-    Her work spans interactive installations, generative systems, and
-    experimental interfaces that invite participation and reinterpretation.
-    Rather than producing fixed outcomes, her projects evolve through audience
-    interaction, foregrounding process, play, and emergence.
+    Yasha has exhibited in galleries, festivals, and experimental spaces around the world, using technology not just to automate, but to spark curiosity, reflection, and engagement.
+    She continues to explore the creative possibilities of code as both a material and a method.
   </p>
 
   <p>
-    Drawing from artificial intelligence, human–computer interaction, and
-    systems thinking, her work questions authorship, control, and meaning in
-    digital culture—often revealing the hidden logic behind computational
-    systems.
+    Yasha currently lives in Karlsruhe, Germany and is a part-time artist & researcher for the
+    <a href="https://zkm.de/en/hertzlab" target="_blank" rel="noopener noreferrer">ZKM | Hertzlab</a>.
   </p>
-
-  <p>
-    Yasha has exhibited work in galleries, festivals, and experimental spaces,
-    and continues to explore how technology can be used not just to automate,
-    but to provoke curiosity and reflection.
-  </p>
-
-
 
   <!-- FOOTER -->
   <div class="footer">
@@ -303,23 +296,17 @@ toggle.addEventListener('change', () => {
   localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
 });
 
-// HEADER OVERLAY CLICK SCROLLS TO TOP
-const pageContainer = document.getElementById('pageContainer');
-document.getElementById('headerOverlay').addEventListener('click', () => {
-  const pageTop = pageContainer.offsetTop;
-  window.scrollTo({ top: pageTop, behavior: 'smooth' });
-});
-
 // RESTORE SCROLL POSITION ON LOAD
 window.addEventListener('load', () => {
-  const pageTop = pageContainer.offsetTop;
+  const pageTop = document.getElementById('pageContainer').offsetTop;
   const offset = parseFloat(localStorage.getItem('pageScrollOffset')) || 0;
   window.scrollTo({ top: pageTop + offset, behavior: 'auto' });
 });
 
 // SAVE SCROLL POSITION
 window.addEventListener('scroll', () => {
-  const offset = window.scrollY - pageContainer.offsetTop;
+  const pageTop = document.getElementById('pageContainer').offsetTop;
+  const offset = window.scrollY - pageTop;
   localStorage.setItem('pageScrollOffset', offset);
 });
 </script>
