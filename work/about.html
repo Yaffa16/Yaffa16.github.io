@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bio — Weird With Code</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;cursor:none;background:#ffffff}
+:root{
+  --green:#39ff14;--bg:#bdbdbd;--bg2:#b0b0b0;--bg3:#a8a8a8;
+  --ink:#1a1a1a;--ink2:#3a3a3a;--ink3:#6a6a6a;
+  --line:rgba(0,0,0,.12);--line2:rgba(0,0,0,.07);
+}
+
+#cursor{
+  position:fixed;pointer-events:none;z-index:9999;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 6px var(--green),0 0 14px var(--green);
+  transform:translate(-50%,-50%);
+  transition:width .15s,height .15s;
+}
+#cursor.big{width:20px;height:20px;background:transparent;border:1.5px solid var(--green);box-shadow:none}
+
+#page-bio{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+
+.site-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 44px;border-bottom:1px solid var(--line);
+  background:var(--bg);flex-shrink:0;z-index:50;
+}
+.site-header-name,.site-header-nav a{
+  font-family:'Barlow Condensed',sans-serif;color:#fff;
+  cursor:pointer;transition:color .2s,filter .2s;text-decoration:none;
+}
+.site-header-name{font-weight:700;font-size:20px;letter-spacing:.06em;text-transform:uppercase}
+.site-header-nav{
+  font-weight:300;font-size:16px;letter-spacing:.14em;
+  text-transform:uppercase;display:flex;gap:32px;
+}
+.site-header-nav a.active{color:var(--green)}
+.site-header-name:hover,.site-header-nav a:hover{color:var(--green);filter:drop-shadow(0 0 6px var(--green))}
+
+.bio-scroll{
+  flex:1 1 0;overflow-y:auto;overflow-x:hidden;
+  background:#fff;
+}
+.bio-scroll::-webkit-scrollbar{width:2px}
+.bio-scroll::-webkit-scrollbar-thumb{background:var(--bg3)}
+
+.bio-title-bar{padding:40px 44px 32px;border-bottom:1px solid var(--line)}
+.bio-title-bar h1{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;
+  font-size:clamp(44px,7vw,96px);letter-spacing:-.03em;
+  color:var(--ink);line-height:.88;text-transform:uppercase;
+}
+
+.bio-content-row{
+  display:flex;align-items:flex-start;
+  padding:40px 44px;gap:52px;
+  max-width:960px;
+}
+
+.bio-photo-col{flex-shrink:0;width:220px}
+.bio-photo-wrap{
+  width:220px;aspect-ratio:3/4;overflow:hidden;
+  background:var(--bg3);position:relative;
+}
+.bio-photo-wrap img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  filter:contrast(1.04);
+  transition:transform .5s cubic-bezier(.16,1,.3,1);
+}
+.bio-photo-wrap:hover img{transform:scale(1.04)}
+.bio-photo-label{
+  font-family:'Barlow Condensed',sans-serif;font-weight:300;
+  font-size:10px;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--ink3);margin-top:10px;
+}
+
+.bio-text-col{flex:1 1 0;min-width:0}
+
+.bio-name{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;
+  font-size:clamp(28px,4vw,52px);letter-spacing:-.02em;
+  color:var(--ink);text-transform:uppercase;line-height:.9;
+  margin-bottom:6px;
+}
+.bio-role{
+  font-family:'Barlow Condensed',sans-serif;font-weight:300;
+  font-size:13px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:28px;
+  padding-bottom:18px;border-bottom:1px solid var(--line);
+}
+.bio-role span{color:var(--green);font-weight:400}
+
+.bio-body p{
+  font-family:'Barlow',sans-serif;font-weight:300;
+  font-size:14px;line-height:1.7;color:var(--ink2);
+  margin-bottom:18px;
+}
+.bio-body p:last-child{margin-bottom:0}
+.bio-body a{
+  color:var(--ink);text-decoration:none;
+  border-bottom:1px solid var(--green);
+  transition:color .2s,border-color .2s;
+}
+.bio-body a:hover{color:var(--green)}
+.bio-body strong{font-weight:400;color:var(--ink)}
+.bio-body em{font-style:normal;color:var(--green);font-weight:400}
+
+/* ── CONTACT SECTION ─────────────────────────────────────── */
+.contact-section{
+  padding:36px 44px 0;
+  border-top:1px solid var(--line);
+  max-width:960px;
+}
+.contact-intro{
+  font-family:'Barlow',sans-serif;font-weight:300;
+  font-size:13px;line-height:1.65;color:var(--ink3);
+  margin-bottom:20px;
+}
+.contact-label{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:10px;letter-spacing:.45em;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:20px;
+  padding-bottom:10px;border-bottom:1px solid var(--line2);
+}
+.contact-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:2px;
+  margin-bottom:36px;
+}
+.contact-card{
+  border:1px solid var(--line);
+  padding:18px 20px 20px;
+  text-decoration:none;
+  display:flex;flex-direction:column;gap:6px;
+  transition:background .15s,border-color .15s;
+  background:#fff;
+}
+.contact-card:hover{background:var(--ink);border-color:var(--ink)}
+.contact-card-type{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:9px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--ink3);transition:color .15s;
+}
+.contact-card:hover .contact-card-type{color:rgba(255,255,255,.5)}
+.contact-card-value{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:18px;letter-spacing:.01em;text-transform:uppercase;
+  color:var(--ink);line-height:1;transition:color .15s;
+}
+.contact-card:hover .contact-card-value{color:#fff}
+.contact-card-arrow{
+  font-family:'Barlow Condensed',sans-serif;font-weight:300;
+  font-size:11px;letter-spacing:.1em;
+  color:var(--green);margin-top:4px;
+  transition:color .15s;
+  text-shadow:0 0 6px var(--green);
+}
+.contact-card:hover .contact-card-arrow{color:var(--green)}
+
+/* ── BACK BUTTON ─────────────────────────────────────────── */
+.bio-back{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:13px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink);text-decoration:none;
+  border-bottom:1px solid var(--ink3);padding-bottom:1px;
+  transition:color .18s,border-color .18s;
+}
+.bio-back:hover{color:var(--green);border-color:var(--green);filter:drop-shadow(0 0 4px var(--green))}
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+.bio-footer{
+  padding:28px 44px 36px;
+  border-top:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.bio-footer-motto{
+  font-family:'Barlow Condensed',sans-serif;font-weight:300;
+  font-size:10px;letter-spacing:.45em;text-transform:uppercase;color:var(--ink3);
+}
+.toggle-row{display:flex;align-items:center;gap:10px}
+.toggle-label{
+  font-family:'Barlow Condensed',sans-serif;font-weight:300;
+  font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink3);
+}
+.switch{position:relative;width:44px;height:22px;flex-shrink:0}
+.switch input{display:none}
+.slider{
+  position:absolute;inset:0;background:var(--bg2);
+  border-radius:0;cursor:pointer;
+  border:1px solid var(--line);
+  transition:background .3s;
+}
+.slider::before{
+  content:"";position:absolute;
+  width:14px;height:14px;
+  left:3px;top:3px;
+  background:var(--ink3);
+  transition:transform .3s,background .3s;
+}
+input:checked + .slider{background:var(--ink)}
+input:checked + .slider::before{
+  transform:translateX(22px);background:var(--green);
+  box-shadow:0 0 6px var(--green);
+}
+
+body.dark-mode{background:#111}
+body.dark-mode .bio-scroll{background:#111}
+body.dark-mode .bio-title-bar h1{color:#e8e8e8}
+body.dark-mode .bio-name{color:#e8e8e8}
+body.dark-mode .bio-body p{color:#aaa}
+body.dark-mode .bio-body a{color:#e8e8e8}
+body.dark-mode .contact-card{background:#1a1a1a;border-color:rgba(255,255,255,.08)}
+body.dark-mode .contact-card-value{color:#e8e8e8}
+body.dark-mode .contact-card:hover{background:#333}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+
+<div id="page-bio">
+  <header class="site-header">
+    <a class="site-header-name" href="index.html">Weird With Code</a>
+    <nav class="site-header-nav">
+      <a href="work.html">Work</a>
+      <a href="about.html" class="active">About</a>
+    </nav>
+  </header>
+
+  <div class="bio-scroll">
+    <div class="bio-title-bar">
+      <h1>About</h1>
+    </div>
+
+    <div class="bio-content-row">
+      <div class="bio-photo-col">
+        <div class="bio-photo-wrap">
+          <img src="../assets/Profile_Photo.jpg" alt="Yasha Jain"
+               onerror="this.style.display='none'">
+        </div>
+        <div class="bio-photo-label">Yasha Jain · 2025</div>
+      </div>
+
+      <div class="bio-text-col">
+        <div class="bio-name">Yasha Jain</div>
+        <div class="bio-role">
+          New Media Artist &nbsp;·&nbsp; Creative Technologist &nbsp;·&nbsp;
+          <span>weirdwithcode</span>
+        </div>
+        <div class="bio-body">
+          <p>
+            Yasha Jain is a new media artist and creative technologist working under the moniker
+            <em>weirdwithcode</em>. She creates interactive installations, generative art, and
+            experiments with live coding. Her work draws from programming, artificial intelligence,
+            and human–computer interaction to explore how computational systems shape perception,
+            control, and meaning in digital culture.
+          </p>
+          <p>
+            Yasha has exhibited in galleries, festivals, and experimental spaces around the world,
+            using technology not just to automate, but to spark curiosity, reflection, and engagement.
+            She continues to explore the creative possibilities of code as both a material and a method.
+            In her free time she likes to play the Sitar or go for a hike.
+          </p>
+          <p>
+            Yasha currently lives in Karlsruhe, Germany and works as an artist &amp; researcher for the
+            <a href="https://zkm.de/en/hertzlab" target="_blank" rel="noopener noreferrer">ZKM|Hertzlab</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="contact-section">
+      <div class="contact-label">Contact</div>
+      <p class="contact-intro">For collaborations, exhibitions, talks, commissions, or general inquiries, feel free to reach out.</p>
+      <div class="contact-grid">
+
+        <a class="contact-card" href="mailto:jain.yasha@gmail.com">
+          <div class="contact-card-type">Personal Email</div>
+          <div class="contact-card-value">jain.yasha@gmail.com</div>
+          <div class="contact-card-arrow">→ Send a message</div>
+        </a>
+
+        <a class="contact-card" href="mailto:jain@zkm.de">
+          <div class="contact-card-type">Work Email</div>
+          <div class="contact-card-value">jain@zkm.de</div>
+          <div class="contact-card-arrow">→ Send a message</div>
+        </a>
+
+        <a class="contact-card" href="https://www.instagram.com/yaffa16/" target="_blank" rel="noopener noreferrer">
+          <div class="contact-card-type">Instagram</div>
+          <div class="contact-card-value">@yaffa16</div>
+          <div class="contact-card-arrow">→ View profile</div>
+        </a>
+
+      </div>
+    </div>
+
+    <div class="bio-footer">
+      <a href="work.html" class="bio-back">← Work</a>
+      <span class="bio-footer-motto">JIYO · AUR · JEENE · DO</span>
+      <div class="toggle-row">
+        <span class="toggle-label">Dark</span>
+        <label class="switch">
+          <input type="checkbox" id="modeToggle">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var toggle = document.getElementById('modeToggle');
+if (localStorage.getItem('darkMode') === 'true') {
+  document.body.classList.add('dark-mode');
+  toggle.checked = true;
+}
+toggle.addEventListener('change', function() {
+  document.body.classList.toggle('dark-mode');
+  localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+});
+
+var cur = document.getElementById('cursor');
+document.addEventListener('mousemove', function(e) {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top  = e.clientY + 'px';
+});
+var hoverSel = 'a,button,.switch';
+document.addEventListener('mouseover', function(e) {
+  if (e.target.closest(hoverSel)) cur.classList.add('big');
+});
+document.addEventListener('mouseout', function(e) {
+  if (e.target.closest(hoverSel)) cur.classList.remove('big');
+});
+</script>
+</body>
+</html>
