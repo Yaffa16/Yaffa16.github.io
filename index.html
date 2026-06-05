@@ -229,7 +229,7 @@ function ready(){
   initSize();
   state.forEach(function(s){s.x=OX;s.y=OY;s.el.style.transform='translate('+OX+'px,'+OY+'px) scale('+currentBreathScale+')';});
   wholeEl.style.opacity='0';wholeEl.style.transition='opacity 1.2s ease';
-  setTimeout(function(){wholeEl.style.opacity='1';phase='breathing';breathStart=null;setTimeout(shatter,2000);},300);
+  setTimeout(function(){wholeEl.style.opacity='1';phase='breathing';breathStart=null;setTimeout(shatter,1000);},300);
   nodePoly.style.opacity='1';
   nodeDots.forEach(function(d){d.style.opacity='1';});
   labelTxts.forEach(function(l){l.style.opacity='1';});
