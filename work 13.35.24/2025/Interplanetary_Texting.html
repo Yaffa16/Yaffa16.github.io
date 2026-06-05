@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Interplanetary Texting — Weird With Code</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Barlow',sans-serif; font-weight:300;
+  line-height:1.75; background:var(--bg); color:#1a1a1a;
+  cursor:none; overflow-x:hidden;
+}
+:root {
+  --green:#39ff14; --bg:#bdbdbd; --bg2:#b0b0b0; --bg3:#a8a8a8;
+  --ink:#1a1a1a; --ink2:#3a3a3a; --ink3:#6a6a6a;
+  --line:rgba(0,0,0,0.12); --line2:rgba(0,0,0,0.07);
+}
+#cursor {
+  position:fixed; pointer-events:none; z-index:9999;
+  width:8px; height:8px; border-radius:50%;
+  background:var(--green); box-shadow:0 0 6px var(--green),0 0 14px var(--green);
+  transform:translate(-50%,-50%); transition:width 0.15s,height 0.15s;
+}
+#cursor.big { width:20px; height:20px; background:transparent; border:1.5px solid var(--green); box-shadow:none; }
+.site-header {
+  position:sticky; top:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 44px; border-bottom:1px solid var(--line); background:var(--bg);
+}
+.site-header-name {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700; font-size:20px; letter-spacing:0.06em; text-transform:uppercase;
+  color:#fff; text-decoration:none; cursor:pointer; transition:color 0.2s,filter 0.2s;
+}
+.site-header-nav { display:flex; gap:32px; }
+.site-header-nav a {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:300; font-size:16px; letter-spacing:0.14em; text-transform:uppercase;
+  color:#fff; text-decoration:none; transition:color 0.2s,filter 0.2s;
+}
+.site-header-name:hover,.site-header-nav a:hover {
+  color:var(--green); filter:drop-shadow(0 0 6px var(--green));
+}
+.project-hero {
+  padding:52px 44px 36px; border-bottom:1px solid var(--line);
+  display:grid; grid-template-columns:1fr auto; gap:24px; align-items:end; background:#fff;
+}
+.project-num {
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:13px; letter-spacing:0.35em; text-transform:uppercase;
+  color:var(--ink3); margin-bottom:12px;
+}
+.project-title {
+  font-family:'Barlow Condensed',sans-serif; font-weight:900;
+  font-size:clamp(40px,7vw,100px); letter-spacing:-0.03em; text-transform:uppercase;
+  color:#000; line-height:0.88;
+}
+.project-meta-block { text-align:right; padding-bottom:6px; }
+.project-meta-block p {
+  font-family:'Barlow Condensed',sans-serif; font-weight:300;
+  font-size:12px; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--ink3); line-height:1.8;
+}
+.project-body {
+  display:grid; grid-template-columns:240px 1fr;
+  border-bottom:1px solid var(--line); background:#fff;
+}
+.project-sidebar {
+  padding:36px 24px 36px 44px; border-right:1px solid var(--line);
+  position:sticky; top:57px; height:calc(100vh - 57px);
+  overflow-y:auto; display:flex; flex-direction:column; gap:24px; background:#fff;
+}
+.project-sidebar::-webkit-scrollbar { width:2px; }
+.project-sidebar::-webkit-scrollbar-thumb { background:#ddd; }
+.sidebar-section-label {
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:10px; letter-spacing:0.4em; text-transform:uppercase;
+  color:#999; margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid #e8e8e8;
+}
+.sidebar-tag {
+  font-family:'Barlow Condensed',sans-serif; font-weight:400;
+  font-size:13px; letter-spacing:0.04em; color:#444; padding:2px 0; line-height:1.5;
+}
+.project-content { padding:40px 44px 80px 44px; background:#fff; }
+.project-lead {
+  font-family:'Barlow Condensed',sans-serif; font-weight:300;
+  font-size:clamp(20px,2.2vw,28px); letter-spacing:0.01em; line-height:1.35;
+  color:#444; margin-bottom:32px; width:100%;
+}
+.content-h2 {
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:11px; letter-spacing:0.4em; text-transform:uppercase; color:#999;
+  margin:36px 0 12px; padding-top:36px; border-top:1px solid #e8e8e8;
+}
+.project-content p {
+  font-family:'Barlow',sans-serif; font-weight:300;
+  font-size:15px; line-height:1.85; color:#444; width:100%; margin-bottom:16px;
+}
+.project-content p em { color:#1a1a1a; font-style:italic; }
+
+/* ── MEDIA LAYOUT ── natural aspect ratios, no fixed heights ── */
+.media-block { margin:28px 0; width:100%; }
+
+/* single item: full width, height follows content */
+.media-block.solo .media-item { width:100%; }
+
+/* 2-column grid: items sit side by side, each at its own natural height */
+.media-block.duo,
+.media-block.multi {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:3px;
+}
+
+/* last odd item in a multi grid spans both columns */
+.media-block.multi .media-item.span-full {
+  grid-column:1 / -1;
+}
+
+/* 3-item layout: first full width, then two side by side */
+.media-block.trio { display:grid; gap:3px; grid-template-columns:1fr 1fr; }
+.media-block.trio .media-item:first-child { grid-column:1 / -1; }
+
+/* every media item: let content define height */
+.media-item { width:100%; overflow:hidden; background:#f0f0f0; }
+
+/* images: full width, height auto — NEVER crop */
+.media-item img {
+  width:100%; height:auto; display:block;
+}
+
+/* videos: 16:9 aspect-ratio box so they don't collapse before metadata loads */
+.media-item .video-wrap {
+  position:relative; width:100%; padding-top:56.25%;
+}
+.media-item .video-wrap video {
+  position:absolute; inset:0; width:100%; height:100%; display:block; object-fit:contain;
+  background:#000;
+}
+
+/* iframes (YouTube, Vimeo, etc.): 16:9 */
+.media-item .iframe-wrap {
+  position:relative; width:100%; padding-top:56.25%;
+}
+.media-item .iframe-wrap iframe {
+  position:absolute; inset:0; width:100%; height:100%; border:none; display:block;
+}
+
+.media-caption {
+  font-family:'Barlow Condensed',sans-serif; font-weight:300;
+  font-size:11px; letter-spacing:0.15em; text-transform:uppercase;
+  color:#999; margin-top:8px; width:100%;
+}
+.project-footer {
+  padding:22px 44px; display:flex; align-items:center; justify-content:space-between;
+  background:#fff; border-top:1px solid #e8e8e8;
+}
+.footer-left {
+  font-family:'Barlow Condensed',sans-serif; font-weight:300;
+  font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:#999;
+}
+.footer-back {
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:13px; letter-spacing:0.2em; text-transform:uppercase;
+  color:#1a1a1a; text-decoration:none; border-bottom:1px solid #999;
+  padding-bottom:1px; transition:color 0.18s,border-color 0.18s,filter 0.18s;
+}
+.footer-back:hover { color:var(--green); border-color:var(--green); filter:drop-shadow(0 0 4px var(--green)); }
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+
+<header class="site-header">
+  <a href="../../index.html" class="site-header-name">Weird With Code</a>
+  <nav class="site-header-nav">
+    <a href="../../work.html">Work</a>
+    <a href="../../work/bio.html">About</a>
+  </nav>
+</header>
+
+<div class="project-hero">
+  <div>
+    <div class="project-num">07 / 2025</div>
+    <div class="project-title">Interplanetary Texting</div>
+  </div>
+  <div class="project-meta-block"><p>Personal project<br>2025<br>Web / Concept</p></div>
+</div>
+
+<div class="project-body">
+  <aside class="project-sidebar">
+    <div><div class="sidebar-section-label">Type</div><div class="sidebar-tag">Speculative Communication Tool</div></div>
+    <div><div class="sidebar-section-label">Year</div><div class="sidebar-tag">2025</div></div>
+    <div><div class="sidebar-section-label">Tools</div><div class="sidebar-tag">JavaScript</div><div class="sidebar-tag">Web APIs</div><div class="sidebar-tag">Creative Writing</div></div>
+    <div><div class="sidebar-section-label">Themes</div><div class="sidebar-tag">Space</div><div class="sidebar-tag">Communication</div><div class="sidebar-tag">Speculation</div></div>
+  </aside>
+  <main class="project-content">
+<div class="content-h2">Simulation Features</div>
+<div class="content-h2">Experience & Learning</div>
+<p>This project demonstrates how light-speed communication affects interplanetary messaging. Users gain a hands-on understanding of planetary distances, orbital dynamics, and the challenges of communication across space.</p>
+<div class="content-h2">Visitor Interaction</div>
+<p>Users can select source and destination planets, type messages, and track their journey through the solar system. Celebrate arrivals, observe delays, and reflect on the vastness of space and the limits of communication.</p>
+  </main>
+</div>
+
+<footer class="project-footer">
+  <a href="../../work.html" class="footer-back">← Back to Work</a>
+  <span class="footer-left">Jiyo · Aur · Jeene · Do</span>
+</footer>
+
+<script>
+var cur=document.getElementById('cursor');
+document.addEventListener('mousemove',function(e){cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
+document.addEventListener('mouseover',function(e){if(e.target.closest('a,button'))cur.classList.add('big');});
+document.addEventListener('mouseout',function(e){if(e.target.closest('a,button'))cur.classList.remove('big');});
+</script>
+</body>
+</html>
