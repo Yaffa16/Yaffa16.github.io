@@ -7,416 +7,261 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;overflow:hidden;cursor:none;background:#e8e8e8}
+html,body{width:100%;height:100%;background:#bdbdbd;color:#1a1a1a;font-family:'Barlow',sans-serif;cursor:none}
+
 :root{
-  --green:#39ff14;--bg:#bdbdbd;--bg2:#b0b0b0;--bg3:#a8a8a8;
+  --green:#39ff14;
+  --bg:#bdbdbd;--bg2:#b0b0b0;--bg3:#a8a8a8;
+  --row:#ffffff;--row-hover:#f5f5f5;
   --ink:#1a1a1a;--ink2:#3a3a3a;--ink3:#6a6a6a;
   --line:rgba(0,0,0,.12);--line2:rgba(0,0,0,.07);
-  --card-shadow:
-    0 1px 2px rgba(0,0,0,.10),
-    0 4px 8px rgba(0,0,0,.08),
-    0 12px 24px rgba(0,0,0,.06);
-  --card-shadow-hover:
-    0 2px 4px rgba(0,0,0,.12),
-    0 8px 20px rgba(0,0,0,.12),
-    0 24px 48px rgba(0,0,0,.10);
 }
 
-/* ── CURSOR ────────────────────────────────────────────────── */
+/* ── CURSOR ─────────────────────────────────── */
 #cursor{position:fixed;pointer-events:none;z-index:9999;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green),0 0 14px var(--green);transform:translate(-50%,-50%);transition:width .15s,height .15s}
 #cursor.big{width:20px;height:20px;background:transparent;border:1.5px solid var(--green);box-shadow:none}
 
-/* ── PAGE SHELL ─────────────────────────────────────────────── */
-#page-work{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+/* ── PAGE ────────────────────────────────────── */
+#page{display:flex;flex-direction:column;min-height:100vh;background:var(--bg)}
 
-/* ── HEADER ─────────────────────────────────────────────────── */
-.site-header{display:flex;align-items:center;justify-content:space-between;padding:18px 44px;border-bottom:1px solid var(--line);background:var(--bg);flex-shrink:0;z-index:50}
-.site-header-name,.site-header-nav a{font-family:'Barlow Condensed',sans-serif;color:#fff;cursor:pointer;transition:color .2s,filter .2s;text-decoration:none}
+/* ── HEADER ──────────────────────────────────── */
+.site-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 44px;
+  background:var(--bg);
+  border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:100;
+}
+.site-header-name,.site-header-nav a{
+  font-family:'Barlow Condensed',sans-serif;
+  color:#fff;cursor:pointer;
+  transition:color .2s,filter .2s;text-decoration:none;
+}
 .site-header-name{font-weight:700;font-size:20px;letter-spacing:.06em;text-transform:uppercase}
 .site-header-nav{font-weight:300;font-size:16px;letter-spacing:.14em;text-transform:uppercase;display:flex;gap:32px}
 .site-header-nav a.active{color:var(--green)}
 .site-header-name:hover,.site-header-nav a:hover{color:var(--green);filter:drop-shadow(0 0 6px var(--green))}
 
-/* ── ONE SCROLL CONTAINER ────────────────────────────────────── */
-.works-scroll{flex:1 1 0;overflow-y:auto;overflow-x:hidden;background:#e8e8e8}
-.works-scroll::-webkit-scrollbar{width:2px}
-.works-scroll::-webkit-scrollbar-thumb{background:var(--bg3)}
+/* ── MAIN ────────────────────────────────────── */
+main{flex:1;padding-bottom:80px}
 
-/* ── TITLE ───────────────────────────────────────────────────── */
-.work-title-bar{padding:40px 44px 32px;background:#fff;border-bottom:1px solid var(--line)}
-.work-title-bar h1{
-  font-family:'Barlow Condensed',sans-serif;font-weight:900;
-  font-size:clamp(44px,7vw,96px);letter-spacing:-.03em;
-  color:var(--ink);line-height:.88;text-transform:uppercase;white-space:nowrap;
-}
-
-/* ── TWO-COL LAYOUT ─────────────────────────────────────────── */
-.content-row{display:flex;align-items:flex-start;position:relative}
-
-/* ── FLOATING SIDEBAR ──────────────────────────────────────── */
-.nav-sidebar-wrap{
-  width:200px;flex-shrink:0;
-  position:sticky;top:20px;
-  align-self:flex-start;
-  padding:20px 12px;
-  z-index:10;
-}
-.nav-sidebar{
-  background:#fff;
-  border:1px solid rgba(0,0,0,.10);
-  box-shadow:
-    0 1px 3px rgba(0,0,0,.06),
-    0 6px 18px rgba(0,0,0,.08),
-    0 20px 40px rgba(0,0,0,.06);
-  border-radius:3px;
-  padding:0 0 16px;
-  overflow:hidden;
-}
-.sidebar-header{
-  padding:12px 16px 10px;
+/* ── SECTION BAND ────────────────────────────── */
+.section-band{
+  display:flex;align-items:baseline;justify-content:space-between;
+  padding:22px 44px 16px;
   border-bottom:1px solid var(--line);
-  font-family:'Barlow Condensed',sans-serif;font-weight:700;
-  font-size:9px;letter-spacing:.5em;text-transform:uppercase;
-  color:var(--ink3);
+  background:#ffffff;
 }
-.nav-sidebar::-webkit-scrollbar{width:2px}
-.nav-sidebar::-webkit-scrollbar-thumb{background:var(--bg3)}
-.nav-year-group{margin-top:12px}
-.nav-year-label{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:700;font-size:10px;letter-spacing:.45em;text-transform:uppercase;
-  color:var(--ink3);padding:0 16px 6px;
-  border-bottom:1px solid var(--line2);margin-bottom:4px;
-  display:block;cursor:pointer;transition:color .2s,filter .2s;
-}
-.nav-year-label:hover{color:var(--ink)}
-.nav-proj-link{
-  display:block;
-  font-family:'Barlow Condensed',sans-serif;font-weight:400;font-size:12px;
-  letter-spacing:.03em;text-transform:uppercase;color:var(--ink2);
-  padding:3px 16px 3px 20px;text-decoration:none;line-height:1.3;
-  transition:color .15s,background .15s;border-left:2px solid transparent;
-}
-.nav-proj-link:hover{color:var(--ink);background:rgba(0,0,0,.04);border-left-color:var(--green)}
-
-/* ── MAIN CONTENT ───────────────────────────────────────────── */
-.works-main{flex:1 1 0;min-width:0;overflow:hidden;padding-bottom:60px}
-
-/* ── YEAR SECTION ───────────────────────────────────────────── */
-.year-section{padding:24px 32px 0 24px;margin-bottom:52px}
-.year-section-label{
-  font-family:'Barlow Condensed',sans-serif;font-weight:700;
-  font-size:10px;letter-spacing:.45em;text-transform:uppercase;
-  color:var(--ink3);padding-bottom:10px;border-bottom:1px solid var(--line);
-  margin-bottom:24px;
-}
-
-/* ── CARD GRID ──────────────────────────────────────────────── */
-.cards-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(190px, 1fr));
-  gap:28px 18px;
-}
-
-/* ── CARD — object with depth ─────────────────────────────── */
-.proj-card{
-  display:flex;flex-direction:column;
-  text-decoration:none;color:inherit;
-  opacity:0;transform:translateY(14px);
-  transition:opacity .45s ease,transform .45s ease;
-  cursor:pointer;
-  /* 3D context */
-  perspective:800px;
-  perspective-origin:50% 40%;
-}
-.proj-card.visible{opacity:1;transform:translateY(0)}
-
-/* The actual tiltable surface */
-.proj-card-inner{
-  display:flex;flex-direction:column;
-  transform-style:preserve-3d;
-  transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s ease;
-  border-radius:2px;
-  will-change:transform;
-}
-
-/* Image — tall rectangle */
-.proj-img{
-  width:100%;aspect-ratio:3/4;
-  overflow:hidden;background:var(--bg3);
-  position:relative;
-  box-shadow:var(--card-shadow);
-  transition:box-shadow .4s ease;
-  border-radius:2px;
-}
-.proj-img img{
-  width:100%;height:100%;object-fit:cover;display:block;
-  transition:transform .6s cubic-bezier(.16,1,.3,1);
-  filter:contrast(1.04);
-}
-.proj-card:hover .proj-img{box-shadow:var(--card-shadow-hover)}
-.proj-card:hover .proj-img img{transform:scale(1.06)}
-
-/* Thin highlight edge — simulates top-lit object */
-.proj-img::after{
-  content:'';
-  position:absolute;inset:0;
-  background:linear-gradient(
-    165deg,
-    rgba(255,255,255,.12) 0%,
-    rgba(255,255,255,0) 40%,
-    rgba(0,0,0,.06) 100%
-  );
-  pointer-events:none;
-  border-radius:2px;
-  transition:opacity .3s;
-}
-.proj-card:hover .proj-img::after{opacity:.5}
-
-/* Bottom label strip — flush under the image like a physical label */
-.proj-label{
-  background:#fff;
-  padding:10px 12px 12px;
-  border:1px solid rgba(0,0,0,.08);
-  border-top:none;
-  box-shadow:0 4px 10px rgba(0,0,0,.06),0 12px 24px rgba(0,0,0,.04);
-  transition:box-shadow .4s ease;
-  border-radius:0 0 2px 2px;
-}
-.proj-card:hover .proj-label{box-shadow:0 8px 20px rgba(0,0,0,.10),0 20px 40px rgba(0,0,0,.06)}
-
-.proj-title{
-  font-family:'Barlow Condensed',sans-serif;font-weight:700;
-  font-size:18px;letter-spacing:.01em;color:var(--ink);
-  line-height:1;text-transform:uppercase;margin-bottom:4px;
-}
-.proj-subtitle{
-  font-family:'Barlow',sans-serif;font-weight:300;
-  font-size:10px;color:var(--ink2);letter-spacing:.04em;line-height:1.5;
-  margin-bottom:3px;
-}
-.proj-meta{
+.section-label{
   font-family:'Barlow Condensed',sans-serif;font-weight:300;
-  font-size:10px;letter-spacing:.06em;color:var(--ink3);
+  font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink3);
 }
-.proj-meta::before{content:'— '}
-
-/* Placeholder when no image */
-.proj-img-placeholder{
-  width:100%;height:100%;
-  display:flex;align-items:center;justify-content:center;
-}
-.proj-img-placeholder span{
+.section-year{
   font-family:'Barlow Condensed',sans-serif;font-weight:900;
-  font-size:48px;color:rgba(0,0,0,.15);text-transform:uppercase;
+  font-size:clamp(52px,8vw,96px);
+  color:var(--ink);line-height:.85;letter-spacing:-.02em;
+}
+.section-band.past .section-year{color:rgba(0,0,0,.22);font-size:clamp(38px,5vw,68px)}
+.section-band.past .section-label{color:rgba(0,0,0,.3)}
+
+/* ── EVENT ROW ───────────────────────────────── */
+.event-row{
+  display:grid;
+  grid-template-columns:90px 72px 1fr 1.2fr 0.8fr;
+  align-items:start;
+  border-bottom:1px solid var(--line);
+  background:var(--row);
+  transition:background .15s;
+  text-decoration:none;color:inherit;
+}
+.event-row:hover{background:var(--row-hover)}
+
+/* Thumbnail */
+.ev-thumb{padding:12px 10px 12px 44px}
+.ev-thumb img{width:60px;height:60px;object-fit:cover;display:block}
+.ev-thumb-placeholder{
+  width:60px;height:60px;background:var(--bg3);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:18px;color:rgba(0,0,0,.2);text-transform:uppercase;
+}
+
+/* Date */
+.ev-date{
+  padding:12px 8px 12px 0;
+  font-family:'Barlow Condensed',sans-serif;
+  text-align:right;align-self:center;
+}
+.ev-date-day{font-weight:700;font-size:22px;color:var(--ink);line-height:1}
+.ev-date-year{font-weight:300;font-size:11px;color:var(--ink3);letter-spacing:.06em;margin-top:2px}
+
+/* Title col */
+.ev-title-col{padding:12px 20px;border-left:1px solid var(--line)}
+.ev-title{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:22px;letter-spacing:.01em;text-transform:uppercase;
+  color:var(--ink);line-height:1.05;margin-bottom:8px;
+}
+.ev-tags{display:flex;flex-wrap:wrap;gap:5px}
+.ev-tag{
+  font-family:'Barlow Condensed',sans-serif;font-weight:300;font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid rgba(0,0,0,.18);color:var(--ink3);
+  padding:2px 7px;background:transparent;
+}
+
+/* Description */
+.ev-desc{
+  padding:12px 20px;border-left:1px solid var(--line);
+  font-family:'Barlow',sans-serif;font-weight:300;font-size:11.5px;
+  color:var(--ink2);line-height:1.65;
+}
+
+/* Venue */
+.ev-venue{
+  padding:12px 44px 12px 20px;border-left:1px solid var(--line);
+  font-family:'Barlow Condensed',sans-serif;font-weight:300;font-size:10px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);
+  display:flex;align-items:flex-end;
 }
 </style>
 </head>
 <body>
 <div id="cursor"></div>
+<div id="page">
 
-<div id="page-work">
   <header class="site-header">
-    <a class="site-header-name" href="index.html">Weird With Code</a>
+    <a class="site-header-name" href="../index.html">Weird With Code</a>
     <nav class="site-header-nav">
       <a href="work.html" class="active">Work</a>
       <a href="bio.html">About</a>
     </nav>
   </header>
 
-  <div class="works-scroll" id="worksScroll">
-    <div class="work-title-bar"><h1>Selected Works</h1></div>
-    <div class="content-row">
-      <div class="nav-sidebar-wrap">
-        <nav class="nav-sidebar" id="navSidebar">
-          <div class="sidebar-header">Index</div>
-        </nav>
-      </div>
-      <div class="works-main" id="worksGridArea"></div>
-    </div>
-  </div>
+  <main id="main"></main>
 </div>
 
 <script>
 var WORKS=[
-  {year:2025,items:[
-    {title:'Animated Drawings',href:'2025/Animated_Drawings.html',img:'2025/Animated_Drawings.jpg',subtitle:'Generative drawing system',meta:'Personal project / 2025'},
-    {title:'Electronic Petting Zoo',href:'2025/Electronic_Petting_Zoo.html',img:'2025/Electronic_Petting_Zoo.jpg',subtitle:'Interactive installation',meta:'Commission / 2025'},
-    {title:'Bring Your Own Model',href:'2025/Bring_Your_Own_Model.html',img:'2025/Bring_Your_Own_Model.jpg',subtitle:'AI-participatory art piece',meta:'Exhibition / 2025'},
-    {title:'Terms Of Confession',href:'2025/Terms_Of_Confession.html',img:'2025/Terms_Of_Confession.jpg',subtitle:'Data privacy performance',meta:'Personal project / 2025'},
-    {title:'OHL Plants',href:'2025/OHL_Plants.html',img:'2025/OHL_Plants.jpg',subtitle:'Living sensor garden',meta:'Residency / 2025'},
-    {title:'Kamuna',href:'2025/Kamuna.html',img:'2025/Kamuna.jpg',subtitle:'Community web experience',meta:'Team project / 2025'},
-    {title:'Interplanetary Texting',href:'2025/Interplanetary_Texting.html',img:'2025/Interplanetary_Texting.jpg',subtitle:'Speculative communication tool',meta:'Personal project / 2025'},
+  {year:2025,label:'Selected Works',items:[
+    {title:'Animated Drawings',href:'2025/Animated_Drawings.html',img:'2025/Animated_Drawings.jpg',tags:['Personal','Generative'],desc:'A generative drawing system that produces evolving animated illustrations in real time, blurring authorship between artist and algorithm.',venue:'Personal project / 2025'},
+    {title:'Electronic Petting Zoo',href:'2025/Electronic_Petting_Zoo.html',img:'2025/Electronic_Petting_Zoo.jpg',tags:['Installation'],desc:'An interactive installation where visitors interact with electronic pets that respond to touch and sound.',venue:'Commission / 2025'},
+    {title:'Bring Your Own Model',href:'2025/Bring_Your_Own_Model.html',img:'2025/Bring_Your_Own_Model.jpg',tags:['AI','Exhibition'],desc:'A hands on low technology workshop that teaches participants to build and train their own AI  models',venue:'Exhibition / 2025'},
+    {title:'Terms Of Confession',href:'2025/Terms_Of_Confession.html',img:'2025/Terms_Of_Confession.jpg',tags:['Performance','Data'],desc:'A data-privacy performance that turns the act of agreeing to terms of service into a live, theatrical confessional ritual.',venue:'Personal project / 2025'},
+    {title:'OHL Plants',href:'2025/OHL_Plants.html',img:'2025/OHL_Plants.jpg',tags:['Sensor','Residency'],desc:'A living sensor garden where plants act as interactive medium',venue:'Residency / 2025'},
+    {title:'Kamuna',href:'2025/Kamuna.html',img:'2025/Kamuna.jpg',tags:['Web','Community'],desc:'A  web experience designed to simulate communication to Mars',venue:'Team project / 2025'},
+    {title:'Interplanetary Texting',href:'2025/Interplanetary_Texting.html',img:'2025/Interplanetary_Texting.jpg',tags:['Speculative'],desc:'A speculative communication tool that simulates the realtime delay of sending messages across interplanetary distances.',venue:'Personal project / 2025'},
   ]},
-  {year:2024,items:[
-    {title:'Voice Box',href:'2024/voice_box.html',img:'2024/voice_box.jpg',subtitle:'Speech-to-visual interface',meta:'Personal project / 3 months'},
-    {title:'Flatware Hardware Software Wetware',href:'2024/Flatware_Hardware_Software_Wetware.html',img:'2024/Flatware_Hardware_Software_Wetware.jpg',subtitle:'Hybrid object performance',meta:'Exhibition / 4 months'},
-    {title:'Meme Me',href:'2024/meme_me.html',img:'2024/meme_me.jpg',subtitle:'Internet culture generator',meta:'Personal project / 1 month'},
+  {year:2024,label:'',items:[
+    {title:'Voice Box',href:'2024/voice_box.html',img:'2024/voice_box.jpg',tags:['Speech','Interface'],desc:'An interactive installation that creates a realtime radio play with your voice  clone and chosen storyline ',venue:'Personal project / 3 months'},
+    {title:'Flatware Hardware Software Wetware',href:'2024/Flatware_Hardware_Software_Wetware.html',img:'2024/Flatware_Hardware_Software_Wetware.jpg',tags:['Performance','Exhibition'],desc:'Installation art for the Exhibition (A)I Tell You, You Tell Me ',venue:'Exhibition / 4 months'},
+    {title:'Meme Me',href:'2024/meme_me.html',img:'2024/meme_me.jpg',tags:['Internet','Generative'],desc:'A meme generator that converts your photo realtime into a contextually aware meme',venue:'Personal project / 1 month'},
   ]},
-  {year:2023,items:[
-    {title:'Live Coding',href:'2023/isle_of_coding.html',img:'2023/isle_of_coding.jpg',subtitle:'Algorithmic music performance',meta:'Live event / 2023'},
-    {title:'If You Think You Are Sleeping',href:'2023/if_you_think_you_are_sleeping.html',img:'2023/if_you_think_you_are_sleeping.jpg',subtitle:'Dream-state interactive video',meta:'Personal project / 2 months'},
-    {title:'Berthold Leibinger',href:'2023/berthold_leibinger.html',img:'2023/berthold_leibinger.jpg',subtitle:'Corporate generative identity',meta:'Commission / 3 months'},
+  {year:2023,label:'',items:[
+    {title:'Live Coding',href:'2023/isle_of_coding.html',img:'2023/isle_of_coding.jpg',tags:['Performance','Music'],desc:'An algorave  performance ',venue:'Live event / 2023'},
+    {title:'If You Think You Are Sleeping',href:'2023/if_you_think_you_are_sleeping.html',img:'2023/if_you_think_you_are_sleeping.jpg',tags:['Video','Interactive'],desc:'A rememebrance for Peter Weibel',venue:'Personal project / 2 months'},
+    {title:'Berthold Leibinger',href:'2023/berthold_leibinger.html',img:'2023/berthold_leibinger.jpg',tags:['Identity','Commission'],desc:'A corporate generative identity system for the Berthold Leibinger Foundation, producing unique visual marks from institutional data.',venue:'Commission / 3 months'},
   ]},
-  {year:2022,items:[
-    {title:'Taming AI',href:'2022/taming_ai.html',img:'2022/taming_ai.jpg',subtitle:'Human–machine negotiation piece',meta:'Exhibition / 2 months'},
-    {title:'Agents',href:'2022/agents.html',img:'2022/agents.jpg',subtitle:'Autonomous software entities',meta:'Personal project / 1 month'},
-    {title:'Botcast',href:'2022/botcast.html',img:'2022/botcast.jpg',subtitle:'Bot-generated podcast',meta:'Team project / 3 months'},
-    {title:'Berlin Stallwachter Party',href:'2022/berlin_stallwachter_party.html',img:'2022/berlin_stallwachter_party.jpg',subtitle:'Live event visualisation',meta:'Commission / 1 month'},
+  {year:2022,label:'',items:[
+    {title:'Taming AI',href:'2022/taming_ai.html',img:'2022/taming_ai.jpg',tags:['AI','Exhibition'],desc:'PArt of the interview series, Taming AI',venue:'Exhibition / 2 months'},
+    {title:'Agents',href:'2022/agents.html',img:'2022/agents.jpg',tags:['Software','Personal'],desc:'Interactive art about emergent behaviours.',venue:'Personal project / 1 month'},
+    {title:'Botcast',href:'2022/botcast.html',img:'2022/botcast.jpg',tags:['Audio','Team'],desc:'A bot-generated daily news podcast',venue:'Team project / 3 months'},
+    {title:'Berlin Stallwachter Party',href:'2022/berlin_stallwachter_party.html',img:'2022/berlin_stallwachter_party.jpg',tags:['Live','Visualisation'],desc:'A VR visualisation for the Stallwachter Party in Berlin',venue:'Commission / 1 month'},
   ]},
-  {year:2019,items:[
-    {title:'Memory Holes',href:'2019/memory_holes.html',img:'2019/memory_holes.jpg',subtitle:'Digital amnesia installation',meta:'Personal project / 4 months'},
+  {year:2019,label:'',items:[
+    {title:'Memory Holes',href:'2019/memory_holes.html',img:'2019/memory_holes.jpg',tags:['Installation'],desc:'An AR app for Turkey, of the city  archives',venue:'Personal project / 4 months'},
   ]},
-  {year:2017,items:[
-    {title:'Bindu',href:'2017/bindu.html',img:'2017/bindu.jpg',subtitle:'Meditative generative mandala',meta:'Personal project / 2017'},
-    {title:'Start Festival',href:'2017/start_festival.html',img:'2017/start_festival.jpg',subtitle:'Festival identity & visuals',meta:'Commission / 2 months'},
-    {title:'Prayer Room',href:'2017/prayer_room.html',img:'2017/prayer_room.jpg',subtitle:'Sacred space tech installation',meta:'Personal project / 3 months'},
+  {year:2017,label:'',items:[
+    {title:'Bindu',href:'2017/bindu.html',img:'2017/bindu.jpg',tags:['Generative'],desc:'A VR app on the life of S.H Raza.',venue:'Eyemyth Festival/ 2017'},
+    {title:'Start Festival',href:'2017/start_festival.html',img:'2017/start_festival.jpg',tags:['Identity','Commission'],desc:'Start Festival installation',venue:'Commission / 2 months'},
+    {title:'Prayer Room',href:'2017/prayer_room.html',img:'2017/prayer_room.jpg',tags:['Installation','Sacred'],desc:'A VR tech installation .',venue:'Personal project / 3 months'},
   ]},
-  {year:2016,items:[
-    {title:'Reflections',href:'2016/reflections.html',img:'2016/reflections.jpg',subtitle:'Generative mirror portraits',meta:'Personal project / 2016'},
+  {year:2016,label:'',items:[
+    {title:'Reflections',href:'2016/reflections.html',img:'2016/reflections.jpg',tags:['Generative'],desc:'A generative mirror portrait series in which a camera feed is continuously reimagined through layers of algorithmic transformation.',venue:'Personal project / 2016'},
   ]},
 ];
 
-var gridArea    = document.getElementById('worksGridArea');
-var sidebar     = document.getElementById('navSidebar');
-var worksScroll = document.getElementById('worksScroll');
-var yearSections = [];
+var main = document.getElementById('main');
 
-WORKS.forEach(function(g) {
-  var sectionId = 'year-' + g.year;
-
-  /* ── Sidebar ─────────────────────────────────── */
-  var group = document.createElement('div');
-  group.className = 'nav-year-group';
-
-  var yearLbl = document.createElement('span');
-  yearLbl.className = 'nav-year-label';
-  yearLbl.textContent = g.year;
-  yearLbl.addEventListener('click', function() {
-    var t = document.getElementById(sectionId);
-    if (t) t.scrollIntoView({ behavior:'smooth', block:'start' });
-  });
-  group.appendChild(yearLbl);
-
-  g.items.forEach(function(item) {
-    var link = document.createElement('a');
-    link.className = 'nav-proj-link';
-    link.href = item.href;
-    link.textContent = item.title;
-    group.appendChild(link);
-  });
-  sidebar.appendChild(group);
-
-  /* ── Main section ────────────────────────────── */
-  var sec = document.createElement('div');
-  sec.className = 'year-section';
-  sec.id = sectionId;
+WORKS.forEach(function(g, gi) {
+  var band = document.createElement('div');
+  band.className = 'section-band' + (gi >= 2 ? ' past' : '');
 
   var lbl = document.createElement('div');
-  lbl.className = 'year-section-label';
-  lbl.textContent = g.year;
-  sec.appendChild(lbl);
+  lbl.className = 'section-label';
+  lbl.textContent = g.label || (gi >= 2 ? 'Past Works' : '');
 
-  var grid = document.createElement('div');
-  grid.className = 'cards-grid';
+  var yr = document.createElement('div');
+  yr.className = 'section-year';
+  yr.textContent = g.year;
 
-  g.items.forEach(function(item) {
-    var card = document.createElement('a');
-    card.className = 'proj-card';
-    card.href = item.href;
+  band.appendChild(lbl);
+  band.appendChild(yr);
+  main.appendChild(band);
 
-    var inner = document.createElement('div');
-    inner.className = 'proj-card-inner';
+  g.items.forEach(function(item, i) {
+    var row = document.createElement('a');
+    row.className = 'event-row';
+    row.href = item.href;
 
-    /* Image */
-    var iw = document.createElement('div');
-    iw.className = 'proj-img';
+    // Thumbnail
+    var thumbWrap = document.createElement('div');
+    thumbWrap.className = 'ev-thumb';
     var img = document.createElement('img');
     img.src = item.img; img.alt = item.title; img.loading = 'lazy';
     img.onerror = function() {
       img.style.display = 'none';
-      var ph = document.createElement('div'); ph.className = 'proj-img-placeholder';
-      var sp = document.createElement('span'); sp.textContent = item.title.slice(0,2).toUpperCase();
-      ph.appendChild(sp); iw.appendChild(ph);
+      var ph = document.createElement('div'); ph.className = 'ev-thumb-placeholder';
+      ph.textContent = item.title.slice(0,2).toUpperCase();
+      thumbWrap.appendChild(ph);
     };
-    iw.appendChild(img);
-    inner.appendChild(iw);
+    thumbWrap.appendChild(img);
 
-    /* Label strip */
-    var label = document.createElement('div');
-    label.className = 'proj-label';
+    // Date
+    var dateCol = document.createElement('div');
+    dateCol.className = 'ev-date';
+    var day = document.createElement('div'); day.className = 'ev-date-day';
+    day.textContent = String(i+1).padStart(2,'0') + '.' + String(g.year).slice(2);
+    var yr2 = document.createElement('div'); yr2.className = 'ev-date-year';
+    yr2.textContent = String(g.year).slice(2);
+    dateCol.appendChild(day);
+    dateCol.appendChild(yr2);
 
-    var title = document.createElement('div'); title.className = 'proj-title'; title.textContent = item.title;
-    var sub   = document.createElement('div'); sub.className   = 'proj-subtitle'; sub.textContent = item.subtitle;
-    var meta  = document.createElement('div'); meta.className  = 'proj-meta'; meta.textContent = item.meta;
-    label.appendChild(title);
-    if (item.subtitle) label.appendChild(sub);
-    if (item.meta)     label.appendChild(meta);
-
-    inner.appendChild(label);
-    card.appendChild(inner);
-    grid.appendChild(card);
-
-    /* ── 3D tilt on mousemove ───────────────── */
-    card.addEventListener('mousemove', function(e) {
-      var rect = inner.getBoundingClientRect();
-      var cx   = rect.left + rect.width  / 2;
-      var cy   = rect.top  + rect.height / 2;
-      var dx   = (e.clientX - cx) / (rect.width  / 2);   // -1 … +1
-      var dy   = (e.clientY - cy) / (rect.height / 2);   // -1 … +1
-      var rotX = -dy * 6;   // max 6° tilt on X axis
-      var rotY =  dx * 5;   // max 5° tilt on Y axis
-      var tz   = 8;         // lift toward viewer (px)
-      inner.style.transform =
-        'perspective(800px) rotateX('+rotX+'deg) rotateY('+rotY+'deg) translateZ('+tz+'px)';
+    // Title + tags
+    var titleCol = document.createElement('div');
+    titleCol.className = 'ev-title-col';
+    var title = document.createElement('div'); title.className = 'ev-title'; title.textContent = item.title;
+    var tags = document.createElement('div'); tags.className = 'ev-tags';
+    (item.tags||[]).forEach(function(t) {
+      var tag = document.createElement('span'); tag.className = 'ev-tag'; tag.textContent = t;
+      tags.appendChild(tag);
     });
-    card.addEventListener('mouseleave', function() {
-      inner.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
-    });
+    titleCol.appendChild(title);
+    titleCol.appendChild(tags);
+
+    // Description
+    var descCol = document.createElement('div');
+    descCol.className = 'ev-desc';
+    descCol.textContent = item.desc || '';
+
+    // Venue
+    var venueCol = document.createElement('div');
+    venueCol.className = 'ev-venue';
+    venueCol.textContent = item.venue || '';
+
+    row.appendChild(thumbWrap);
+    row.appendChild(dateCol);
+    row.appendChild(titleCol);
+    row.appendChild(descCol);
+    row.appendChild(venueCol);
+    main.appendChild(row);
   });
-
-  sec.appendChild(grid);
-  gridArea.appendChild(sec);
-  yearSections.push({ el: sec, year: g.year });
 });
 
-/* ── Scroll-spy ──────────────────────────────────────────── */
-var navYearLabels = sidebar.querySelectorAll('.nav-year-label');
-worksScroll.addEventListener('scroll', function() {
-  var scrollTop = worksScroll.scrollTop;
-  var active = yearSections[0];
-  yearSections.forEach(function(s) {
-    if (s.el.offsetTop - 100 <= scrollTop) active = s;
-  });
-  navYearLabels.forEach(function(lbl) {
-    var on = String(lbl.textContent) === String(active.year);
-    lbl.style.color  = on ? 'var(--green)' : '';
-    lbl.style.filter = on ? 'drop-shadow(0 0 4px var(--green))' : '';
-  });
-}, { passive:true });
-
-/* ── Scroll reveal ───────────────────────────────────────── */
-var allCards = document.querySelectorAll('.proj-card');
-var io = new IntersectionObserver(function(entries) {
-  entries.forEach(function(e) {
-    if (!e.isIntersecting) return;
-    var card = e.target, siblings = card.parentElement.querySelectorAll('.proj-card');
-    setTimeout(function(){ card.classList.add('visible'); }, Array.prototype.indexOf.call(siblings,card)*60);
-    io.unobserve(card);
-  });
-}, { threshold:.06, root: worksScroll });
-allCards.forEach(function(c){ io.observe(c); });
-setTimeout(function(){
-  allCards.forEach(function(c){
-    var r=c.getBoundingClientRect();
-    if(r.top<window.innerHeight+100) c.classList.add('visible');
-  });
-},80);
-
-/* ── Cursor ──────────────────────────────────────────────── */
+// Cursor
 var cur = document.getElementById('cursor');
 document.addEventListener('mousemove', function(e){ cur.style.left=e.clientX+'px'; cur.style.top=e.clientY+'px'; });
-var hoverSel = 'a,button,.proj-card,.nav-year-label';
+var hoverSel = 'a,button,.ev-tag';
 document.addEventListener('mouseover', function(e){ if(e.target.closest(hoverSel)) cur.classList.add('big'); });
 document.addEventListener('mouseout',  function(e){ if(e.target.closest(hoverSel)) cur.classList.remove('big'); });
 </script>
