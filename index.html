@@ -207,6 +207,18 @@
   var SKEW  = 0;    // in-plane shear, normally none
 
   var offset = 0, shown = 0;            // scrub position (in card units)
+
+  /* The deck is a finite stack, not a carousel. offset is the index of
+     the pane at the front, so it lives in [0, N-1]: 0 shows the whole
+     stack receding, N-1 puts the last project up front. Clamping here
+     (rather than wrapping with a modulo) is what stops a fast flick
+     from cycling around to the beginning again. Momentum is dropped
+     the moment an end is reached so nothing bounces or drifts on. */
+  var MIN_OFF = 0, MAX_OFF = Math.max(0, N - 1);
+  function clampScrub() {
+    if (offset < MIN_OFF) { offset = MIN_OFF; glide = 0; vel = 0; }
+    else if (offset > MAX_OFF) { offset = MAX_OFF; glide = 0; vel = 0; }
+  }
   var px = 0, py = 0, cpx = 0, cpy = 0; // parallax
   var lerp = function (a, b, n) { return a + (b - a) * n; };
 
@@ -222,7 +234,15 @@
   stage.addEventListener('wheel', function (e) {
     e.preventDefault();
     if (navigating) return;
-    offset += (e.deltaY + e.deltaX) * 0.0022;
+    // deltaMode 1 = lines, 2 = pages. Normalising keeps one notch worth
+    // the same amount of deck on every browser.
+    var unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? innerHeight : 1;
+    var step = (e.deltaY + e.deltaX) * unit * 0.0022;
+    // A single hard flick can arrive as one enormous delta; cap it so
+    // the deck advances at a readable pace instead of teleporting.
+    step = Math.max(-1.2, Math.min(1.2, step));
+    offset += step;
+    clampScrub();
     lastInput = performance.now();
   }, { passive: false });
 
@@ -259,6 +279,7 @@
     // which it does, since dy is part of the same expression.
     var step = (d - dy) * 0.0058;
     offset -= step;
+    clampScrub();
     vel = step;                       // remembered for momentum
     lastInput = performance.now();
   });
@@ -403,12 +424,17 @@
       offset -= glide;
       glide *= 0.92;                       // decay
       if (Math.abs(glide) < 0.0008) glide = 0;
+      clampScrub();                        // an end kills the momentum
       lastInput = performance.now();       // hold off the snap while gliding
     }
     if (!dragging && performance.now() - lastInput > 400) {
       offset = lerp(offset, Math.round(offset), 0.10);
+      if (Math.abs(offset - Math.round(offset)) < 0.0015) offset = Math.round(offset);
     }
     shown = lerp(shown, offset, 0.08);
+    // Land exactly instead of chasing offset by ever-smaller fractions,
+    // so the deck actually comes to rest after a scrub.
+    if (Math.abs(shown - offset) < 0.0015) shown = offset;
     cpx = lerp(cpx, px, 0.06);
     cpy = lerp(cpy, py, 0.06);
 
@@ -434,8 +460,11 @@
 
     var W = innerWidth, H = innerHeight;
     cards.forEach(function (c, i) {
-      // depth rank 0 (front) .. N-1 (deep), fractional for smoothness
-      var r = (i - shown) % N; if (r < 0) r += N;
+      // Depth rank 0 (front) .. N-1 (deep), fractional for smoothness.
+      // Linear, NOT modular: a pane scrubbed past the front keeps going
+      // (negative rank) and fades out rather than reappearing at the
+      // back of the stack.
+      var r = i - shown;
       c.flat = lerp(c.flat, c.hovered ? 1 : 0, 0.34); // immediate
 
       // Hover slides the pane sideways ONLY: same depth, same tilt,
@@ -455,10 +484,10 @@
       var z = z0;
       var rot = TILT;
 
-      // Fade only the deep end; a wrapping card crosses the front at
-      // full opacity, jumps to the deep end already faded to zero,
-      // then fades back in as it advances. The front stays solid.
-      var fade = r > N - 1.6 ? Math.max(0, (N - r) / 1.6) : 1;
+      // Nothing recycles any more, so the deep end stays solid. The
+      // only fade is on panes that have travelled past the front: they
+      // dissolve over ~1.2 ranks as they pass the viewer.
+      var fade = r < 0 ? Math.max(0, 1 + r / 1.2) : 1;
 
       var haze = Math.min(0.10, Math.max(0, (r - 2.2) * 0.0117)); // 1/3 fog
       var zi = 1000 - Math.round(r * 10);
@@ -495,11 +524,17 @@
         ' rotateZ(' + az.toFixed(2) + 'deg)' +
         (sk ? ' skewY(' + sk.toFixed(2) + 'deg)' : '');
       c.el.style.opacity = fade.toFixed(3);
+      // A pane that has scrubbed past is invisible but still sitting in
+      // front of the stack; hide it so it costs nothing and can never
+      // swallow a pointer.
+      c.el.style.visibility = fade <= 0.002 ? 'hidden' : '';
+      c.el.style.pointerEvents = fade <= 0.002 ? 'none' : '';
       c.el.style.setProperty('--haze', haze.toFixed(3));
       c.el.style.zIndex = String(zi);
 
       // projected screen quad for our own hit-testing
       c.fade = fade;
+      c.rank = r;
       // Panes have three different shapes now, so each caches its own
       // half-width/half-height for hit-testing.
       if (!c.hw) { c.hw = c.el.offsetWidth / 2; c.hh = c.el.offsetHeight / 2; }
@@ -538,6 +573,9 @@
       var front = null;
       for (var fi = 0; fi < cards.length; fi++) {
         var fc = cards[fi];
+        // Ignore panes already travelling past the viewer, or the
+        // caption flickers to the previous project mid-scrub.
+        if (fc.rank < -0.3) continue;
         if (fc.fade > 0.5 && (!front || fc.zc > front.zc)) front = fc;
       }
       if (front && front !== hoverCard) {
