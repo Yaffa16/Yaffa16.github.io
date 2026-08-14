@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Agents — Weird With Code</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/wwc.css">
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -170,19 +171,22 @@ body {
 }
 .footer-back:hover { color:var(--green); border-color:var(--green); filter:drop-shadow(0 0 4px var(--green)); }
 </style>
+<link rel="stylesheet" href="../../assets/project.css">
 </head>
 <body>
 <div id="cursor"></div>
 
-<header class="site-header">
-  <a href="../../index.html" class="site-header-name">Weird With Code</a>
-  <nav class="site-header-nav">
-    <a href="../../work.html">Work</a>
-    <a href="../../work/bio.html">About</a>
+<header class="uv-head">
+  <a class="uv-mark" href="../../index.html">Weird With Code<sup>&#174;</sup></a>
+  <nav class="uv-nav">
+    <a href="../../index.html">Projects</a>
+    <a href="../../work/work.html">Index</a>
+    <a href="../../work/bio.html">Studio</a>
+    <button type="button" data-overlay-open>Contact</button>
   </nav>
 </header>
 
-<div class="project-hero">
+<div class="project-hero" data-rise>
   <div>
     <div class="project-num">20 / 2022</div>
     <div class="project-title">Agents</div>
@@ -191,35 +195,35 @@ body {
 </div>
 
 <div class="project-body">
-  <aside class="project-sidebar">
+  <aside class="project-sidebar" data-rise>
     <div><div class="sidebar-section-label">Type</div><div class="sidebar-tag">Generative Software</div></div>
     <div><div class="sidebar-section-label">Year</div><div class="sidebar-tag">2022</div></div>
     <div><div class="sidebar-section-label">Tools</div><div class="sidebar-tag">Python</div><div class="sidebar-tag">p5.js</div><div class="sidebar-tag">Autonomous Agents</div></div>
     <div><div class="sidebar-section-label">Themes</div><div class="sidebar-tag">Agency</div><div class="sidebar-tag">Emergence</div><div class="sidebar-tag">Systems</div></div>
   </aside>
   <main class="project-content">
-<div class="media-block solo"><div class="media-item"><div class="video-wrap"><video style="width:100%;height:100%;display:block;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;background:transparent;" src="Agents.mp4" controls autoplay muted loop playsinline>
+<div class="media-block solo" data-rise><div class="media-item"><div class="video-wrap"><video style="width:100%;height:100%;display:block;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;background:transparent;" src="Agents.mp4" controls autoplay muted loop playsinline>
       Your browser does not support the video tag.
     </video></div></div></div>
 <div class="media-caption">Agents</div>
-<div class="content-h2">Concept</div>
+<div class="content-h2" data-rise>Concept</div>
 <p>The installation creates a living ecosystem of algorithmic “agents” each with its own sensory framework, behavioral traits, and social tendencies. Visitors are tracked via a real-time camera system and can engage with the digital creatures through spatial movement. Each agent reacts differently:</p>
 <p>The result is a vivid choreography of autonomous behaviors that appears natural yet unmistakably artificial.</p>
 <p><em>Agents</em> questions the nature of intelligence and life by demonstrating how complex, lifelike behaviors can emerge from simple rule-based systems. Visitors become active participants in a generative system that continuously evolves based on their presence.</p>
 <p>Spatialized audio enhances the experience: the position of both creatures and visitors is made perceptible not just visually, but acoustically, using a multichannel sound system that places sounds in real space.</p>
-<div class="content-h2">Technical Write-Up</div>
+<div class="content-h2" data-rise>Technical Write-Up</div>
 <p>Developed in Unity by Yasha Jain, this system responds to visitor movement, enabling seamless communication between the agents and their human counterparts.</p>
 <p>Digital creatures are rendered using custom shaders and predefined behavious. Some agents have individual behavious, some have flock behavious. This gives each agent a unique visual character and creates an eco system of various creatures.</p>
 <p>Each agent operates autonomously using different behaviour models. Some agents come close to you, while some run away , some agents react in an evolutionary manner when you spend some time near them. They react dynamically to the interaction stimulii.</p>
 <p>A multichannel spatial audio system maps the position of agents and visitors in real space, reinforcing immersion and interaction.</p>
-<div class="content-h2">Context</div>
+<div class="content-h2" data-rise>Context</div>
 <p>Exhibited as part of <strong>Biomedia</strong>, ZKM’s landmark exhibition exploring the convergence of biology, media, and artificial intelligence, <em>Agents</em> reflects the aesthetic and philosophical implications of machine-generated behavior and artificial life forms.</p>
 <p>With its layered sensory interactivity and generative system, <em>Agents</em> exemplifies a future where algorithmic systems do more than simulate life—they begin to behave in ways that evoke it.</p>
   </main>
 </div>
 
 <footer class="project-footer">
-  <a href="../../work.html" class="footer-back">← Back to Work</a>
+  <a href="../../work/work.html" class="footer-back">← Index</a>
   <span class="footer-left">Jiyo · Aur · Jeene · Do</span>
 </footer>
 
@@ -229,5 +233,21 @@ document.addEventListener('mousemove',function(e){cur.style.left=e.clientX+'px';
 document.addEventListener('mouseover',function(e){if(e.target.closest('a,button'))cur.classList.add('big');});
 document.addEventListener('mouseout',function(e){if(e.target.closest('a,button'))cur.classList.remove('big');});
 </script>
+<div id="uv-overlay" aria-hidden="true" role="dialog" aria-label="Contact">
+  <div class="uv-ov-top">
+    <span class="uv-micro">Contact</span>
+    <button type="button" class="uv-ov-close" data-overlay-close>Close</button>
+  </div>
+  <div class="uv-ov-mid">
+    <a href="mailto:jain.yasha@gmail.com">jain.yasha@gmail.com</a>
+    <a href="mailto:jain@zkm.de">jain@zkm.de</a>
+    <a href="https://www.instagram.com/yaffa16/" target="_blank" rel="noopener noreferrer">@yaffa16</a>
+  </div>
+  <div class="uv-ov-foot">
+    <span>Karlsruhe, Germany</span>
+    <span>Open to commissions, exhibitions &amp; talks</span>
+  </div>
+</div>
+<script src="../../assets/wwc.js" defer></script>
 </body>
 </html>

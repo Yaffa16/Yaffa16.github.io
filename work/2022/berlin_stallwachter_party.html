@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Berlin Stallwachter Party — Weird With Code</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/wwc.css">
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -170,19 +171,22 @@ body {
 }
 .footer-back:hover { color:var(--green); border-color:var(--green); filter:drop-shadow(0 0 4px var(--green)); }
 </style>
+<link rel="stylesheet" href="../../assets/project.css">
 </head>
 <body>
 <div id="cursor"></div>
 
-<header class="site-header">
-  <a href="../../index.html" class="site-header-name">Weird With Code</a>
-  <nav class="site-header-nav">
-    <a href="../../work.html">Work</a>
-    <a href="../../work/bio.html">About</a>
+<header class="uv-head">
+  <a class="uv-mark" href="../../index.html">Weird With Code<sup>&#174;</sup></a>
+  <nav class="uv-nav">
+    <a href="../../index.html">Projects</a>
+    <a href="../../work/work.html">Index</a>
+    <a href="../../work/bio.html">Studio</a>
+    <button type="button" data-overlay-open>Contact</button>
   </nav>
 </header>
 
-<div class="project-hero">
+<div class="project-hero" data-rise>
   <div>
     <div class="project-num">22 / 2022</div>
     <div class="project-title">Berlin Stallwachter Party</div>
@@ -191,20 +195,20 @@ body {
 </div>
 
 <div class="project-body">
-  <aside class="project-sidebar">
+  <aside class="project-sidebar" data-rise>
     <div><div class="sidebar-section-label">Type</div><div class="sidebar-tag">Live Event Visualisation</div></div>
     <div><div class="sidebar-section-label">Year</div><div class="sidebar-tag">2022</div></div>
     <div><div class="sidebar-section-label">Tools</div><div class="sidebar-tag">TouchDesigner</div><div class="sidebar-tag">MIDI</div><div class="sidebar-tag">Live Audio</div></div>
     <div><div class="sidebar-section-label">Themes</div><div class="sidebar-tag">Party</div><div class="sidebar-tag">Live Performance</div><div class="sidebar-tag">Generative Visuals</div></div>
   </aside>
   <main class="project-content">
-<div class="media-block solo"><div class="media-item"><img src="https://img.youtube.com/vi/cKUDZWoVN0U/hqdefault.jpg" alt="Berlin Stallwachster" style="width:100%;height:100%;object-fit:contain;display:block;"></div></div>
+<div class="media-block solo" data-rise><div class="media-item"><img src="https://img.youtube.com/vi/cKUDZWoVN0U/hqdefault.jpg" alt="Berlin Stallwachster" style="width:100%;height:100%;object-fit:contain;display:block;"></div></div>
 <div class="media-caption">Berlin Stallwachter Party</div>
   </main>
 </div>
 
 <footer class="project-footer">
-  <a href="../../work.html" class="footer-back">← Back to Work</a>
+  <a href="../../work/work.html" class="footer-back">← Index</a>
   <span class="footer-left">Jiyo · Aur · Jeene · Do</span>
 </footer>
 
@@ -214,5 +218,21 @@ document.addEventListener('mousemove',function(e){cur.style.left=e.clientX+'px';
 document.addEventListener('mouseover',function(e){if(e.target.closest('a,button'))cur.classList.add('big');});
 document.addEventListener('mouseout',function(e){if(e.target.closest('a,button'))cur.classList.remove('big');});
 </script>
+<div id="uv-overlay" aria-hidden="true" role="dialog" aria-label="Contact">
+  <div class="uv-ov-top">
+    <span class="uv-micro">Contact</span>
+    <button type="button" class="uv-ov-close" data-overlay-close>Close</button>
+  </div>
+  <div class="uv-ov-mid">
+    <a href="mailto:jain.yasha@gmail.com">jain.yasha@gmail.com</a>
+    <a href="mailto:jain@zkm.de">jain@zkm.de</a>
+    <a href="https://www.instagram.com/yaffa16/" target="_blank" rel="noopener noreferrer">@yaffa16</a>
+  </div>
+  <div class="uv-ov-foot">
+    <span>Karlsruhe, Germany</span>
+    <span>Open to commissions, exhibitions &amp; talks</span>
+  </div>
+</div>
+<script src="../../assets/wwc.js" defer></script>
 </body>
 </html>
