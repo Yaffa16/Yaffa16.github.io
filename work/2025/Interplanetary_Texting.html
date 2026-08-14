@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Interplanetary Texting — Weird With Code</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/wwc.css">
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -170,19 +171,22 @@ body {
 }
 .footer-back:hover { color:var(--green); border-color:var(--green); filter:drop-shadow(0 0 4px var(--green)); }
 </style>
+<link rel="stylesheet" href="../../assets/project.css">
 </head>
 <body>
 <div id="cursor"></div>
 
-<header class="site-header">
-  <a href="../../index.html" class="site-header-name">Weird With Code</a>
-  <nav class="site-header-nav">
-    <a href="../../work.html">Work</a>
-    <a href="../../work/bio.html">About</a>
+<header class="uv-head">
+  <a class="uv-mark" href="../../index.html">Weird With Code<sup>&#174;</sup></a>
+  <nav class="uv-nav">
+    <a href="../../index.html">Projects</a>
+    <a href="../../work/work.html">Index</a>
+    <a href="../../work/bio.html">Studio</a>
+    <button type="button" data-overlay-open>Contact</button>
   </nav>
 </header>
 
-<div class="project-hero">
+<div class="project-hero" data-rise>
   <div>
     <div class="project-num">07 / 2025</div>
     <div class="project-title">Interplanetary Texting</div>
@@ -191,23 +195,23 @@ body {
 </div>
 
 <div class="project-body">
-  <aside class="project-sidebar">
+  <aside class="project-sidebar" data-rise>
     <div><div class="sidebar-section-label">Type</div><div class="sidebar-tag">Speculative Communication Tool</div></div>
     <div><div class="sidebar-section-label">Year</div><div class="sidebar-tag">2025</div></div>
     <div><div class="sidebar-section-label">Tools</div><div class="sidebar-tag">JavaScript</div><div class="sidebar-tag">Web APIs</div><div class="sidebar-tag">Creative Writing</div></div>
     <div><div class="sidebar-section-label">Themes</div><div class="sidebar-tag">Space</div><div class="sidebar-tag">Communication</div><div class="sidebar-tag">Speculation</div></div>
   </aside>
   <main class="project-content">
-<div class="content-h2">Simulation Features</div>
-<div class="content-h2">Experience & Learning</div>
+<div class="content-h2" data-rise>Simulation Features</div>
+<div class="content-h2" data-rise>Experience & Learning</div>
 <p>This project demonstrates how light-speed communication affects interplanetary messaging. Users gain a hands-on understanding of planetary distances, orbital dynamics, and the challenges of communication across space.</p>
-<div class="content-h2">Visitor Interaction</div>
+<div class="content-h2" data-rise>Visitor Interaction</div>
 <p>Users can select source and destination planets, type messages, and track their journey through the solar system. Celebrate arrivals, observe delays, and reflect on the vastness of space and the limits of communication.</p>
   </main>
 </div>
 
 <footer class="project-footer">
-  <a href="../../work.html" class="footer-back">← Back to Work</a>
+  <a href="../../work/work.html" class="footer-back">← Index</a>
   <span class="footer-left">Jiyo · Aur · Jeene · Do</span>
 </footer>
 
@@ -217,5 +221,21 @@ document.addEventListener('mousemove',function(e){cur.style.left=e.clientX+'px';
 document.addEventListener('mouseover',function(e){if(e.target.closest('a,button'))cur.classList.add('big');});
 document.addEventListener('mouseout',function(e){if(e.target.closest('a,button'))cur.classList.remove('big');});
 </script>
+<div id="uv-overlay" aria-hidden="true" role="dialog" aria-label="Contact">
+  <div class="uv-ov-top">
+    <span class="uv-micro">Contact</span>
+    <button type="button" class="uv-ov-close" data-overlay-close>Close</button>
+  </div>
+  <div class="uv-ov-mid">
+    <a href="mailto:jain.yasha@gmail.com">jain.yasha@gmail.com</a>
+    <a href="mailto:jain@zkm.de">jain@zkm.de</a>
+    <a href="https://www.instagram.com/yaffa16/" target="_blank" rel="noopener noreferrer">@yaffa16</a>
+  </div>
+  <div class="uv-ov-foot">
+    <span>Karlsruhe, Germany</span>
+    <span>Open to commissions, exhibitions &amp; talks</span>
+  </div>
+</div>
+<script src="../../assets/wwc.js" defer></script>
 </body>
 </html>
