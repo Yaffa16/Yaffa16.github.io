@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Kamuna — Weird With Code</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/wwc.css">
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -170,19 +171,21 @@ body {
 }
 .footer-back:hover { color:var(--green); border-color:var(--green); filter:drop-shadow(0 0 4px var(--green)); }
 </style>
+<link rel="stylesheet" href="../../assets/project.css">
 </head>
 <body>
 <div id="cursor"></div>
 
-<header class="site-header">
-  <a href="../../index.html" class="site-header-name">Weird With Code</a>
-  <nav class="site-header-nav">
-    <a href="../../work.html">Work</a>
-    <a href="../../work/bio.html">About</a>
+<header class="uv-head">
+  <a class="uv-mark" href="../../index.html">Weird With Code<sup>&#174;</sup> Projects</a>
+  <nav class="uv-nav">
+    <a href="../../work/work.html">Index</a>
+    <a href="../../work/bio.html">Studio</a>
+    <button type="button" data-overlay-open>Contact</button>
   </nav>
 </header>
 
-<div class="project-hero">
+<div class="project-hero" data-rise>
   <div>
     <div class="project-num">06 / 2025</div>
     <div class="project-title">Kamuna</div>
@@ -191,29 +194,29 @@ body {
 </div>
 
 <div class="project-body">
-  <aside class="project-sidebar">
+  <aside class="project-sidebar" data-rise>
     <div><div class="sidebar-section-label">Type</div><div class="sidebar-tag">Community Web Experience</div></div>
     <div><div class="sidebar-section-label">Year</div><div class="sidebar-tag">2025</div></div>
     <div><div class="sidebar-section-label">Tools</div><div class="sidebar-tag">JavaScript</div><div class="sidebar-tag">WebSockets</div><div class="sidebar-tag">p5.js</div></div>
     <div><div class="sidebar-section-label">Themes</div><div class="sidebar-tag">Community</div><div class="sidebar-tag">Collaboration</div><div class="sidebar-tag">Web</div></div>
   </aside>
   <main class="project-content">
-<div class="media-block multi"><div class="media-item"><img src="Mars_communication_1.jpg" alt="comms station " style="width:100%;height:100%;object-fit:contain;display:block;"></div><div class="media-item"><img src="Mars_communication_2.jpg" alt="comms station  2" style="width:100%;height:100%;object-fit:contain;display:block;"></div><div class="media-item"><div class="video-wrap"><video style="width:100%;height:100%;display:block;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;background:transparent;" src="Kamuna_Comms_Station.mp4" controls autoplay muted loop playsinline>
+<div class="media-block multi" data-rise><div class="media-item"><img src="Mars_communication_1.jpg" alt="comms station " style="width:100%;height:100%;object-fit:contain;display:block;"></div><div class="media-item"><img src="Mars_communication_2.jpg" alt="comms station  2" style="width:100%;height:100%;object-fit:contain;display:block;"></div><div class="media-item"><div class="video-wrap"><video style="width:100%;height:100%;display:block;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;background:transparent;" src="Kamuna_Comms_Station.mp4" controls autoplay muted loop playsinline>
       Your browser does not support the video tag.
     </video></div></div><div class="media-item"><img src="Mars_3d_1.jpeg" alt="comms station " style="width:100%;height:100%;object-fit:contain;display:block;"></div><div class="media-item"><img src="Mars_3d_2.jpeg" alt="comms station  2" style="width:100%;height:100%;object-fit:contain;display:block;"></div><div class="media-item"><img src="Mars_3d_3.jpeg" alt="comms station  2" style="width:100%;height:100%;object-fit:contain;display:block;"></div></div>
 <div class="media-caption">Kamuna</div>
-<div class="content-h2">KAMUNA 2025</div>
-<div class="content-h2">Earth – Mars Communication Station</div>
+<div class="content-h2" data-rise>KAMUNA 2025</div>
+<div class="content-h2" data-rise>Earth – Mars Communication Station</div>
 <p>Developed by the Hertzlab’s Yasha Jain, the Mars Communication Station is a speculative installation that explores what it means to communicate across planetary distance. Spanning both the ZKM | Hertzlab and the HfG Karlsruhe’s Bio Design Lab, this dual-site work invites you to step into a video call between Earth and Mars — a portal to the edges of our technological and imaginative reach.</p>
 <p>At the core of the installation are two terminals representing Earth and Mars. Each is equipped with a camera, microphone, screen, and headphones. Visitors are invited to engage with their counterpart on the “other planet.” But there's a twist: all transmissions include a deliberate communication delay of several seconds, echoing the real latency experienced when sending signals between the two planets.</p>
 <p>This brief temporal dislocation — just a few seconds — is enough to make you feel the vastness of space. It creates a subtle but profound tension: conversation becomes slower, more intentional, and strangely poetic.</p>
 <p>To help guide these interplanetary dialogues, the installation provides a rotating set of interactive <strong>“missions”</strong> — imaginative prompts designed to inspire reflection, humor, and play. Visitors are encouraged to follow a mission or go off-script to shape their own dialogue across the divide.</p>
 <p>Surrounding the central exchange, the installation loops the latest imagery from Mars, drawn from NASA’s active rover missions. These haunting visuals are paired with real-time weather data from the InSight lander — including wind speed, atmospheric pressure, and surface temperature — grounding this speculative environment in present-day science.</p>
-<div class="content-h2">Martian Twitter</div>
+<div class="content-h2" data-rise>Martian Twitter</div>
 <p><strong>“Mars Twitter”</strong> offers a glimpse into an imagined Martian digital culture: a live stream of fictional tweets authored by robots, colonists, scientists, and satellites. It’s part satire, part worldbuilding — and a reminder that wherever humans go, their memes will follow.</p>
 <p>Mars Communication Station blends real Martian data, speculative fiction, and participatory technology into a meditation on time, distance, and communication.</p>
 <p>Design considerations included:</p>
-<div class="content-h2">Martian Fabrication Station</div>
+<div class="content-h2" data-rise>Martian Fabrication Station</div>
 <p>Welcome to the Martian Fabrication Station — a speculative design installation imagining a future where clothing is not bought, but fabricated. On Mars, where every gram of cargo counts and textiles don’t exist in abundance, fashion must be printed, repurposed, and redefined.</p>
 <p>At the center of the installation stands a mannequin wearing a <strong>Martian saree</strong> — a hybrid garment that merges cultural heritage with survival engineering. The top is composed of modular, 3D-printed units, designed to snap together in endlessly customizable arrangements. These pieces can be reshaped, replaced, or reconfigured based on need, mood, or role — offering both aesthetic flexibility and material efficiency in a world where adaptability is everything. The 3D printed material can be melted and reprinted in another shape.</p>
 <p>Draped across the body is the “Saree,” an Indian flowing garment constructed from heat-protective foil, the same kind used to line habitats and shield equipment from solar radiation. Its reflective surface catches light like silk, but serves as thermal insulation — a poetic fusion of tradition and technology. the corset for the saree is 3d Printed and can bve recycled. Along with this, there are samples of Nasa 3d "textiles" that have been released in opensource. I also had a shape that is modular and can be rearranged to repurpose into whatever shape is needed. This was to showcase the versatility of 3D printing.</p>
@@ -222,7 +225,7 @@ body {
 </div>
 
 <footer class="project-footer">
-  <a href="../../work.html" class="footer-back">← Back to Work</a>
+  <a href="../../work/work.html" class="footer-back">← Index</a>
   <span class="footer-left">Jiyo · Aur · Jeene · Do</span>
 </footer>
 
@@ -232,5 +235,21 @@ document.addEventListener('mousemove',function(e){cur.style.left=e.clientX+'px';
 document.addEventListener('mouseover',function(e){if(e.target.closest('a,button'))cur.classList.add('big');});
 document.addEventListener('mouseout',function(e){if(e.target.closest('a,button'))cur.classList.remove('big');});
 </script>
+<div id="uv-overlay" aria-hidden="true" role="dialog" aria-label="Contact">
+  <div class="uv-ov-top">
+    <button type="button" class="uv-ov-close" data-overlay-close>&#8592; Close</button>
+    <span class="uv-micro">Contact</span>
+  </div>
+  <div class="uv-ov-mid">
+    <a href="mailto:jain.yasha@gmail.com">jain.yasha@gmail.com</a>
+    <a href="mailto:jain@zkm.de">jain@zkm.de</a>
+    <a href="https://www.instagram.com/yaffa16/" target="_blank" rel="noopener noreferrer">@yaffa16</a>
+  </div>
+  <div class="uv-ov-foot">
+    <span>Karlsruhe, Germany</span>
+    <span>Open to commissions, exhibitions &amp; talks</span>
+  </div>
+</div>
+<script src="../../assets/wwc.js" defer></script>
 </body>
 </html>
