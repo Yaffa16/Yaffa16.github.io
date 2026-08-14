@@ -3,250 +3,511 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Weird With Code</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;overflow:hidden;cursor:none;background:#bdbdbd}
-:root{
-  --green:#39ff14;--bg:#bdbdbd;--bg2:#b0b0b0;--bg3:#a8a8a8;
-  --ink:#1a1a1a;--ink2:#3a3a3a;--ink3:#6a6a6a;
-  --line:rgba(0,0,0,.12);--line2:rgba(0,0,0,.07);
-}
-#cursor{position:fixed;pointer-events:none;z-index:9999;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green),0 0 14px var(--green);transform:translate(-50%,-50%);transition:width .15s,height .15s}
-#cursor.big{width:20px;height:20px;background:transparent;border:1.5px solid var(--green);box-shadow:none}
-#svgDefs{position:absolute;width:0;height:0;overflow:hidden}
-#lineCanvas{position:fixed;inset:0;pointer-events:none;z-index:20}
-#whole{position:fixed;z-index:8;top:50%;left:50%;transform:translate(-50%,-50%);width:var(--iw);height:var(--ih);pointer-events:none;opacity:0;transition:opacity 1.2s ease}
-#whole img{width:100%;height:100%;object-fit:contain}
-.frag{position:fixed;top:0;left:0;width:var(--iw);height:var(--ih);overflow:visible;opacity:0;will-change:transform;z-index:10;pointer-events:none}
-.frag-clip{position:absolute;top:0;left:0;width:var(--iw);height:var(--ih);overflow:hidden}
-.frag-clip img{position:absolute;top:0;left:0;width:var(--iw);height:var(--ih);object-fit:contain;display:block}
-.frag-svg{position:absolute;top:0;left:0;width:100%;height:100%;overflow:visible;pointer-events:none}
-.site-header{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 44px;background:var(--bg);flex-shrink:0}
-.site-header-name,.site-header-nav a{font-family:'Barlow Condensed',sans-serif;color:#fff;cursor:pointer;transition:color .2s,filter .2s;text-decoration:none}
-.site-header-name{font-weight:700;font-size:20px;letter-spacing:.06em;text-transform:uppercase}
-.site-header-nav{font-weight:300;font-size:16px;letter-spacing:.14em;text-transform:uppercase;display:flex;gap:32px}
-.site-header-name:hover,.site-header-nav a:hover{color:var(--green);filter:drop-shadow(0 0 6px var(--green))}
-#lineCanvas text{filter:drop-shadow(0 0 5px #39ff14);opacity:0;transition:opacity .8s}
-#lineCanvas circle{filter:drop-shadow(0 0 5px #39ff14);opacity:0;transition:opacity .8s}
-#nodePoly{fill:none;stroke:#39ff14;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px #39ff14);opacity:0;transition:opacity .8s}
-</style>
+<title>Weird With Code — Yasha Jain</title>
+<meta name="description" content="Weird With Code is the practice of Yasha Jain, a new media artist and creative technologist. Interactive installations, generative art and live coding."/>
+<meta property="og:title" content="Weird With Code — Yasha Jain"/>
+<meta property="og:description" content="New media artist and creative technologist. Interactive installations, generative art, live coding."/>
+<meta property="og:image" content="https://www.weirdwithcode.com/assets/Profile_Photo.jpg"/>
+<meta property="og:type" content="website"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/wwc.css">
 </head>
-<body>
+<body data-veil class="mode-overview">
 
-<div id="cursor"></div>
-
-<svg id="svgDefs" width="0" height="0">
-  <defs>
-    <filter id="whiteGlow" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="0" result="b1"/>
-      <feGaussianBlur in="SourceGraphic" stdDeviation="0" result="b2"/>
-      <feFlood flood-color="#fff" flood-opacity="1" result="w"/>
-      <feComposite in="w" in2="b2" operator="in" result="g2"/>
-      <feComposite in="w" in2="b1" operator="in" result="g1"/>
-      <feMerge><feMergeNode in="g2"/><feMergeNode in="g1"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-  </defs>
-</svg>
-
-<div class="site-header">
-  <span class="site-header-name">Weird With Code</span>
-  <nav class="site-header-nav">
-    <a href="work/work.html">Work</a>
-    <a href="work/bio.html">About</a>
+<header class="uv-head">
+  <a class="uv-mark" href="index.html">Weird With Code<sup>&#174;</sup> Projects</a>
+  <nav class="uv-nav">
+    <a href="work/work.html">Index</a>
+    <a href="work/bio.html">Studio</a>
+    <button type="button" data-overlay-open>Contact</button>
   </nav>
+</header>
+
+<!-- ============ 3D DECK (overview) ============ -->
+<div class="uv-stage" id="stage">
+  <div class="uv-deck" id="deck"></div>
+</div>
+<div class="uv-caption" id="caption"><span class="t"></span><span class="yr"></span></div>
+
+<!-- ============ INDEX (flat list on the same page) ============ -->
+<main class="uv-home-index">
+  <div class="uv-list" id="homeList"></div>
+  <footer class="uv-foot">
+    <span>Jiyo &#183; Aur &#183; Jeene &#183; Do</span>
+    <a href="https://www.instagram.com/yaffa16/" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <span>Yasha Jain &#169; 2026</span>
+  </footer>
+</main>
+
+<div class="uv-switch" id="switch">
+  <button type="button" class="on" data-mode="overview">Overview</button>
+  <button type="button" data-mode="index">Index</button>
 </div>
 
-<svg id="lineCanvas" xmlns="http://www.w3.org/2000/svg">
-  <polygon id="nodePoly" points="0,0 0,0 0,0 0,0"/>
-  <circle id="nd0" cx="0" cy="0" r="4" fill="#39ff14"/>
-  <circle id="nd1" cx="0" cy="0" r="4" fill="#39ff14"/>
-  <circle id="nd2" cx="0" cy="0" r="4" fill="#39ff14"/>
-  <circle id="nd3" cx="0" cy="0" r="4" fill="#39ff14"/>
-  <text id="ltxt0" font-family="'Barlow Condensed',sans-serif" font-size="13" letter-spacing="1" fill="#39ff14">Creative Coding</text>
-  <text id="ltxt1" font-family="'Barlow Condensed',sans-serif" font-size="13" letter-spacing="1" fill="#39ff14">Graphic Designer</text>
-  <text id="ltxt2" font-family="'Barlow Condensed',sans-serif" font-size="13" letter-spacing="1" fill="#39ff14">Multidisciplinary Practice</text>
-  <text id="ltxt3" font-family="'Barlow Condensed',sans-serif" font-size="13" letter-spacing="1" fill="#39ff14">Visual Design</text>
-</svg>
+<!-- ============ CONTACT OVERLAY ============ -->
+<div id="uv-overlay" aria-hidden="true" role="dialog" aria-label="Contact">
+  <div class="uv-ov-top">
+    <span class="uv-micro">Contact</span>
+    <button type="button" class="uv-ov-close" data-overlay-close>Close</button>
+  </div>
+  <div class="uv-ov-mid">
+    <a href="mailto:jain.yasha@gmail.com">jain.yasha@gmail.com</a>
+    <a href="mailto:jain@zkm.de">jain@zkm.de</a>
+    <a href="https://www.instagram.com/yaffa16/" target="_blank" rel="noopener noreferrer">@yaffa16</a>
+  </div>
+  <div class="uv-ov-foot">
+    <span>Karlsruhe, Germany</span>
+    <span>Open to commissions, exhibitions &amp; talks</span>
+  </div>
+</div>
 
-<div id="whole"><img id="srcImg" src="img.png" alt=""/></div>
-
+<script src="assets/works.js"></script>
 <script>
-var VW=window.innerWidth,VH=window.innerHeight,CX=VW/2,CY=VH/2;
-var mx=CX,my=CY;
-var srcImg=document.getElementById('srcImg'),wholeEl=document.getElementById('whole');
-var lineCanvas=document.getElementById('lineCanvas'),nodePoly=document.getElementById('nodePoly');
-var nodeDots=[0,1,2,3].map(function(i){return document.getElementById('nd'+i);});
-var labelTxts=[0,1,2,3].map(function(i){return document.getElementById('ltxt'+i);});
-var phase='fadein',breathStart=null,breathDuration=2200,currentBreathScale=1;
-var NS='http://www.w3.org/2000/svg';
-var W,H,OX,OY;
+/* =================================================================
+   THE DECK
+   Panes recede along a bottom-left -> top-right diagonal in 3D.
+   Wheel / drag scrubs the stack (front pane recycles to the back),
+   mouse position parallaxes the whole deck, hovering a pane
+   flattens it toward the viewer. Click opens the project.
+   ================================================================= */
+(function () {
+  'use strict';
+  var RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var FINE = matchMedia('(pointer: fine)').matches;
 
-var FRAGS=[
-  {poly:'62% 0%, 80% 0%, 78% 8%, 68% 12%, 60% 10%',cx:.72,cy:.05},
-  {poly:'22% 8%, 40% 10%, 42% 22%, 28% 28%, 24% 22%',cx:.32,cy:.16},
-  {poly:'40% 10%, 60% 10%, 58% 24%, 46% 28%, 42% 22%',cx:.50,cy:.17},
-  {poly:'60% 10%, 78% 8%, 80% 20%, 68% 26%, 58% 24%',cx:.70,cy:.16},
-  {poly:'24% 22%, 42% 22%, 44% 36%, 30% 42%, 22% 38%',cx:.33,cy:.30},
-  {poly:'42% 22%, 58% 24%, 56% 38%, 46% 42%, 44% 36%',cx:.50,cy:.30},
-  {poly:'58% 24%, 80% 20%, 82% 34%, 70% 40%, 56% 38%',cx:.70,cy:.29},
-  {poly:'0% 38%, 10% 42%, 22% 38%, 20% 54%, 8% 58%, 0% 52%',cx:.09,cy:.46},
-  {poly:'22% 38%, 44% 36%, 46% 52%, 32% 56%, 20% 54%',cx:.32,cy:.46},
-  {poly:'44% 36%, 56% 38%, 58% 52%, 48% 56%, 46% 52%',cx:.51,cy:.46},
-  {poly:'56% 38%, 70% 40%, 82% 34%, 80% 52%, 66% 56%, 58% 52%',cx:.70,cy:.45},
-  {poly:'20% 54%, 32% 56%, 46% 52%, 44% 68%, 28% 72%, 18% 68%',cx:.32,cy:.62},
-  {poly:'46% 52%, 48% 56%, 58% 52%, 60% 66%, 50% 70%, 44% 68%',cx:.52,cy:.61},
-  {poly:'58% 52%, 66% 56%, 80% 52%, 82% 66%, 68% 70%, 60% 66%',cx:.71,cy:.60},
-  {poly:'18% 68%, 28% 72%, 44% 68%, 42% 84%, 22% 88%, 16% 82%',cx:.30,cy:.76},
-  {poly:'44% 68%, 50% 70%, 60% 66%, 62% 82%, 50% 86%, 42% 84%',cx:.52,cy:.75},
-  {poly:'60% 66%, 68% 70%, 82% 66%, 80% 82%, 66% 86%, 62% 82%',cx:.72,cy:.75},
-  {poly:'42% 84%, 50% 86%, 62% 82%, 66% 86%, 80% 82%, 78% 94%, 42% 94%',cx:.61,cy:.90},
-];
+  var rows = window.WC_FLAT;
 
-function parsePoly(s){
-  return s.split(',').map(function(p){var a=p.trim().split(/\s+/);return{px:parseFloat(a[0])/100,py:parseFloat(a[1])/100};});
-}
+  // Flat index list (also the fallback on touch / reduced motion)
+  var list = document.getElementById('homeList');
+  list.innerHTML = rows.map(function (w) {
+    // No data-peek here: that attribute is what makes wwc.js spawn the
+    // image that floats beside the cursor. The Index view is a plain
+    // text list.
+    return '<a class="uv-row" href="work/' + w.href + '">' +
+      '<span class="n">' + w.n + '</span>' +
+      '<span class="t">' + w.title + '</span>' +
+      '<span class="g">' + w.tags + '</span>' +
+      '<span class="y">' + w.venue + ' &#8212; ' + w.year + '</span></a>';
+  }).join('');
 
-var state=FRAGS.map(function(f){
-  return{x:0,y:0,rot:0,tx:0,ty:0,tr:0,vx:0,vy:0,vr:0,el:null,svgPoly:null,svgGlow:null,pts:parsePoly(f.poly)};
-});
-
-FRAGS.forEach(function(f,i){
-  var outer=document.createElement('div');outer.className='frag';
-  var inner=document.createElement('div');inner.className='frag-clip';inner.style.clipPath='polygon('+f.poly+')';
-  var img=document.createElement('img');img.src='img.png';img.alt='';
-  inner.appendChild(img);outer.appendChild(inner);
-  var svg=document.createElementNS(NS,'svg');svg.classList.add('frag-svg');
-  var pGlow=document.createElementNS(NS,'polygon');
-  pGlow.setAttribute('fill','none');pGlow.setAttribute('stroke','rgba(255,255,255,.55)');
-  pGlow.setAttribute('stroke-width','3');pGlow.setAttribute('stroke-linejoin','round');
-  pGlow.setAttribute('filter','url(#whiteGlow)');svg.appendChild(pGlow);
-  var pEdge=document.createElementNS(NS,'polygon');
-  pEdge.setAttribute('fill','none');pEdge.setAttribute('stroke','rgba(255,255,255,.92)');
-  pEdge.setAttribute('stroke-width','1');pEdge.setAttribute('stroke-linejoin','round');
-  svg.appendChild(pEdge);outer.appendChild(svg);
-  document.body.appendChild(outer);
-  state[i].el=outer;state[i].svgPoly=pEdge;state[i].svgGlow=pGlow;
-});
-
-function initSize(){
-  var nw=srcImg.naturalWidth||800,nh=srcImg.naturalHeight||900;
-  var sc=Math.min(VW*.66/nw,VH*.96/nh,1);
-  W=Math.round(nw*sc);H=Math.round(nh*sc);
-  document.documentElement.style.setProperty('--iw',W+'px');
-  document.documentElement.style.setProperty('--ih',H+'px');
-  OX=CX-W/2;OY=CY-H/2;
-  document.querySelectorAll('.frag-clip,.frag-clip img,.frag').forEach(function(el){el.style.width=W+'px';el.style.height=H+'px';});
-  state.forEach(function(s){
-    var vb='0 0 '+W+' '+H;
-    s.el.querySelector('.frag-svg').setAttribute('viewBox',vb);
-    var pts=s.pts.map(function(p){return(p.px*W).toFixed(1)+','+(p.py*H).toFixed(1);}).join(' ');
-    s.svgPoly.setAttribute('points',pts);s.svgGlow.setAttribute('points',pts);
+  // Overview / Index switch
+  var sw = document.getElementById('switch');
+  sw.addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-mode]');
+    if (!b) return;
+    sw.querySelectorAll('button').forEach(function (x) { x.classList.remove('on'); });
+    b.classList.add('on');
+    document.body.classList.toggle('mode-index', b.dataset.mode === 'index');
+    document.body.classList.toggle('mode-overview', b.dataset.mode === 'overview');
+    if (b.dataset.mode === 'index') window.scrollTo(0, 0);
   });
-}
 
-var nodeArms=[
-  {angle:Math.PI*.15,rBase:220},{angle:Math.PI*.62,rBase:270},
-  {angle:Math.PI*1.15,rBase:240},{angle:Math.PI*1.68,rBase:200},
-];
-var nodes=nodeArms.map(function(){return{sx:CX,sy:CY};});
-
-function assignScatterTargets(){
-  state.forEach(function(s){
-    s.tx=OX+(Math.random()*2-1)*VW*.45;
-    s.ty=OY+(Math.random()*2-1)*VH*.45;
-    s.tr=(s.rot>0?-1:1)*(Math.random()>.5?1:-1)*(20+Math.random()*65);
-  });
-}
-
-document.addEventListener('click',function(e){
-  if(phase==='scattered'&&!e.target.closest('a,[data-nav]'))assignScatterTargets();
-});
-
-function resizeSVG(){
-  VW=window.innerWidth;VH=window.innerHeight;CX=VW/2;CY=VH/2;
-  lineCanvas.setAttribute('viewBox','0 0 '+VW+' '+VH);
-  lineCanvas.setAttribute('width',VW);lineCanvas.setAttribute('height',VH);
-}
-resizeSVG();window.addEventListener('resize',resizeSVG);
-
-function shatter(){
-  phase='shattering';
-  state.forEach(function(s){s.x=OX;s.y=OY;s.rot=0;s.vx=0;s.vy=0;s.vr=0;s.el.style.opacity='1';s.el.style.transform='translate('+OX+'px,'+OY+'px)';});
-  wholeEl.style.transition='opacity 0.3s ease';wholeEl.style.opacity='0';
-  setTimeout(function(){
-    assignScatterTargets();phase='scattered';
-    setTimeout(function(){
-      nodePoly.style.opacity='1';
-      nodeDots.forEach(function(d){d.style.opacity='1';});
-      labelTxts.forEach(function(l){l.style.opacity='1';});
-    },600);
-  },220);
-}
-
-function easeInOutSine(t){return -(Math.cos(Math.PI*t)-1)/2;}
-
-function loop(ts){
-  requestAnimationFrame(loop);
-  if(phase==='breathing'||phase==='fadein'){
-    if(!breathStart)breathStart=ts;
-    var t=easeInOutSine((Math.sin((ts-breathStart)/breathDuration*Math.PI*2)+1)/2);
-    currentBreathScale=1+t*.05;
-    wholeEl.style.transform='translate(-50%,-50%) scale('+currentBreathScale+')';
-    return;
+  if (!FINE || RM) {
+    document.body.classList.remove('mode-overview');
+    document.body.classList.add('mode-index');
+    return; // no deck
   }
-  if(phase!=='scattered')return;
-  state.forEach(function(s){
-    s.vx+=(s.tx-s.x)*.01;s.vy+=(s.ty-s.y)*.01;s.vr+=(s.tr-s.rot)*.01;
-    s.vx*=.80;s.vy*=.80;s.vr*=.80;
-    s.x+=s.vx;s.y+=s.vy;s.rot+=s.vr;
-    s.el.style.transform='translate('+s.x.toFixed(1)+'px,'+s.y.toFixed(1)+'px) rotate('+s.rot.toFixed(2)+'deg)';
-  });
-  var offX=(mx-CX)/Math.max(CX,1),offY=(my-CY)/Math.max(CY,1);
-  nodeArms.forEach(function(arm,i){
-    var tx=mx+Math.cos(arm.angle)*arm.rBase*(1+offX*Math.cos(arm.angle)*.7);
-    var ty=my+Math.sin(arm.angle)*arm.rBase*(1+offY*Math.sin(arm.angle)*.7);
-    nodes[i].sx+=(tx-nodes[i].sx)*.12;nodes[i].sy+=(ty-nodes[i].sy)*.12;
-    nodes[i].sx=Math.max(20,Math.min(VW-20,nodes[i].sx));nodes[i].sy=Math.max(20,Math.min(VH-20,nodes[i].sy));
-  });
-  var pts=nodes.map(function(n){return n.sx.toFixed(1)+','+n.sy.toFixed(1);}).join(' ');
-  nodePoly.setAttribute('points',pts);
-  nodes.forEach(function(n,i){nodeDots[i].setAttribute('cx',n.sx.toFixed(1));nodeDots[i].setAttribute('cy',n.sy.toFixed(1));});
-  nodes.forEach(function(n,i){
-    var nx=nodes[(i+1)%nodes.length];
-    var mx2=(n.sx+nx.sx)*.5,my2=(n.sy+nx.sy)*.5;
-    var ang=Math.atan2(nx.sy-n.sy,nx.sx-n.sx)*180/Math.PI;
-    if(ang>90||ang<-90)ang+=180;
-    labelTxts[i].setAttribute('x',mx2.toFixed(1));labelTxts[i].setAttribute('y',my2.toFixed(1));
-    labelTxts[i].setAttribute('text-anchor','middle');labelTxts[i].setAttribute('dominant-baseline','middle');
-    labelTxts[i].setAttribute('transform','rotate('+ang.toFixed(1)+','+mx2.toFixed(1)+','+my2.toFixed(1)+')');
-    labelTxts[i].setAttribute('dy','-7');
-  });
-}
 
-function ready(){
-  initSize();
-  state.forEach(function(s){s.x=OX;s.y=OY;s.el.style.transform='translate('+OX+'px,'+OY+'px) scale('+currentBreathScale+')';});
-  wholeEl.style.opacity='0';wholeEl.style.transition='opacity 1.2s ease';
-  setTimeout(function(){wholeEl.style.opacity='1';phase='breathing';breathStart=null;setTimeout(shatter,1000);},300);
-  nodePoly.style.opacity='1';
-  nodeDots.forEach(function(d){d.style.opacity='1';});
-  labelTxts.forEach(function(l){l.style.opacity='1';});
-}
-srcImg.addEventListener('load',ready);
-if(srcImg.complete&&srcImg.naturalWidth)ready();
-requestAnimationFrame(loop);
+  var deck = document.getElementById('deck');
+  var stage = document.getElementById('stage');
+  var caption = document.getElementById('caption');
+  var capT = caption.querySelector('.t');
+  var capY = caption.querySelector('.yr');
 
-// Cursor
-var cur=document.getElementById('cursor');
-document.addEventListener('mousemove',function(e){
-  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
-  mx=e.clientX;my=e.clientY;
-});
-var hoverSel='a,button,[data-nav]';
-document.addEventListener('mouseover',function(e){if(e.target.closest(hoverSel))cur.classList.add('big');});
-document.addEventListener('mouseout',function(e){if(e.target.closest(hoverSel))cur.classList.remove('big');});
+  var N = rows.length;
+
+  /* Three frame formats, proportioned from the reference dimensions
+     and expressed as fractions of --cardw so they scale with the
+     viewport: tall portrait (680x905), wide landscape (904x550) and
+     a moderate landscape in between (820x700). */
+  var FRAMES = [
+    { w: 0.75, h: 1.00 },   // 680 x 905
+    { w: 1.00, h: 0.61 },   // 904 x 550
+    { w: 0.91, h: 0.77 }    // 820 x 700
+  ];
+
+  var cards = rows.map(function (w, i) {
+    var a = document.createElement('a');
+    a.className = 'uv-card';
+    a.href = 'work/' + w.href;
+    a.setAttribute('aria-label', w.title + ', ' + w.year);
+    a.draggable = false;
+    var fr = FRAMES[i % FRAMES.length];
+    a.style.setProperty('--cw', 'calc(var(--cardw) * ' + fr.w + ')');
+    a.style.setProperty('--ch', 'calc(var(--cardw) * ' + fr.h + ')');
+    var blur = document.createElement('img');
+    blur.className = 'uv-blur'; blur.alt = ''; blur.draggable = false;
+    blur.src = 'work/' + w.img; blur.loading = 'eager'; blur.decoding = 'async';
+    var img = document.createElement('img');
+    img.className = 'uv-sharp';
+    img.draggable = false;
+    img.src = 'work/' + w.img;
+    img.alt = w.title;
+    img.loading = 'eager'; // 22 thumbs; blank glass panes look broken
+    img.decoding = 'async';
+    if (img.complete && img.naturalWidth) a.classList.add('ready');
+    else img.addEventListener('load', function () { a.classList.add('ready'); });
+    img.addEventListener('error', function () { a.remove(); });
+    a.appendChild(blur);
+    a.appendChild(img);
+    var edge = document.createElement('span'); edge.className = 'uv-edge';
+    var edgeB = document.createElement('span'); edgeB.className = 'uv-edge-b';
+    a.appendChild(edge);
+    a.appendChild(edgeB);
+    deck.appendChild(a);
+    return { el: a, data: w, hovered: false, flat: 0 };
+  });
+
+  /* Path geometry, per unit of depth rank */
+  /* Steps are a fraction of the pane width so the stack fills the
+     frame identically at any viewport. 0.34 / 0.37 is a ~47deg
+     diagonal, matching the measured reference. */
+  var STEP_X = 0, STEP_Y = 0, STEP_Z = 0;
+  function sizeSteps() {
+    var cw = cards[0] ? cards[0].el.offsetWidth : 320;
+    STEP_X = cw * 0.42;
+    STEP_Y = cw * 0.36;   // flatter climb, still legible
+    STEP_Z = cw * 0.42;   // shallow depth step: a deep one compresses
+                          // the far end into the vanishing point and
+                          // leaves the right of the frame empty
+    cards.forEach(function (c) { c.hw = 0; c.hh = 0; });
+  }
+  sizeSteps();
+  addEventListener('resize', sizeSteps);
+  var BASE_X = -0.36, BASE_Y = 0.56;   // front pane bleeds off the bottom-LEFT corner
+  /* The panes are turned in 3D. A flat CSS skew can reproduce the
+     measured corner angles but not the look: in the reference those
+     angles come from a rotated plane seen in perspective, so the image
+     foreshortens across the pane. Rotation is the real effect.  */
+  var TILT = -45;   // rotateY: pane turns to face left (base yaw)
+
+  /* Extra rotation per axis, added on top of TILT. All three are
+     applied to the pane AND to its hit-testing quad, so clicks stay on
+     the pane whatever you set here.
+       ROT_X  pitch — tips the top toward you (+) or away (-)
+       ROT_Y  yaw   — extra turn left/right, added to TILT
+       ROT_Z  roll  — spins the pane in its own plane            */
+  var ROT_X = -15;
+  var ROT_Y = 20;
+  var ROT_Z =0;
+  var SKEW  = 0;    // in-plane shear, normally none
+
+  var offset = 0, shown = 0;            // scrub position (in card units)
+  var px = 0, py = 0, cpx = 0, cpy = 0; // parallax
+  var lerp = function (a, b, n) { return a + (b - a) * n; };
+
+  var rawX = innerWidth / 2, rawY = innerHeight / 2;
+  addEventListener('mousemove', function (e) {
+    px = e.clientX / innerWidth - 0.5;
+    py = e.clientY / innerHeight - 0.5;
+    rawX = e.clientX; rawY = e.clientY;
+  }, { passive: true });
+
+  /* Wheel scrubs the deck instead of scrolling the page */
+  var lastInput = 0;
+  stage.addEventListener('wheel', function (e) {
+    e.preventDefault();
+    if (navigating) return;
+    offset += (e.deltaY + e.deltaX) * 0.0022;
+    lastInput = performance.now();
+  }, { passive: false });
+
+  /* Drag scrub + click-to-open.
+     The panes are re-transformed every animation frame, so a pane can
+     shift between pointerdown and pointerup; the browser then refuses
+     to synthesize a click at all. Navigation therefore keys off the
+     pane captured at pointerdown, fired on pointerup when the pointer
+     barely moved. Native clicks on panes are suppressed to avoid a
+     double navigation through the global link handler. */
+  var dragging = false, dragX = 0, dragY = 0, moved = 0, downCard = null;
+  stage.addEventListener('pointerdown', function (e) {
+    if (navigating) return;
+    dragging = true; dragX = e.clientX; dragY = e.clientY; moved = 0;
+    // Fresh strict test at the press point; fall back to the sticky
+    // hover only if the press is actually within its sticky margin.
+    downCard = hitTest(e.clientX, e.clientY) ||
+               hitTestDrawn(e.clientX, e.clientY) ||
+               (stickyContains(hoverCard, e.clientX, e.clientY) ? hoverCard : null);
+  });
+  addEventListener('pointermove', function (e) {
+    if (!dragging) return;
+    var d = e.clientX - dragX; dragX = e.clientX;
+    var dy = e.clientY - (dragY || e.clientY); dragY = e.clientY;
+    moved += Math.abs(d) + Math.abs(dy);
+    if (moved <= 14) return; // still within click slop: don't scrub yet
+    // near 1:1 with the on-screen step of ~155px per card, diagonal-aware
+    offset -= (d - dy) * 0.0058;
+    lastInput = performance.now();
+  });
+  // Trackpad clicks usually include a few px of movement; anything
+  // under CLICK_SLOP counts as a click, not a drag.
+  var CLICK_SLOP = 14;
+  // Belt and braces: never let the browser start a native drag from a
+  // pane, and treat a cancelled pointer like a released one so drag
+  // state can't stick.
+  document.addEventListener('dragstart', function (e) {
+    if (e.target.closest && e.target.closest('.uv-card')) e.preventDefault();
+  });
+  addEventListener('pointercancel', function () {
+    dragging = false; downCard = null;
+  });
+  addEventListener('pointerup', function (e) {
+    dragging = false;
+    if (moved <= CLICK_SLOP) {
+      if (downCard) {
+        openProject(downCard);
+      }
+      // Clicks on empty space do nothing: scrubbing is drag/wheel only.
+    }
+    downCard = null;
+  });
+  deck.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('.uv-card')) {
+      e.preventDefault(); e.stopPropagation();
+    }
+  }, true);
+
+  var navigating = false;
+  // Returning via back/forward cache must not leave the page faded
+  // out or navigation locked.
+  addEventListener('pageshow', function () {
+    navigating = false;
+    focusCard = null; focusT = 0;
+    document.body.style.opacity = '1';
+  });
+  /* Clicking a pane previews it before leaving: the pane travels to
+     the centre of the screen at a slightly larger size and turns
+     face-on, every other pane fades away, then the project page
+     loads. */
+  var focusCard = null, focusT = 0, focusStart = 0;
+  // The pane takes FOCUS_MS to land centre-screen, then HOLD_MS of
+  // stillness on the enlarged image before the project page loads.
+  var FOCUS_MS = 420;
+  var HOLD_MS  = 1000;
+  var LEAVE_MS = FOCUS_MS + HOLD_MS;
+  function openProject(card) {
+    if (navigating) return;
+    navigating = true;
+    focusCard = card;
+    focusStart = performance.now();
+    caption.classList.remove('on');
+    stage.style.cursor = '';
+    setTimeout(function () {
+      location.href = card.el.getAttribute('href');
+    }, LEAVE_MS);
+  }
+  /* ---- own hit-testing --------------------------------------------
+     Each frame stores every pane's projected screen quad; hover and
+     clicks are resolved against those quads, nearest pane wins. */
+  var P3 = 9500, hoverCard = null, capW = 0, capH = 0;
+  addEventListener('resize', function () {
+    cards.forEach(function (c) { c.hw = 0; c.hh = 0; });
+  });
+
+  function project(wx, wy, wz) {
+    // Straight perspective projection about the origin — the deck no
+    // longer rotates, so there is no parallax term to undo here.
+    var Ox = 0, Oy = -0.04 * innerHeight;
+    var s = P3 / (P3 - wz);
+    return [Ox + (wx - Ox) * s + innerWidth / 2,
+            Oy + (wy - Oy) * s + innerHeight / 2, wz];
+  }
+  function inQuad(q, px2, py2) {
+    var sgn = 0;
+    for (var i = 0; i < 4; i++) {
+      var A = q[i], B = q[(i + 1) % 4];
+      var cr = (B[0] - A[0]) * (py2 - A[1]) - (B[1] - A[1]) * (px2 - A[0]);
+      if (cr !== 0) {
+        var t = cr > 0 ? 1 : -1;
+        if (sgn === 0) sgn = t; else if (t !== sgn) return false;
+      }
+    }
+    return true;
+  }
+  function hitTest(px2, py2) {
+    var best = null;
+    for (var i = 0; i < cards.length; i++) {
+      var c = cards[i];
+      if (!c.quad || c.fade <= 0.5) continue;
+      if (inQuad(c.quad, px2, py2) && (!best || c.zc > best.zc)) best = c;
+    }
+    return best;
+  }
+  // For clicks: the pane the user can SEE under the pointer, slid or not.
+  function hitTestDrawn(px2, py2) {
+    var best = null;
+    for (var i = 0; i < cards.length; i++) {
+      var c = cards[i];
+      if (!c.drawnQuad || c.fade <= 0.5) continue;
+      if (inQuad(c.drawnQuad, px2, py2) && (!best || c.zc > best.zc)) best = c;
+    }
+    return best;
+  }
+  function stickyContains(c, px2, py2) {
+    if (!c || !c.quad) return false;
+    var cx2 = 0, cy2 = 0;
+    for (var i = 0; i < 4; i++) { cx2 += c.quad[i][0] / 4; cy2 += c.quad[i][1] / 4; }
+    var big = c.quad.map(function (p3) {
+      return [cx2 + (p3[0] - cx2) * 1.18, cy2 + (p3[1] - cy2) * 1.18];
+    });
+    return inQuad(big, px2, py2);
+  }
+  function setHover(hit) {
+    if (hit === hoverCard) return;
+    if (hoverCard) hoverCard.hovered = false;
+    hoverCard = hit;
+    if (hit) {
+      hit.hovered = true;
+      capT.textContent = hit.data.title;
+      capY.textContent = hit.data.n + ' \u2014 ' + hit.data.year;
+      caption.classList.add('on');
+      capW = caption.offsetWidth; capH = caption.offsetHeight;
+      stage.style.cursor = 'pointer';
+    } else {
+      caption.classList.remove('on');
+      stage.style.cursor = '';
+    }
+  }
+
+  function frame() {
+    // After 400ms without input, settle onto the nearest whole card so
+    // the front pane always sits cleanly on the grid.
+    if (!dragging && performance.now() - lastInput > 400) {
+      offset = lerp(offset, Math.round(offset), 0.10);
+    }
+    shown = lerp(shown, offset, 0.08);
+    cpx = lerp(cpx, px, 0.06);
+    cpy = lerp(cpy, py, 0.06);
+
+    // Popup trails the cursor but never leaves the viewport: it flips
+    // to the left of the pointer near the right edge, and above it near
+    // the bottom.
+    var cw = capW, ch = capH;
+    var capX = rawX + 18, capY = rawY + 20;
+    if (capX + cw > innerWidth - 8) capX = rawX - cw - 14;
+    if (capY + ch > innerHeight - 8) capY = rawY - ch - 14;
+    caption.style.transform =
+      'translate3d(' + capX + 'px,' + capY + 'px,0)';
+    // No deck rotation. The mouse-parallax rotateX was tipping the whole
+    // stack backwards; rotateY went with it. The panes' own left-facing
+    // TILT is the only rotation in the scene now.
+    deck.style.transform = 'none';
+
+    if (focusCard) {
+      // Time-based: a slow frame must not leave the preview unfinished.
+      var fp = Math.min(1, (performance.now() - focusStart) / FOCUS_MS);
+      focusT = 1 - Math.pow(1 - fp, 3);   // ease-out
+    }
+
+    var W = innerWidth, H = innerHeight;
+    cards.forEach(function (c, i) {
+      // depth rank 0 (front) .. N-1 (deep), fractional for smoothness
+      var r = (i - shown) % N; if (r < 0) r += N;
+      c.flat = lerp(c.flat, c.hovered ? 1 : 0, 0.34); // immediate
+
+      // Hover slides the pane sideways ONLY: same depth, same tilt,
+      // same size. No pull toward the viewer (that made it "come up"),
+      // no rotation. SLIDE is the whole gesture.
+      // Deeper panes are drawn smaller by perspective, so the world-
+      // space shift is scaled by (P - z) / P to keep the ON-SCREEN
+      // slide the same distance at every rank.
+      var P = 9500;                       // matches CSS perspective
+      var x0 = BASE_X * W + r * STEP_X;
+      var y0 = BASE_Y * H - r * STEP_Y;
+      var z0 = -r * STEP_Z;
+      var f = c.flat;
+      var SLIDE = 300;                     // on-screen px, to the right
+      var x = x0 + SLIDE * ((P - z0) / P) * f;
+      var y = y0;
+      var z = z0;
+      var rot = TILT;
+
+      // Fade only the deep end; a wrapping card crosses the front at
+      // full opacity, jumps to the deep end already faded to zero,
+      // then fades back in as it advances. The front stays solid.
+      var fade = r > N - 1.6 ? Math.max(0, (N - r) / 1.6) : 1;
+
+      var haze = Math.min(0.10, Math.max(0, (r - 2.2) * 0.0117)); // 1/3 fog
+      var zi = 1000 - Math.round(r * 10);
+
+      if (focusCard) {
+        if (c === focusCard) {
+          // Centre it: with screen = O + (world - O) * P/(P - z), the
+          // world position that lands dead centre is O * (1 - 1/s).
+          var Ox2 = 0, Oy2 = -0.04 * H;
+          var zF = 300, sF = P / (P - zF);          // ~1.17x its rest size
+          var xF = Ox2 * (1 - 1 / sF), yF = Oy2 * (1 - 1 / sF);
+          var ft2 = focusT;
+          x = x + (xF - x) * ft2;
+          y = y + (yF - y) * ft2;
+          z = z + (zF - z) * ft2;
+          // the shear eases out with focusT, applied below
+          haze = haze * (1 - ft2);
+          fade = 1;
+          zi = 4000;
+        } else {
+          fade *= (1 - Math.min(1, focusT * 1.6));  // everything else clears
+        }
+      }
+
+      var ease = focusCard === c ? (1 - focusT) : 1;   // preview flattens all
+      var ax = ROT_X * ease,
+          ay = (rot + ROT_Y) * ease,
+          az = ROT_Z * ease,
+          sk = SKEW * ease;
+      c.el.style.transform =
+        'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,' + z.toFixed(1) + 'px)' +
+        ' rotateX(' + ax.toFixed(2) + 'deg)' +
+        ' rotateY(' + ay.toFixed(2) + 'deg)' +
+        ' rotateZ(' + az.toFixed(2) + 'deg)' +
+        (sk ? ' skewY(' + sk.toFixed(2) + 'deg)' : '');
+      c.el.style.opacity = fade.toFixed(3);
+      c.el.style.setProperty('--haze', haze.toFixed(3));
+      c.el.style.zIndex = String(zi);
+
+      // projected screen quad for our own hit-testing
+      c.fade = fade;
+      // Panes have three different shapes now, so each caches its own
+      // half-width/half-height for hit-testing.
+      if (!c.hw) { c.hw = c.el.offsetWidth / 2; c.hh = c.el.offsetHeight / 2; }
+      var HW2 = c.hw, HH2 = c.hh;
+      // Rotate each corner the way the CSS does — rotateX, then
+      // rotateY, then rotateZ — so the clickable quad matches the
+      // drawn pane on all three axes.
+      var RX = ax * Math.PI / 180, RY = ay * Math.PI / 180, RZ = az * Math.PI / 180;
+      var cX = Math.cos(RX), sX = Math.sin(RX),
+          cY = Math.cos(RY), sY = Math.sin(RY),
+          cZ = Math.cos(RZ), sZ = Math.sin(RZ);
+      var tk = Math.tan(sk * Math.PI / 180);
+      // HIT-TESTING USES THE PANE'S RESTING POSITION, NOT ITS SLID ONE.
+      // Building it from the slid position creates a feedback loop:
+      // hovering slides the pane away from the cursor, the cursor is
+      // then outside it, hover drops, it slides back under the cursor,
+      // hover fires again -> flicker. Worse between two panes, where
+      // each one sliding away exposes the other. Testing against the
+      // rest position breaks the loop: what the cursor is "over" never
+      // changes because of the hover itself.
+      function quadAt(qx, qy, qz) {
+        return [[-HW2, -HH2], [HW2, -HH2], [HW2, HH2], [-HW2, HH2]].map(function (p2) {
+          var px0 = p2[0], py0 = p2[1] + p2[0] * tk;                // shear
+          var x1 = px0 * cZ - py0 * sZ, y1 = px0 * sZ + py0 * cZ;   // roll
+          var x2 = x1 * cY, z2 = -x1 * sY;                          // yaw
+          var y3 = y1 * cX - z2 * sX, z3 = y1 * sX + z2 * cX;       // pitch
+          return project(qx + x2, qy + y3, qz + z3);
+        });
+      }
+      c.quad = quadAt(x0, y0, z0);      // resting geometry
+      c.drawnQuad = quadAt(x, y, z);    // where it is actually painted
+      c.zc = project(x0, y0, z0)[2];   // stable depth ordering
+    });
+    var hitNow = hitTest(rawX, rawY);
+    if (!hitNow && stickyContains(hoverCard, rawX, rawY)) hitNow = hoverCard;
+    setHover(hitNow);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
 </script>
+<script src="assets/wwc.js" defer></script>
 </body>
 </html>

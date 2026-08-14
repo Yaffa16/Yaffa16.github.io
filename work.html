@@ -3,267 +3,120 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Work — Weird With Code</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
+<title>Index — Weird With Code</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/wwc.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;background:#bdbdbd;color:#1a1a1a;font-family:'Barlow',sans-serif;cursor:none}
-
-:root{
-  --green:#39ff14;
-  --bg:#bdbdbd;--bg2:#b0b0b0;--bg3:#a8a8a8;
-  --row:#ffffff;--row-hover:#f5f5f5;
-  --ink:#1a1a1a;--ink2:#3a3a3a;--ink3:#6a6a6a;
-  --line:rgba(0,0,0,.12);--line2:rgba(0,0,0,.07);
+.page-top {
+  padding: clamp(84px, 14vh, 130px) var(--pad) 26px;
+  display: flex; justify-content: space-between; align-items: baseline;
+  flex-wrap: wrap; gap: 12px;
 }
-
-/* ── CURSOR ─────────────────────────────────── */
-#cursor{position:fixed;pointer-events:none;z-index:9999;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green),0 0 14px var(--green);transform:translate(-50%,-50%);transition:width .15s,height .15s}
-#cursor.big{width:20px;height:20px;background:transparent;border:1.5px solid var(--green);box-shadow:none}
-
-/* ── PAGE ────────────────────────────────────── */
-#page{display:flex;flex-direction:column;min-height:100vh;background:var(--bg)}
-
-/* ── HEADER ──────────────────────────────────── */
-.site-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:18px 44px;
-  background:var(--bg);
-  border-bottom:1px solid var(--line);
-  position:sticky;top:0;z-index:100;
+.page-top h1 { font-size: 12px; font-weight: 600; letter-spacing: .04em; }
+.filters { display: flex; flex-wrap: wrap; gap: 14px; padding: 0 var(--pad) 20px; }
+.chip {
+  font-family: inherit; font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; background: none; border: 0;
+  color: var(--dim); cursor: pointer; padding: 0;
+  transition: color .3s;
 }
-.site-header-name,.site-header-nav a{
-  font-family:'Barlow Condensed',sans-serif;
-  color:#fff;cursor:pointer;
-  transition:color .2s,filter .2s;text-decoration:none;
-}
-.site-header-name{font-weight:700;font-size:20px;letter-spacing:.06em;text-transform:uppercase}
-.site-header-nav{font-weight:300;font-size:16px;letter-spacing:.14em;text-transform:uppercase;display:flex;gap:32px}
-.site-header-nav a.active{color:var(--green)}
-.site-header-name:hover,.site-header-nav a:hover{color:var(--green);filter:drop-shadow(0 0 6px var(--green))}
-
-/* ── MAIN ────────────────────────────────────── */
-main{flex:1;padding-bottom:80px}
-
-/* ── SECTION BAND ────────────────────────────── */
-.section-band{
-  display:flex;align-items:baseline;justify-content:space-between;
-  padding:22px 44px 16px;
-  border-bottom:1px solid var(--line);
-  background:#ffffff;
-}
-.section-label{
-  font-family:'Barlow Condensed',sans-serif;font-weight:300;
-  font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink3);
-}
-.section-year{
-  font-family:'Barlow Condensed',sans-serif;font-weight:900;
-  font-size:clamp(52px,8vw,96px);
-  color:var(--ink);line-height:.85;letter-spacing:-.02em;
-}
-.section-band.past .section-year{color:rgba(0,0,0,.22);font-size:clamp(38px,5vw,68px)}
-.section-band.past .section-label{color:rgba(0,0,0,.3)}
-
-/* ── EVENT ROW ───────────────────────────────── */
-.event-row{
-  display:grid;
-  grid-template-columns:90px 72px 1fr 1.2fr 0.8fr;
-  align-items:start;
-  border-bottom:1px solid var(--line);
-  background:var(--row);
-  transition:background .15s;
-  text-decoration:none;color:inherit;
-}
-.event-row:hover{background:var(--row-hover)}
-
-/* Thumbnail */
-.ev-thumb{padding:12px 10px 12px 44px}
-.ev-thumb img{width:60px;height:60px;object-fit:cover;display:block}
-.ev-thumb-placeholder{
-  width:60px;height:60px;background:var(--bg3);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Barlow Condensed',sans-serif;font-weight:700;
-  font-size:18px;color:rgba(0,0,0,.2);text-transform:uppercase;
-}
-
-/* Date */
-.ev-date{
-  padding:12px 8px 12px 0;
-  font-family:'Barlow Condensed',sans-serif;
-  text-align:right;align-self:center;
-}
-.ev-date-day{font-weight:700;font-size:22px;color:var(--ink);line-height:1}
-.ev-date-year{font-weight:300;font-size:11px;color:var(--ink3);letter-spacing:.06em;margin-top:2px}
-
-/* Title col */
-.ev-title-col{padding:12px 20px;border-left:1px solid var(--line)}
-.ev-title{
-  font-family:'Barlow Condensed',sans-serif;font-weight:700;
-  font-size:22px;letter-spacing:.01em;text-transform:uppercase;
-  color:var(--ink);line-height:1.05;margin-bottom:8px;
-}
-.ev-tags{display:flex;flex-wrap:wrap;gap:5px}
-.ev-tag{
-  font-family:'Barlow Condensed',sans-serif;font-weight:300;font-size:10px;
-  letter-spacing:.14em;text-transform:uppercase;
-  border:1px solid rgba(0,0,0,.18);color:var(--ink3);
-  padding:2px 7px;background:transparent;
-}
-
-/* Description */
-.ev-desc{
-  padding:12px 20px;border-left:1px solid var(--line);
-  font-family:'Barlow',sans-serif;font-weight:300;font-size:11.5px;
-  color:var(--ink2);line-height:1.65;
-}
-
-/* Venue */
-.ev-venue{
-  padding:12px 44px 12px 20px;border-left:1px solid var(--line);
-  font-family:'Barlow Condensed',sans-serif;font-weight:300;font-size:10px;
-  letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);
-  display:flex;align-items:flex-end;
-}
+.chip:hover { color: var(--ink); }
+.chip.on { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 </style>
 </head>
 <body>
-<div id="cursor"></div>
-<div id="page">
 
-  <header class="site-header">
-    <a class="site-header-name" href="../index.html">Weird With Code</a>
-    <nav class="site-header-nav">
-      <a href="work.html" class="active">Work</a>
-      <a href="bio.html">About</a>
-    </nav>
-  </header>
+<header class="uv-head">
+  <a class="uv-mark" href="index.html">Weird With Code<sup>&#174;</sup></a>
+  <nav class="uv-nav">
+    <a href="index.html">Projects</a>
+    <a href="work/work.html" class="now">Index</a>
+    <a href="work/bio.html">Studio</a>
+    <button type="button" data-overlay-open>Contact</button>
+  </nav>
+</header>
 
-  <main id="main"></main>
+<section class="page-top">
+  <h1 data-rise>Index</h1>
+  <span class="uv-micro uv-num" data-rise style="--d:100ms" id="total"></span>
+</section>
+
+<div class="filters" id="filters" data-rise style="--d:150ms"></div>
+
+<main class="uv-list" id="list"></main>
+
+<footer class="uv-foot">
+  <a href="index.html">&#8592; Projects</a>
+  <span>Jiyo &#183; Aur &#183; Jeene &#183; Do</span>
+  <span>Yasha Jain &#169; 2026</span>
+</footer>
+
+<div id="uv-overlay" aria-hidden="true" role="dialog" aria-label="Contact">
+  <div class="uv-ov-top">
+    <span class="uv-micro">Contact</span>
+    <button type="button" class="uv-ov-close" data-overlay-close>Close</button>
+  </div>
+  <div class="uv-ov-mid">
+    <a href="mailto:jain.yasha@gmail.com">jain.yasha@gmail.com</a>
+    <a href="mailto:jain@zkm.de">jain@zkm.de</a>
+    <a href="https://www.instagram.com/yaffa16/" target="_blank" rel="noopener noreferrer">@yaffa16</a>
+  </div>
+  <div class="uv-ov-foot">
+    <span>Karlsruhe, Germany</span>
+    <span>Open to commissions, exhibitions &amp; talks</span>
+  </div>
 </div>
 
+<script>window.WC_BASE = 'work/';</script>
+<script src="assets/works.js"></script>
 <script>
-var WORKS=[
-  {year:2025,label:'Selected Works',items:[
-    {title:'Animated Drawings',href:'2025/Animated_Drawings.html',img:'2025/Animated_Drawings.jpg',tags:['Personal','Generative'],desc:'A generative drawing system that produces evolving animated illustrations in real time, blurring authorship between artist and algorithm.',venue:'Personal project / 2025'},
-    {title:'Electronic Petting Zoo',href:'2025/Electronic_Petting_Zoo.html',img:'2025/Electronic_Petting_Zoo.jpg',tags:['Installation'],desc:'An interactive installation where visitors interact with electronic pets that respond to touch and sound.',venue:'Commission / 2025'},
-    {title:'Bring Your Own Model',href:'2025/Bring_Your_Own_Model.html',img:'2025/Bring_Your_Own_Model.jpg',tags:['AI','Exhibition'],desc:'A hands on low technology workshop that teaches participants to build and train their own AI  models',venue:'Exhibition / 2025'},
-    {title:'Terms Of Confession',href:'2025/Terms_Of_Confession.html',img:'2025/Terms_Of_Confession.jpg',tags:['Performance','Data'],desc:'A data-privacy performance that turns the act of agreeing to terms of service into a live, theatrical confessional ritual.',venue:'Personal project / 2025'},
-    {title:'OHL Plants',href:'2025/OHL_Plants.html',img:'2025/OHL_Plants.jpg',tags:['Sensor','Residency'],desc:'A living sensor garden where plants act as interactive medium',venue:'Residency / 2025'},
-    {title:'Kamuna',href:'2025/Kamuna.html',img:'2025/Kamuna.jpg',tags:['Web','Community'],desc:'A  web experience designed to simulate communication to Mars',venue:'Team project / 2025'},
-    {title:'Interplanetary Texting',href:'2025/Interplanetary_Texting.html',img:'2025/Interplanetary_Texting.jpg',tags:['Speculative'],desc:'A speculative communication tool that simulates the realtime delay of sending messages across interplanetary distances.',venue:'Personal project / 2025'},
-  ]},
-  {year:2024,label:'',items:[
-    {title:'Voice Box',href:'2024/voice_box.html',img:'2024/voice_box.jpg',tags:['Speech','Interface'],desc:'An interactive installation that creates a realtime radio play with your voice  clone and chosen storyline ',venue:'Personal project / 3 months'},
-    {title:'Flatware Hardware Software Wetware',href:'2024/Flatware_Hardware_Software_Wetware.html',img:'2024/Flatware_Hardware_Software_Wetware.jpg',tags:['Performance','Exhibition'],desc:'Installation art for the Exhibition (A)I Tell You, You Tell Me ',venue:'Exhibition / 4 months'},
-    {title:'Meme Me',href:'2024/meme_me.html',img:'2024/meme_me.jpg',tags:['Internet','Generative'],desc:'A meme generator that converts your photo realtime into a contextually aware meme',venue:'Personal project / 1 month'},
-  ]},
-  {year:2023,label:'',items:[
-    {title:'Live Coding',href:'2023/isle_of_coding.html',img:'2023/isle_of_coding.jpg',tags:['Performance','Music'],desc:'An algorave  performance ',venue:'Live event / 2023'},
-    {title:'If You Think You Are Sleeping',href:'2023/if_you_think_you_are_sleeping.html',img:'2023/if_you_think_you_are_sleeping.jpg',tags:['Video','Interactive'],desc:'A rememebrance for Peter Weibel',venue:'Personal project / 2 months'},
-    {title:'Berthold Leibinger',href:'2023/berthold_leibinger.html',img:'2023/berthold_leibinger.jpg',tags:['Identity','Commission'],desc:'A corporate generative identity system for the Berthold Leibinger Foundation, producing unique visual marks from institutional data.',venue:'Commission / 3 months'},
-  ]},
-  {year:2022,label:'',items:[
-    {title:'Taming AI',href:'2022/taming_ai.html',img:'2022/taming_ai.jpg',tags:['AI','Exhibition'],desc:'PArt of the interview series, Taming AI',venue:'Exhibition / 2 months'},
-    {title:'Agents',href:'2022/agents.html',img:'2022/agents.jpg',tags:['Software','Personal'],desc:'Interactive art about emergent behaviours.',venue:'Personal project / 1 month'},
-    {title:'Botcast',href:'2022/botcast.html',img:'2022/botcast.jpg',tags:['Audio','Team'],desc:'A bot-generated daily news podcast',venue:'Team project / 3 months'},
-    {title:'Berlin Stallwachter Party',href:'2022/berlin_stallwachter_party.html',img:'2022/berlin_stallwachter_party.jpg',tags:['Live','Visualisation'],desc:'A VR visualisation for the Stallwachter Party in Berlin',venue:'Commission / 1 month'},
-  ]},
-  {year:2019,label:'',items:[
-    {title:'Memory Holes',href:'2019/memory_holes.html',img:'2019/memory_holes.jpg',tags:['Installation'],desc:'An AR app for Turkey, of the city  archives',venue:'Personal project / 4 months'},
-  ]},
-  {year:2017,label:'',items:[
-    {title:'Bindu',href:'2017/bindu.html',img:'2017/bindu.jpg',tags:['Generative'],desc:'A VR app on the life of S.H Raza.',venue:'Eyemyth Festival/ 2017'},
-    {title:'Start Festival',href:'2017/start_festival.html',img:'2017/start_festival.jpg',tags:['Identity','Commission'],desc:'Start Festival installation',venue:'Commission / 2 months'},
-    {title:'Prayer Room',href:'2017/prayer_room.html',img:'2017/prayer_room.jpg',tags:['Installation','Sacred'],desc:'A VR tech installation .',venue:'Personal project / 3 months'},
-  ]},
-  {year:2016,label:'',items:[
-    {title:'Reflections',href:'2016/reflections.html',img:'2016/reflections.jpg',tags:['Generative'],desc:'A generative mirror portrait series in which a camera feed is continuously reimagined through layers of algorithmic transformation.',venue:'Personal project / 2016'},
-  ]},
-];
+(function () {
+  var BASE = window.WC_BASE || '';
+  var list = document.getElementById('list');
+  var filters = document.getElementById('filters');
+  document.getElementById('total').textContent =
+    '(' + String(window.WC_FLAT.length).padStart(2, '0') + ')';
 
-var main = document.getElementById('main');
-
-WORKS.forEach(function(g, gi) {
-  var band = document.createElement('div');
-  band.className = 'section-band' + (gi >= 2 ? ' past' : '');
-
-  var lbl = document.createElement('div');
-  lbl.className = 'section-label';
-  lbl.textContent = g.label || (gi >= 2 ? 'Past Works' : '');
-
-  var yr = document.createElement('div');
-  yr.className = 'section-year';
-  yr.textContent = g.year;
-
-  band.appendChild(lbl);
-  band.appendChild(yr);
-  main.appendChild(band);
-
-  g.items.forEach(function(item, i) {
-    var row = document.createElement('a');
-    row.className = 'event-row';
-    row.href = item.href;
-
-    // Thumbnail
-    var thumbWrap = document.createElement('div');
-    thumbWrap.className = 'ev-thumb';
-    var img = document.createElement('img');
-    img.src = item.img; img.alt = item.title; img.loading = 'lazy';
-    img.onerror = function() {
-      img.style.display = 'none';
-      var ph = document.createElement('div'); ph.className = 'ev-thumb-placeholder';
-      ph.textContent = item.title.slice(0,2).toUpperCase();
-      thumbWrap.appendChild(ph);
-    };
-    thumbWrap.appendChild(img);
-
-    // Date
-    var dateCol = document.createElement('div');
-    dateCol.className = 'ev-date';
-    var day = document.createElement('div'); day.className = 'ev-date-day';
-    day.textContent = String(i+1).padStart(2,'0') + '.' + String(g.year).slice(2);
-    var yr2 = document.createElement('div'); yr2.className = 'ev-date-year';
-    yr2.textContent = String(g.year).slice(2);
-    dateCol.appendChild(day);
-    dateCol.appendChild(yr2);
-
-    // Title + tags
-    var titleCol = document.createElement('div');
-    titleCol.className = 'ev-title-col';
-    var title = document.createElement('div'); title.className = 'ev-title'; title.textContent = item.title;
-    var tags = document.createElement('div'); tags.className = 'ev-tags';
-    (item.tags||[]).forEach(function(t) {
-      var tag = document.createElement('span'); tag.className = 'ev-tag'; tag.textContent = t;
-      tags.appendChild(tag);
+  function render(year) {
+    var rows = window.WC_FLAT.filter(function (w) {
+      return year === 'all' || w.year === year;
     });
-    titleCol.appendChild(title);
-    titleCol.appendChild(tags);
+    list.innerHTML = rows.map(function (w) {
+      // No data-peek: that attribute is what makes wwc.js spawn the
+      // image that follows the cursor. The index is a plain text list.
+      return '<a class="uv-row" href="' + BASE + w.href + '">' +
+        '<span class="n">' + w.n + '</span>' +
+        '<span class="t">' + w.title + '</span>' +
+        '<span class="g">' + w.tags + '</span>' +
+        '<span class="y">' + w.venue + ' &#8212; ' + w.year + '</span>' +
+        '</a>';
+    }).join('');
+    
+  }
 
-    // Description
-    var descCol = document.createElement('div');
-    descCol.className = 'ev-desc';
-    descCol.textContent = item.desc || '';
+  var years = window.WC_WORKS.map(function (g) { return g.year; });
+  function chip(label, val, on) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'chip' + (on ? ' on' : '');
+    b.textContent = label;
+    b.__val = val;
+    return b;
+  }
+  filters.appendChild(chip('All', 'all', true));
+  years.forEach(function (y) { filters.appendChild(chip(y, y, false)); });
 
-    // Venue
-    var venueCol = document.createElement('div');
-    venueCol.className = 'ev-venue';
-    venueCol.textContent = item.venue || '';
-
-    row.appendChild(thumbWrap);
-    row.appendChild(dateCol);
-    row.appendChild(titleCol);
-    row.appendChild(descCol);
-    row.appendChild(venueCol);
-    main.appendChild(row);
+  filters.addEventListener('click', function (e) {
+    var b = e.target.closest('.chip');
+    if (!b) return;
+    filters.querySelectorAll('.chip').forEach(function (c) { c.classList.remove('on'); });
+    b.classList.add('on');
+    render(b.__val);
   });
-});
 
-// Cursor
-var cur = document.getElementById('cursor');
-document.addEventListener('mousemove', function(e){ cur.style.left=e.clientX+'px'; cur.style.top=e.clientY+'px'; });
-var hoverSel = 'a,button,.ev-tag';
-document.addEventListener('mouseover', function(e){ if(e.target.closest(hoverSel)) cur.classList.add('big'); });
-document.addEventListener('mouseout',  function(e){ if(e.target.closest(hoverSel)) cur.classList.remove('big'); });
+  render('all');
+})();
 </script>
+<script src="assets/wwc.js" defer></script>
 </body>
 </html>
