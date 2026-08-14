@@ -788,3 +788,64 @@ Index view): 22 rows each, no floating image element after hovering
 five rows, zero data-peek attributes. Year filtering still works (2017
 -> 3 rows), no image after re-render, and rows still open their
 project.
+
+---
+
+## v3.29 — one header everywhere; contact overlay fixed
+
+Header was inconsistent: the homepage folded "Projects" into the
+wordmark, while every other page carried a SEPARATE Projects tab, so
+the boxes shifted position from page to page. Now all 26 pages use the
+identical four boxes, with the wordmark itself acting as Projects:
+
+    Weird With Code(R) Projects | Index | Studio | Contact
+
+The current page's box is marked .now so you can see where you are.
+
+Contact overlay:
+- The header no longer disappears. The overlay was z-index 2000 and the
+  header 900, so the overlay painted over it; the header is now 2100
+  and stays visible and usable while contact is open.
+- The Close button moved to the LEFT and the overlay's top row gained
+  86px of padding so it clears the fixed header instead of colliding
+  with it.
+- While the overlay is open, body.uv-contact highlights the Contact box
+  in the header, so it reads as the active tab.
+
+Verified on homepage, index page, studio, a project page and the root
+works page: identical four tabs on every one. Overlay checked: header
+visible above it, Close left of the label, top row below the header,
+Contact tab highlighted, Esc still closes.
+
+---
+
+## v3.30 — the deck is the landing view on mobile too
+
+Previously touch devices were sent straight to the Index list, because
+the deck was treated as hover-dependent. That was the wrong model: drag
+and tap are the core interactions and both work fine with a finger.
+Only the slide-out is hover-driven, and it simply does not apply on
+touch.
+
+- The `(hover: none)` fallback is gone. Only prefers-reduced-motion
+  still falls back to the list.
+- `touch-action: none` on the stage, so dragging scrubs the deck
+  instead of panning the page (verified: window.scrollY stays 0).
+- CLICK_SLOP is 22px on touch vs 14px with a mouse: fingers wobble more,
+  and a wobbling tap was being classified as a drag.
+- With no cursor to follow, the caption is pinned above the toggle and
+  always names the FRONT pane, updating as you scrub.
+- Phone layout: --cardw drops to clamp(160px, 62vw, 300px) under 700px
+  wide, and the stack starts nearer the middle (BASE_X/BASE_Y switch at
+  the same breakpoint) instead of mostly off-frame.
+- Mobile header fixed: the boxes were overflowing the screen with
+  CONTACT cut off. They now wrap to a second row and share it equally.
+
+One bug found and fixed on the way: inside frame(), `capY` is a local
+holding the caption's y position, which shadows the caption's year
+element of the same name — writing to it threw
+"Cannot create property 'textContent' on number".
+
+Verified: iPhone 390x844 lands on the deck with 6 panes, drag scrubs
+without scrolling the page, the caption tracks the front pane, and a tap
+opens that pane's project. Tablet 6, laptop 9, desktop 11 panes.

@@ -15,7 +15,7 @@
 <body data-veil class="mode-overview">
 
 <header class="uv-head">
-  <a class="uv-mark" href="index.html">Weird With Code<sup>&#174;</sup> Projects</a>
+  <a class="uv-mark" class="now" href="index.html">Weird With Code<sup>&#174;</sup> Projects</a>
   <nav class="uv-nav">
     <a href="work/work.html">Index</a>
     <a href="work/bio.html">Studio</a>
@@ -47,8 +47,8 @@
 <!-- ============ CONTACT OVERLAY ============ -->
 <div id="uv-overlay" aria-hidden="true" role="dialog" aria-label="Contact">
   <div class="uv-ov-top">
+    <button type="button" class="uv-ov-close" data-overlay-close>&#8592; Close</button>
     <span class="uv-micro">Contact</span>
-    <button type="button" class="uv-ov-close" data-overlay-close>Close</button>
   </div>
   <div class="uv-ov-mid">
     <a href="mailto:jain.yasha@gmail.com">jain.yasha@gmail.com</a>
@@ -102,7 +102,7 @@
     if (b.dataset.mode === 'index') window.scrollTo(0, 0);
   });
 
-  if (!FINE || RM) {
+  if (RM) {   // reduced motion only; touch keeps the deck
     document.body.classList.remove('mode-overview');
     document.body.classList.add('mode-index');
     return; // no deck
@@ -174,7 +174,17 @@
   }
   sizeSteps();
   addEventListener('resize', sizeSteps);
-  var BASE_X = -0.36, BASE_Y = 0.56;   // front pane bleeds off the bottom-LEFT corner
+  /* Where the front pane sits, as a fraction of the viewport from
+     centre. Phones are narrow and tall, so the stack has to start
+     nearer the middle or most of it sits off-frame. */
+  var BASE_X = -0.36, BASE_Y = 0.56;
+  function sizeBase() {
+    var narrow = innerWidth < 700;
+    BASE_X = narrow ? -0.26 : -0.36;
+    BASE_Y = narrow ?  0.26 :  0.56;
+  }
+  sizeBase();
+  addEventListener('resize', sizeBase);
   /* The panes are turned in 3D. A flat CSS skew can reproduce the
      measured corner angles but not the look: in the reference those
      angles come from a rotated plane seen in perspective, so the image
@@ -241,7 +251,7 @@
   });
   // Trackpad clicks usually include a few px of movement; anything
   // under CLICK_SLOP counts as a click, not a drag.
-  var CLICK_SLOP = 14;
+  var CLICK_SLOP = FINE ? 14 : 22;   // fingers wobble more than mice
   // Belt and braces: never let the browser start a native drag from a
   // pane, and treat a cancelled pointer like a released one so drag
   // state can't stick.
@@ -500,6 +510,25 @@
       c.drawnQuad = quadAt(x, y, z);    // where it is actually painted
       c.zc = project(x0, y0, z0)[2];   // stable depth ordering
     });
+    if (!FINE) {
+      // Touch: caption always describes the front-most pane.
+      var front = null;
+      for (var fi = 0; fi < cards.length; fi++) {
+        var fc = cards[fi];
+        if (fc.fade > 0.5 && (!front || fc.zc > front.zc)) front = fc;
+      }
+      if (front && front !== hoverCard) {
+        hoverCard = front;
+        // NB: `capY` is shadowed inside this function by the caption's
+        // y position, so reach for the element directly.
+        caption.querySelector('.t').textContent = front.data.title;
+        caption.querySelector('.yr').textContent =
+          front.data.n + ' \u2014 ' + front.data.year;
+        caption.classList.add('on');
+      }
+      requestAnimationFrame(frame);
+      return;
+    }
     var hitNow = hitTest(rawX, rawY);
     if (!hitNow && stickyContains(hoverCard, rawX, rawY)) hitNow = hoverCard;
     setHover(hitNow);
