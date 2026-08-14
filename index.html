@@ -330,7 +330,7 @@
   var focusCard = null, focusT = 0, focusStart = 0;
   // The pane takes FOCUS_MS to land centre-screen, then HOLD_MS of
   // stillness on the enlarged image before the project page loads.
-  var FOCUS_MS = 420;
+  var FOCUS_MS = 620;
   var HOLD_MS  = 1000;
   var LEAVE_MS = FOCUS_MS + HOLD_MS;
   function openProject(card) {
@@ -455,7 +455,7 @@
     if (focusCard) {
       // Time-based: a slow frame must not leave the preview unfinished.
       var fp = Math.min(1, (performance.now() - focusStart) / FOCUS_MS);
-      focusT = 1 - Math.pow(1 - fp, 3);   // ease-out
+      focusT = 1 - Math.pow(1 - fp, 2);   // ease-out
     }
 
     var W = innerWidth, H = innerHeight;
