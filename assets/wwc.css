@@ -68,7 +68,7 @@ html.uv-loading { overflow: hidden; }
    ================================================================= */
 
 .uv-head {
-  position: fixed; top: 0; left: 0; z-index: 900;
+  position: fixed; top: 0; left: 0; z-index: 2100;  /* above the contact overlay */
   display: flex; gap: 3px;
   padding: 6px;
 }
@@ -207,7 +207,12 @@ html.uv-loading { overflow: hidden; }
   visibility: hidden;
 }
 #uv-overlay.open { transform: none; visibility: visible; }
-.uv-ov-top { display: flex; justify-content: space-between; align-items: baseline; }
+body.uv-contact .uv-head button[data-overlay-open] { color: var(--ink); }
+.uv-ov-top {
+  display: flex; gap: 18px; align-items: baseline;
+  /* clear the fixed header, which stays visible above the overlay */
+  padding-top: 86px;
+}
 .uv-ov-close {
   font-family: inherit; font-size: 11px; letter-spacing: .06em;
   background: none; border: 0; cursor: pointer; color: var(--ink);
@@ -311,6 +316,10 @@ a:focus-visible, button:focus-visible {
   will-change: transform;
 }
 :root { --cardw: clamp(450px, 50vw, 500px); }
+/* Phones: a 450px minimum is wider than the whole screen. */
+@media (max-width: 700px) {
+  :root { --cardw: clamp(160px, 62vw, 300px); }
+}
 .uv-card {
   /* Browser hit-testing on deep preserve-3d stacks proved unreliable
      (only the front panes ever received events). The deck does its own
@@ -449,17 +458,44 @@ body.mode-index .uv-stage, body.mode-index .uv-caption { display: none; }
 body.mode-overview { overflow: hidden; }
 
 @media (max-width: 860px) {
-  .uv-head { flex-wrap: wrap; right: 0; }
-  .uv-head a, .uv-head button {
-    min-height: 44px; min-width: 0; flex: 1 1 auto;
-    padding: 8px 16px 8px 10px;
+  .uv-head {
+    flex-wrap: wrap; right: 0;      /* bound the width, or it overflows */
+    box-sizing: border-box; width: 100%;
+    gap: 2px;
   }
-  .uv-mark { min-width: 100% !important; }
+  .uv-head a, .uv-head button {
+    min-height: 40px; min-width: 0;
+    flex: 1 1 0;                    /* equal shares of one row */
+    padding: 8px 6px;
+    font-size: 9px; letter-spacing: .08em;
+    align-items: center; justify-content: center;
+    text-align: center;
+  }
+  .uv-mark {
+    min-width: 100% !important; flex: 1 1 100%;
+    justify-content: flex-start; text-align: left;
+    padding-left: 10px;
+  }
 }
 
-@media (hover: none), (prefers-reduced-motion: reduce) {
-  /* Deck needs a fine pointer and motion; the index carries the load */
+@media (prefers-reduced-motion: reduce) {
+  /* Only reduced-motion falls back to the list. Touch keeps the deck:
+     drag and tap are the core interactions; hover (the slide-out) is
+     an enhancement that simply does not apply on a finger. */
   .uv-stage, .uv-switch, .uv-caption { display: none !important; }
   .uv-home-index { display: block !important; }
   body.mode-overview { overflow: auto !important; }
+}
+
+/* Touch: the browser must not pan/zoom while a drag scrubs the deck. */
+.uv-stage { touch-action: none; }
+
+@media (hover: none) {
+  /* No hover, so the popup cannot follow a cursor: pin the front
+     pane's name and year to the bottom-left instead. */
+  .uv-caption {
+    left: var(--pad) !important; right: auto;
+    top: auto !important; bottom: 58px;
+    transform: none !important;
+  }
 }

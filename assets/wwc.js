@@ -234,6 +234,7 @@
     function open() {
       lastFocus = document.activeElement;
       ov.classList.add('open');
+      document.body.classList.add('uv-contact');
       ov.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
       var c = ov.querySelector('.uv-ov-close');
@@ -241,6 +242,7 @@
     }
     function close() {
       ov.classList.remove('open');
+      document.body.classList.remove('uv-contact');
       ov.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
       if (lastFocus && lastFocus.focus) lastFocus.focus();
