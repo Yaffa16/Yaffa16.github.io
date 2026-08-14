@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Berthold Leibinger — Weird With Code</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/wwc.css">
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -170,19 +171,22 @@ body {
 }
 .footer-back:hover { color:var(--green); border-color:var(--green); filter:drop-shadow(0 0 4px var(--green)); }
 </style>
+<link rel="stylesheet" href="../../assets/project.css">
 </head>
 <body>
 <div id="cursor"></div>
 
-<header class="site-header">
-  <a href="../../index.html" class="site-header-name">Weird With Code</a>
-  <nav class="site-header-nav">
-    <a href="../../work.html">Work</a>
-    <a href="../../work/bio.html">About</a>
+<header class="uv-head">
+  <a class="uv-mark" href="../../index.html">Weird With Code<sup>&#174;</sup></a>
+  <nav class="uv-nav">
+    <a href="../../index.html">Projects</a>
+    <a href="../../work/work.html">Index</a>
+    <a href="../../work/bio.html">Studio</a>
+    <button type="button" data-overlay-open>Contact</button>
   </nav>
 </header>
 
-<div class="project-hero">
+<div class="project-hero" data-rise>
   <div>
     <div class="project-num">18 / 2023</div>
     <div class="project-title">Berthold Leibinger</div>
@@ -191,27 +195,27 @@ body {
 </div>
 
 <div class="project-body">
-  <aside class="project-sidebar">
+  <aside class="project-sidebar" data-rise>
     <div><div class="sidebar-section-label">Type</div><div class="sidebar-tag">Generative Identity</div></div>
     <div><div class="sidebar-section-label">Year</div><div class="sidebar-tag">2023</div></div>
     <div><div class="sidebar-section-label">Tools</div><div class="sidebar-tag">Processing</div><div class="sidebar-tag">Illustrator</div></div>
     <div><div class="sidebar-section-label">Themes</div><div class="sidebar-tag">Corporate</div><div class="sidebar-tag">Generative Design</div><div class="sidebar-tag">Brand</div></div>
   </aside>
   <main class="project-content">
-<div class="media-block trio"><div class="media-item"><img src="https://via.placeholder.com/800x450?text=Invitation+Card+Motifs" alt="Invitation Card Motifs" style="width:100%;height:100%;object-fit:contain;display:block;"></div><div class="media-item"><img src="https://via.placeholder.com/800x450?text=Collective+Motif+Projection" alt="Collective Motif Projection" style="width:100%;height:100%;object-fit:contain;display:block;"></div><div class="media-item"><div class="video-wrap"><video style="width:100%;height:100%;display:block;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;background:transparent;" src="Leibinger.mp4" controls autoplay muted loop playsinline>
+<div class="media-block trio" data-rise><div class="media-item"><img src="https://via.placeholder.com/800x450?text=Invitation+Card+Motifs" alt="Invitation Card Motifs" style="width:100%;height:100%;object-fit:contain;display:block;"></div><div class="media-item"><img src="https://via.placeholder.com/800x450?text=Collective+Motif+Projection" alt="Collective Motif Projection" style="width:100%;height:100%;object-fit:contain;display:block;"></div><div class="media-item"><div class="video-wrap"><video style="width:100%;height:100%;display:block;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;background:transparent;" src="Leibinger.mp4" controls autoplay muted loop playsinline>
       Your browser does not support the video tag.
     </video></div></div></div>
 <div class="media-caption">Berthold Leibinger</div>
-<div class="content-h2">Artistic Concept</div>
+<div class="content-h2" data-rise>Artistic Concept</div>
 <p>The installation transforms event invitation cards into a <strong>living generative artwork</strong>. Each card is generated via AI (Stable Diffusion) with latent space interpolation, creating a visual dialogue between cards. The work poetically interprets <em>quantum duality</em>, blending wave and particle states.</p>
-<div class="content-h2">Interaction</div>
-<div class="content-h2">Technical Write-Up</div>
+<div class="content-h2" data-rise>Interaction</div>
+<div class="content-h2" data-rise>Technical Write-Up</div>
 <p>This project turns a simple event invitation into a participatory artwork, merging individual contributions into a collective generative experience.</p>
   </main>
 </div>
 
 <footer class="project-footer">
-  <a href="../../work.html" class="footer-back">← Back to Work</a>
+  <a href="../../work/work.html" class="footer-back">← Index</a>
   <span class="footer-left">Jiyo · Aur · Jeene · Do</span>
 </footer>
 
@@ -221,5 +225,21 @@ document.addEventListener('mousemove',function(e){cur.style.left=e.clientX+'px';
 document.addEventListener('mouseover',function(e){if(e.target.closest('a,button'))cur.classList.add('big');});
 document.addEventListener('mouseout',function(e){if(e.target.closest('a,button'))cur.classList.remove('big');});
 </script>
+<div id="uv-overlay" aria-hidden="true" role="dialog" aria-label="Contact">
+  <div class="uv-ov-top">
+    <span class="uv-micro">Contact</span>
+    <button type="button" class="uv-ov-close" data-overlay-close>Close</button>
+  </div>
+  <div class="uv-ov-mid">
+    <a href="mailto:jain.yasha@gmail.com">jain.yasha@gmail.com</a>
+    <a href="mailto:jain@zkm.de">jain@zkm.de</a>
+    <a href="https://www.instagram.com/yaffa16/" target="_blank" rel="noopener noreferrer">@yaffa16</a>
+  </div>
+  <div class="uv-ov-foot">
+    <span>Karlsruhe, Germany</span>
+    <span>Open to commissions, exhibitions &amp; talks</span>
+  </div>
+</div>
+<script src="../../assets/wwc.js" defer></script>
 </body>
 </html>
