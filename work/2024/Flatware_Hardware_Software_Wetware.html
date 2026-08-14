@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Flatware Hardware Software Wetware — Weird With Code</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/wwc.css">
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -170,19 +171,22 @@ body {
 }
 .footer-back:hover { color:var(--green); border-color:var(--green); filter:drop-shadow(0 0 4px var(--green)); }
 </style>
+<link rel="stylesheet" href="../../assets/project.css">
 </head>
 <body>
 <div id="cursor"></div>
 
-<header class="site-header">
-  <a href="../../index.html" class="site-header-name">Weird With Code</a>
-  <nav class="site-header-nav">
-    <a href="../../work.html">Work</a>
-    <a href="../../work/bio.html">About</a>
+<header class="uv-head">
+  <a class="uv-mark" href="../../index.html">Weird With Code<sup>&#174;</sup></a>
+  <nav class="uv-nav">
+    <a href="../../index.html">Projects</a>
+    <a href="../../work/work.html">Index</a>
+    <a href="../../work/bio.html">Studio</a>
+    <button type="button" data-overlay-open>Contact</button>
   </nav>
 </header>
 
-<div class="project-hero">
+<div class="project-hero" data-rise>
   <div>
     <div class="project-num">14 / 2024</div>
     <div class="project-title">Flatware Hardware Software Wetware</div>
@@ -191,27 +195,27 @@ body {
 </div>
 
 <div class="project-body">
-  <aside class="project-sidebar">
+  <aside class="project-sidebar" data-rise>
     <div><div class="sidebar-section-label">Type</div><div class="sidebar-tag">Hybrid Object Performance</div></div>
     <div><div class="sidebar-section-label">Year</div><div class="sidebar-tag">2024</div></div>
     <div><div class="sidebar-section-label">Tools</div><div class="sidebar-tag">3D Printing</div><div class="sidebar-tag">Arduino</div><div class="sidebar-tag">Max/MSP</div></div>
     <div><div class="sidebar-section-label">Themes</div><div class="sidebar-tag">Body</div><div class="sidebar-tag">Technology</div><div class="sidebar-tag">Materiality</div></div>
   </aside>
   <main class="project-content">
-<div class="media-block solo"><div class="media-item"><div class="video-wrap"><video style="width:100%;height:100%;display:block;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;background:transparent;" src="Flatware_Hardware_Software_Wetware.mp4" controls autoplay muted loop playsinline>
+<div class="media-block solo" data-rise><div class="media-item"><div class="video-wrap"><video style="width:100%;height:100%;display:block;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;object-fit:cover;background:transparent;" style="width:100%;height:100%;display:block;background:transparent;" src="Flatware_Hardware_Software_Wetware.mp4" controls autoplay muted loop playsinline>
       Your browser does not support the video tag.
   </video></div></div></div>
 <div class="media-caption">Flatware Hardware Software Wetware</div>
-<div class="content-h2">Concept</div>
+<div class="content-h2" data-rise>Concept</div>
 <p>A selection of original artworks from the ZKM collection hang on the walls, each accompanied by a small Raspberry Pi-powered screen. Instead of fixed museum labels, these screens display AI-generated interpretations ,uniquely generated for each visitor.</p>
 <p>Here’s how it works:</p>
-<div class="content-h2">Technical Write-Up</div>
+<div class="content-h2" data-rise>Technical Write-Up</div>
 <p>AI System and Development by Yasha Jain</p>
 <p>Custom-trained vision models to interpret and extract semantic features from artworks. The text generted from each artwork was then used by a locally trained AI to generate a text descripton of the artwork for one of 16 themes.</p>
 <p>The AI-generated text output system was developed by fine-tuned language models on ollama, and hosted locally on the Hertzlab AI server.</p>
 <p>All content is generated live based on user presence and interaction</p>
 <p>Each session is ephemeral, reinforcing the idea that interpretation is never fixed and truth is always contextual</p>
-<div class="content-h2">Context</div>
+<div class="content-h2" data-rise>Context</div>
 <p>Flatware, Hardware, Software, Wetware explores the consequences of turning interpretive power over to machines—particularly in institutions trusted as custodians of cultural knowledge.</p>
 <p>By having a machine mediate meaning, the installation reveals how truth can be personalized, distorted, and re-authored by algorithmic systems that reflect our own inputs and assumptions back to us. At its core, it poses the provocative question:</p>
 <p>What happens when institutions, the supposed bearers of truth, rely on artificial intelligence to speak for them?</p>
@@ -220,7 +224,7 @@ body {
 </div>
 
 <footer class="project-footer">
-  <a href="../../work.html" class="footer-back">← Back to Work</a>
+  <a href="../../work/work.html" class="footer-back">← Index</a>
   <span class="footer-left">Jiyo · Aur · Jeene · Do</span>
 </footer>
 
@@ -230,5 +234,21 @@ document.addEventListener('mousemove',function(e){cur.style.left=e.clientX+'px';
 document.addEventListener('mouseover',function(e){if(e.target.closest('a,button'))cur.classList.add('big');});
 document.addEventListener('mouseout',function(e){if(e.target.closest('a,button'))cur.classList.remove('big');});
 </script>
+<div id="uv-overlay" aria-hidden="true" role="dialog" aria-label="Contact">
+  <div class="uv-ov-top">
+    <span class="uv-micro">Contact</span>
+    <button type="button" class="uv-ov-close" data-overlay-close>Close</button>
+  </div>
+  <div class="uv-ov-mid">
+    <a href="mailto:jain.yasha@gmail.com">jain.yasha@gmail.com</a>
+    <a href="mailto:jain@zkm.de">jain@zkm.de</a>
+    <a href="https://www.instagram.com/yaffa16/" target="_blank" rel="noopener noreferrer">@yaffa16</a>
+  </div>
+  <div class="uv-ov-foot">
+    <span>Karlsruhe, Germany</span>
+    <span>Open to commissions, exhibitions &amp; talks</span>
+  </div>
+</div>
+<script src="../../assets/wwc.js" defer></script>
 </body>
 </html>
