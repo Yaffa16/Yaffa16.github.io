@@ -95,6 +95,10 @@
   sw.addEventListener('click', function (e) {
     var b = e.target.closest('button[data-mode]');
     if (!b) return;
+    // A swipe that happens to finish over this toggle still fires a
+    // click, which was jumping to the Index view mid-scrub. Only a
+    // real tap counts.
+    if (moved > CLICK_SLOP) { e.preventDefault(); return; }
     sw.querySelectorAll('button').forEach(function (x) { x.classList.remove('on'); });
     b.classList.add('on');
     document.body.classList.toggle('mode-index', b.dataset.mode === 'index');
@@ -230,6 +234,11 @@
      barely moved. Native clicks on panes are suppressed to avoid a
      double navigation through the global link handler. */
   var dragging = false, dragX = 0, dragY = 0, moved = 0, downCard = null;
+  var vel = 0, glide = 0;   // flick momentum
+  // Every press starts a fresh gesture. Without this, `moved` kept the
+  // distance from the PREVIOUS swipe, so the next deliberate tap on the
+  // Overview/Index toggle was rejected as "part of a drag".
+  document.addEventListener('pointerdown', function () { moved = 0; }, true);
   stage.addEventListener('pointerdown', function (e) {
     if (navigating) return;
     dragging = true; dragX = e.clientX; dragY = e.clientY; moved = 0;
@@ -244,9 +253,13 @@
     var d = e.clientX - dragX; dragX = e.clientX;
     var dy = e.clientY - (dragY || e.clientY); dragY = e.clientY;
     moved += Math.abs(d) + Math.abs(dy);
-    if (moved <= 14) return; // still within click slop: don't scrub yet
-    // near 1:1 with the on-screen step of ~155px per card, diagonal-aware
-    offset -= (d - dy) * 0.0058;
+    if (moved <= CLICK_SLOP) return;  // still a tap, don't scrub yet
+    // Diagonal-aware: dragging left/up advances. On touch a plain
+    // vertical swipe is the natural "scroll", so it must scrub too —
+    // which it does, since dy is part of the same expression.
+    var step = (d - dy) * 0.0058;
+    offset -= step;
+    vel = step;                       // remembered for momentum
     lastInput = performance.now();
   });
   // Trackpad clicks usually include a few px of movement; anything
@@ -263,6 +276,10 @@
   });
   addEventListener('pointerup', function (e) {
     dragging = false;
+    // Flick to keep scrolling, like a native scroll view.
+    if (moved > CLICK_SLOP && Math.abs(vel) > 0.004) {
+      glide = vel * 14;
+    }
     if (moved <= CLICK_SLOP) {
       if (downCard) {
         openProject(downCard);
@@ -382,6 +399,12 @@
   function frame() {
     // After 400ms without input, settle onto the nearest whole card so
     // the front pane always sits cleanly on the grid.
+    if (glide) {
+      offset -= glide;
+      glide *= 0.92;                       // decay
+      if (Math.abs(glide) < 0.0008) glide = 0;
+      lastInput = performance.now();       // hold off the snap while gliding
+    }
     if (!dragging && performance.now() - lastInput > 400) {
       offset = lerp(offset, Math.round(offset), 0.10);
     }

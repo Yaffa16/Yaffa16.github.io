@@ -849,3 +849,34 @@ element of the same name — writing to it threw
 Verified: iPhone 390x844 lands on the deck with 6 panes, drag scrubs
 without scrolling the page, the caption tracks the front pane, and a tap
 opens that pane's project. Tablet 6, laptop 9, desktop 11 panes.
+
+---
+
+## v3.31 — mobile: swipe scrubs, no accidental jump to Index
+
+Two mobile problems:
+
+1. "Jumps to the index page." The Overview/Index toggle listened for a
+   plain click with no drag check. A swipe that happened to finish over
+   that corner still fires a click, switching views mid-scrub. The
+   toggle now ignores clicks when the gesture moved more than
+   CLICK_SLOP.
+   Follow-on bug found while fixing it: `moved` was only reset on
+   presses that landed on the deck, so after any swipe the NEXT
+   deliberate tap on the toggle was rejected as "part of a drag". A
+   capture-phase pointerdown listener now resets the gesture on every
+   press, wherever it lands.
+
+2. Scrolling. A plain vertical swipe now scrubs the deck (it always fed
+   the same diagonal expression, but the tap threshold was hard-coded
+   to 14px instead of CLICK_SLOP, so short finger swipes were being
+   swallowed). Releasing a swipe now also carries momentum: `glide`
+   decays at 0.92 per frame and holds off the idle snap, so a flick
+   coasts like a native scroll view.
+
+Verified on a 390x844 touch viewport, each on a fresh load: vertical
+swipe moves the deck (front pane travels to the back of the stack) and
+the caption tracks the change across successive swipes; the page itself
+never scrolls; a swipe ending over the toggle stays on the deck; a
+deliberate tap switches to Index and back; a tap on a pane opens that
+project.
