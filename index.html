@@ -206,6 +206,34 @@
   var ROT_Z =0;
   var SKEW  = 0;    // in-plane shear, normally none
 
+  /* ---- MOTION TUNING ----------------------------------------------
+     All of the deck's feel lives here. Bigger = faster / looser,
+     smaller = slower / more damped.
+
+       WHEEL_GAIN   how far one notch of wheel moves the stack
+       DRAG_GAIN    how far one pixel of drag moves the stack
+       EASE         how quickly the drawn position catches up to the
+                    target. This is the damping: low values mean the
+                    deck keeps gliding after your hand stops.
+       FLICK        momentum multiplier on release
+       FLICK_DECAY  per-frame friction on that momentum (higher = it
+                    runs longer, but never past FLICK_STOP)
+       FLICK_MAX    ceiling on a flick, so a hard swipe can't fling
+                    the stack halfway round
+       SNAP         how firmly it settles onto a whole card at rest
+       SETTLE_MS    idle time before that settling starts
+     ------------------------------------------------------------------ */
+  var WHEEL_GAIN  = 0.005;
+  var DRAG_GAIN   = 0.0050;
+  var EASE        = 0.06;
+  var FLICK       = 2.5;
+  var FLICK_DECAY = 0.94;
+  var FLICK_STOP  = 0.0006;
+  var FLICK_MAX   = 0.07;
+  var FLICK_MIN   = 0.005;   // below this, a release just stops
+  var SNAP        = 0.05;
+  var SETTLE_MS   = 550;
+
   var offset = 0, shown = 0;            // scrub position (in card units)
   var px = 0, py = 0, cpx = 0, cpy = 0; // parallax
   var lerp = function (a, b, n) { return a + (b - a) * n; };
@@ -222,7 +250,7 @@
   stage.addEventListener('wheel', function (e) {
     e.preventDefault();
     if (navigating) return;
-    offset += (e.deltaY + e.deltaX) * 0.0022;
+    offset += (e.deltaY + e.deltaX) * WHEEL_GAIN;
     lastInput = performance.now();
   }, { passive: false });
 
@@ -257,7 +285,7 @@
     // Diagonal-aware: dragging left/up advances. On touch a plain
     // vertical swipe is the natural "scroll", so it must scrub too —
     // which it does, since dy is part of the same expression.
-    var step = (d - dy) * 0.0058;
+    var step = (d - dy) * DRAG_GAIN;
     offset -= step;
     vel = step;                       // remembered for momentum
     lastInput = performance.now();
@@ -277,8 +305,12 @@
   addEventListener('pointerup', function (e) {
     dragging = false;
     // Flick to keep scrolling, like a native scroll view.
-    if (moved > CLICK_SLOP && Math.abs(vel) > 0.004) {
-      glide = vel * 14;
+    if (moved > CLICK_SLOP && Math.abs(vel) > FLICK_MIN) {
+      glide = vel * FLICK;
+      // Clamp: a hard swipe should carry a little further than a slow
+      // one, not launch the stack across the whole index.
+      if (glide >  FLICK_MAX) glide =  FLICK_MAX;
+      if (glide < -FLICK_MAX) glide = -FLICK_MAX;
     }
     if (moved <= CLICK_SLOP) {
       if (downCard) {
@@ -401,14 +433,14 @@
     // the front pane always sits cleanly on the grid.
     if (glide) {
       offset -= glide;
-      glide *= 0.92;                       // decay
-      if (Math.abs(glide) < 0.0008) glide = 0;
+      glide *= FLICK_DECAY;                // friction
+      if (Math.abs(glide) < FLICK_STOP) glide = 0;
       lastInput = performance.now();       // hold off the snap while gliding
     }
-    if (!dragging && performance.now() - lastInput > 400) {
-      offset = lerp(offset, Math.round(offset), 0.10);
+    if (!dragging && performance.now() - lastInput > SETTLE_MS) {
+      offset = lerp(offset, Math.round(offset), SNAP);
     }
-    shown = lerp(shown, offset, 0.08);
+    shown = lerp(shown, offset, EASE);
     cpx = lerp(cpx, px, 0.06);
     cpy = lerp(cpy, py, 0.06);
 
